@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Course 2: AI - Home</title>
+
+  <!-- CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <h1 class="logo"><a href="index.html">KAUST Academy Introduction to AI</a></h1>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="active" href="index.html">Home</a></li>
+          <li><a href="day1.html">Day 1</a></li>
+          <li><a href="day2.html">Day 2</a></li>
+          <li><a href="day3.html">Day 3</a></li>
+          <li><a href="day4.html">Day 4</a></li>
+          <li><a href="day5.html">Day 5</a></li>
+          <li><a href="extra.html">Extra</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero">
+    <div class="container text-center animate-up">
+      <h1>Introduction to <br><span>Artificial Intelligence</span></h1>
+      <h2 class="animate-up delay-100">Machine Learning frameworks, Linear/Logistic Regression, Deep Neural Networks,
+        and Unsupervised Learning</h2>
+      <a href="day1.html" class="btn-get-started animate-up delay-200">Start Day 1</a>
+    </div>
+  </section>
+
+  <main id="main">
+
+    <section id="features" class="features" style="padding: 60px 0;">
+      <div class="container">
+
+        <div class="section-title text-center mb-5 animate-up">
+          <p style="color: var(--primary-red); font-weight: bold; letter-spacing: 1px;">COURSE SCHEDULE</p>
+          <h3>Daily Breakdown</h3>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mb-4 animate-up delay-100">
+            <div class="icon-box w-100">
+              <i class="ri-database-2-line"></i>
+              <h3><a href="day1.html">Day 1: Machine Learning Foundations</a></h3>
+              <p>ML framework, Data problems, and Splitting strategies</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mb-4 animate-up delay-200">
+            <div class="icon-box w-100">
+              <i class="ri-functions"></i>
+              <h3><a href="day2.html">Day 2: Machine Learning Algorithms</a></h3>
+              <p>Linear, Distance-based, Kernel-based, and Tree-based models</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mb-4 animate-up delay-300">
+            <div class="icon-box w-100">
+              <i class="ri-node-tree"></i>
+              <h3><a href="day3.html">Day 3: Fundamentals of Deep Learning</a></h3>
+              <p>Neural Networks, Deep Learning, Learning Process (Backpropagation), and Optimizers</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mb-4 animate-up delay-100">
+            <div class="icon-box w-100">
+              <i class="ri-bubble-chart-line"></i>
+              <h3><a href="day4.html">Day 4: Unsupervised Learning</a></h3>
+              <p>K-Means clustering, PCA, t-SNE, and Autoencoders</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mb-4 animate-up delay-200">
+            <div class="icon-box w-100">
+              <i class="ri-file-list-3-line"></i>
+              <h3><a href="day5.html">Day 5: Exam</a></h3>
+              <p>Final Assessment</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mb-4 animate-up delay-300">
+            <div class="icon-box w-100" style="border-bottom-color: var(--text-black);">
+              <i class="ri-folder-add-line" style="color: var(--text-black) !important;"></i>
+              <h3><a href="extra.html">Extra</a></h3>
+              <p>Any extra materials will be shared here.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="footer">
+    <div class="container d-md-flex py-4">
+      <div class="me-md-auto text-center w-100">
+        <div class="copyright">
+          &copy; Copyright <strong><span>KAUST Academy</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits" style="font-size: 14px; margin-top: 5px; color: #555;">
+          Website created by <strong>Ali Habibullah</strong>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- JAVASCRIPT LOGIC FOR THE BURGER MENU -->
+  <script>
+    AOS.init();
+
+    /**
+     * Mobile nav toggle
+     */
+    const on = (type, el, listener, all = false) => {
+      let selectEl = document.querySelector(el);
+      if (selectEl) {
+        selectEl.addEventListener(type, listener);
+      }
+    }
+
+    on('click', '.mobile-nav-toggle', function (e) {
+      document.querySelector('#navbar').classList.toggle('navbar-mobile')
+      this.classList.toggle('bi-list')
+      this.classList.toggle('bi-x')
+    })
+  </script>
+
+</body>
+
+</html>
