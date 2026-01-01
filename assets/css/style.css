@@ -1,35 +1,58 @@
-/* General Variables */
+/* ==========================================================================
+   KAUST Academy Introduction to AI - Styled to match academy.kaust.edu.sa
+   ========================================================================== */
+
+/* General Variables - KAUST Academy Color Palette */
 :root {
-  --primary-red: #D90000; /* Bold Red */
-  --dark-red: #a80000;
-  --text-black: #111111;
-  --text-grey: #444444;
+  --primary-navy: #00264c;
+  /* Primary dark navy blue */
+  --navy-dark: #001a33;
+  /* Darker navy for hover states */
+  --accent-orange: #f0b500;
+  /* Orange accent color */
+  --accent-teal: #1bc5c9;
+  /* Teal accent */
+  --accent-yellow: #cccd2b;
+  /* Yellow accent */
+  --text-navy: #00264c;
+  /* Navy text color */
+  --text-grey: #555555;
+  /* Grey body text */
   --bg-white: #ffffff;
-  --bg-light: #f9f9f9;
-  --shadow-hover: 0 10px 30px rgba(217, 0, 0, 0.15);
+  /* Pure white */
+  --bg-cream: #f7f5f2;
+  /* Off-white/cream background */
+  --bg-light-blue: #eef6ff;
+  /* Light blue sections */
+  --shadow-hover: 0 10px 30px rgba(0, 38, 76, 0.15);
 }
 
 body {
-  font-family: "Open Sans", sans-serif;
-  color: var(--text-black);
+  font-family: "Raleway", "Open Sans", sans-serif;
+  color: var(--text-navy);
   background-color: var(--bg-white);
   overflow-x: hidden;
 }
 
 a {
-  color: var(--primary-red);
+  color: var(--primary-navy);
   text-decoration: none;
   transition: all 0.3s ease;
 }
 
 a:hover {
-  color: var(--dark-red);
+  color: var(--accent-orange);
   text-decoration: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "Raleway", sans-serif;
-  color: var(--text-black);
+  color: var(--text-navy);
   font-weight: 700;
 }
 
@@ -41,6 +64,7 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0;
     transform: translate3d(0, 40px, 0);
   }
+
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
@@ -48,26 +72,41 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes slideInRight {
-  from { opacity: 0; transform: translateX(50px); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .animate-up {
   animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-  opacity: 0; /* Start hidden */
+  opacity: 0;
 }
 
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
 
 /* --------------------------------------------------------------
-# Header / Navbar (FIXED)
+# Header / Navbar - KAUST Academy Dark Navy Style
 -------------------------------------------------------------- */
 #header {
-  background: rgba(255, 255, 255, 0.98); /* Solid white background */
-  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
-  height: 80px;
+  background: var(--primary-navy);
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+  height: 100px;
   width: 100%;
   z-index: 997;
   transition: all 0.5s;
@@ -77,7 +116,7 @@ h1, h2, h3, h4, h5, h6 {
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Pushes Logo to left, Nav to right */
+  justify-content: space-between;
 }
 
 /* Logo Styling */
@@ -85,15 +124,28 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0;
   line-height: 1;
+  display: flex;
+  align-items: center;
 }
 
 .logo a {
-  color: var(--primary-red);
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  color: var(--bg-white);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo a:hover {
+  color: var(--bg-white);
+}
+
+.logo img {
+  height: 75px;
+  width: auto;
 }
 
 /* Navbar Container */
@@ -101,40 +153,41 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0;
 }
 
-/* THE FIX: Force the list to be horizontal */
+/* Horizontal list layout */
 .navbar ul {
   margin: 0;
   padding: 0;
-  display: flex;      /* This makes it horizontal */
-  list-style: none;   /* Removes the bullet points */
+  display: flex;
+  list-style: none;
   align-items: center;
 }
 
 .navbar li {
   position: relative;
-  margin-left: 30px; /* Spacing between links */
+  margin-left: 30px;
 }
 
-/* Link Styling */
-.navbar a, 
+/* Link Styling - White on dark navy */
+.navbar a,
 .navbar a:focus {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text-black);
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
   white-space: nowrap;
   transition: 0.3s;
   text-decoration: none;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.navbar a:hover, 
-.navbar .active, 
-.navbar .active:focus, 
-.navbar li:hover > a {
-  color: var(--primary-red);
+.navbar a:hover,
+.navbar .active,
+.navbar .active:focus,
+.navbar li:hover>a {
+  color: var(--bg-white);
 }
 
 /* Underline Animation */
@@ -143,24 +196,24 @@ h1, h2, h3, h4, h5, h6 {
   display: block;
   width: 0;
   height: 2px;
-  background: var(--primary-red);
+  background: var(--accent-orange);
   transition: width 0.3s;
   position: absolute;
   bottom: -5px;
   left: 0;
 }
 
-.navbar a:hover::after, 
+.navbar a:hover::after,
 .navbar .active::after {
   width: 100%;
 }
 
 /* Hide Mobile Toggle on Desktop */
 .mobile-nav-toggle {
-  color: var(--text-black);
+  color: var(--bg-white);
   font-size: 28px;
   cursor: pointer;
-  display: none; /* Hidden by default on desktop */
+  display: none;
   line-height: 0;
   transition: 0.5s;
 }
@@ -170,21 +223,25 @@ h1, h2, h3, h4, h5, h6 {
 -------------------------------------------------------------- */
 @media (max-width: 991px) {
   .mobile-nav-toggle {
-    display: block; /* Show hamburger on mobile */
+    display: block;
   }
 
   .navbar ul {
-    display: none; /* Hide horizontal menu on mobile (requires JS to toggle) */
+    display: none;
+  }
+
+  .logo a {
+    font-size: 16px;
   }
 }
 
 /* --------------------------------------------------------------
-# Hero Section
+# Hero Section - KAUST Academy Navy Style with Confetti
 -------------------------------------------------------------- */
 #hero {
   width: 100%;
   height: 80vh;
-  background: var(--bg-white);
+  background: var(--primary-navy);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -192,17 +249,147 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
 }
 
-/* Decorative Circle */
-#hero::before {
-  content: "";
+/* Confetti shapes container - full overlay layer (fill mode, gets cropped) */
+.hero-confetti {
   position: absolute;
-  top: -10%;
-  right: -5%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(217,0,0,0.05) 0%, rgba(255,255,255,0) 70%);
-  border-radius: 50%;
-  z-index: 0;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 1400px;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Confetti shapes - triangles and rectangles */
+.confetti-shape {
+  position: absolute;
+  opacity: 0.8;
+}
+
+/* Orange shapes */
+.confetti-1 {
+  bottom: 30px;
+  left: 40px;
+  width: 0;
+  height: 0;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  border-bottom: 45px solid #D97A2E;
+  transform: rotate(18deg);
+}
+
+.confetti-2 {
+  bottom: 120px;
+  left: 150px;
+  width: 35px;
+  height: 18px;
+  background: #D97A2E;
+  transform: rotate(-32deg) skewX(10deg);
+}
+
+/* Teal shapes */
+.confetti-3 {
+  bottom: 60px;
+  left: 280px;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 35px solid #4CA7A6;
+  transform: rotate(52deg);
+}
+
+.confetti-4 {
+  bottom: 150px;
+  right: 320px;
+  width: 28px;
+  height: 14px;
+  background: #4CA7A6;
+  transform: rotate(-65deg) skewY(8deg);
+}
+
+/* Yellow-green shapes */
+.confetti-5 {
+  bottom: 80px;
+  right: 200px;
+  width: 0;
+  height: 0;
+  border-left: 22px solid transparent;
+  border-right: 22px solid transparent;
+  border-bottom: 40px solid #B6BE3F;
+  transform: rotate(-28deg);
+}
+
+.confetti-6 {
+  bottom: 40px;
+  right: 80px;
+  width: 30px;
+  height: 16px;
+  background: #B6BE3F;
+  transform: rotate(42deg) skewX(-12deg);
+}
+
+/* More scattered shapes - varied sizes */
+.confetti-7 {
+  bottom: 180px;
+  left: 80px;
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 32px solid #4CA7A6;
+  transform: rotate(-48deg);
+}
+
+.confetti-8 {
+  bottom: 70px;
+  left: 480px;
+  width: 25px;
+  height: 12px;
+  background: #D97A2E;
+  transform: rotate(72deg) skewY(-15deg);
+}
+
+.confetti-9 {
+  bottom: 130px;
+  right: 500px;
+  width: 0;
+  height: 0;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-bottom: 28px solid #B6BE3F;
+  transform: rotate(38deg);
+}
+
+.confetti-10 {
+  bottom: 200px;
+  left: 350px;
+  width: 22px;
+  height: 11px;
+  background: #4CA7A6;
+  transform: rotate(-22deg) skewX(18deg);
+}
+
+.confetti-11 {
+  bottom: 45px;
+  right: 400px;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 36px solid #D97A2E;
+  transform: rotate(-58deg);
+}
+
+.confetti-12 {
+  bottom: 100px;
+  right: 100px;
+  width: 32px;
+  height: 15px;
+  background: #B6BE3F;
+  transform: rotate(15deg) skewY(10deg);
 }
 
 #hero h1 {
@@ -210,64 +397,84 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 56px;
   font-weight: 800;
   line-height: 1.2;
-  color: var(--text-black);
+  color: var(--bg-white);
+  position: relative;
+  z-index: 2;
 }
 
 #hero h1 span {
-  color: var(--primary-red);
-  border-bottom: 4px solid var(--text-black);
+  background: var(--accent-orange);
+  color: var(--bg-white);
+  padding: 4px 12px;
+  border-radius: 4px;
+  display: inline-block;
 }
 
 #hero h2 {
-  color: var(--text-grey);
+  color: rgba(255, 255, 255, 0.85);
   margin: 20px 0 30px 0;
   font-size: 22px;
   font-weight: 400;
+  position: relative;
+  z-index: 2;
 }
 
+/* Primary Button - Navy Capsule Style */
 .btn-get-started {
   font-family: "Raleway", sans-serif;
   font-weight: 600;
-  font-size: 16px;
-  letter-spacing: 1px;
-  display: inline-block;
-  padding: 12px 40px;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 36px;
   border-radius: 50px;
   transition: 0.3s;
   color: var(--bg-white);
-  background: var(--primary-red);
-  box-shadow: 0 4px 15px rgba(217, 0, 0, 0.3);
+  background: var(--primary-navy);
+  box-shadow: 0 4px 15px rgba(0, 38, 76, 0.25);
   position: relative;
   overflow: hidden;
   z-index: 1;
 }
 
 .btn-get-started:hover {
-  background: var(--text-black);
+  background: var(--navy-dark);
   color: var(--bg-white);
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 20px rgba(0, 38, 76, 0.35);
+}
+
+.btn-get-started::after {
+  content: "→";
+  font-size: 18px;
+  transition: transform 0.3s;
+}
+
+.btn-get-started:hover::after {
+  transform: translateX(4px);
 }
 
 /* --------------------------------------------------------------
-# Feature Cards (Day Links)
+# Feature Cards (Day Links) - KAUST Academy Card Style
 -------------------------------------------------------------- */
 .icon-box {
   padding: 40px 30px;
   position: relative;
   overflow: hidden;
   background: var(--bg-white);
-  box-shadow: 0 0 29px 0 rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease-in-out;
-  border-radius: 8px;
-  border-bottom: 3px solid transparent;
+  border-radius: 16px;
+  border-bottom: 4px solid transparent;
   z-index: 1;
   height: 100%;
 }
 
 .icon-box:hover {
-  transform: translateY(-10px);
-  border-color: var(--primary-red);
+  transform: translateY(-8px);
+  border-color: var(--accent-orange);
   box-shadow: var(--shadow-hover);
 }
 
@@ -275,31 +482,51 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 48px;
   line-height: 1;
   margin-bottom: 15px;
-  color: var(--primary-red) !important; /* Force Red Icons */
+  color: var(--accent-orange) !important;
   transition: 0.3s;
 }
 
 .icon-box h3 {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   margin-bottom: 15px;
 }
 
 .icon-box h3 a {
-  color: var(--text-black);
+  color: var(--text-navy);
   transition: 0.3s;
 }
 
 .icon-box:hover h3 a {
-  color: var(--primary-red);
+  color: var(--primary-navy);
+}
+
+.icon-box p {
+  color: var(--text-grey);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Section Title Styling */
+.section-title p {
+  color: var(--accent-orange) !important;
+  font-weight: 700 !important;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.section-title h3 {
+  color: var(--text-navy);
+  font-size: 32px;
 }
 
 /* --------------------------------------------------------------
-# Tables (The Schedules)
+# Tables (The Schedules) - KAUST Academy Style
 -------------------------------------------------------------- */
 .table-container {
-  box-shadow: 0 5px 25px rgba(0,0,0,0.05);
-  border-radius: 10px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
   overflow: hidden;
   background: white;
 }
@@ -307,17 +534,17 @@ h1, h2, h3, h4, h5, h6 {
 .custom-table {
   width: 100%;
   margin-bottom: 0;
-  color: var(--text-black);
+  color: var(--text-navy);
   border-collapse: separate;
   border-spacing: 0;
 }
 
 .custom-table thead th {
-  background-color: var(--primary-red);
+  background-color: var(--primary-navy);
   color: white;
   border: none;
-  padding: 15px;
-  font-size: 16px;
+  padding: 18px 15px;
+  font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -329,55 +556,72 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .custom-table tbody td {
-  padding: 15px;
+  padding: 16px 15px;
   vertical-align: middle;
   border-bottom: 1px solid #eee;
   border-right: 1px solid #eee;
+  color: var(--text-grey);
 }
 
 /* Hover Effect on Rows */
 .custom-table tbody tr:hover {
-  background-color: #fff0f0; /* Very light red tint */
-  transform: scale(1.005);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  background-color: var(--bg-cream);
+  transform: scale(1.002);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
   z-index: 2;
   position: relative;
 }
 
 .custom-table tbody tr td:first-child {
-  font-weight: bold;
-  color: var(--primary-red);
+  font-weight: 600;
+  color: var(--primary-navy);
   border-left: 1px solid #eee;
 }
 
-/* Link Button in Table */
+/* Link Button in Table - Navy Capsule */
 .table-btn {
   display: inline-block;
-  padding: 6px 15px;
-  background-color: var(--text-black);
+  padding: 8px 20px;
+  background-color: var(--primary-navy);
   color: white !important;
-  border-radius: 4px;
+  border-radius: 50px;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
   transition: 0.3s;
 }
 
 .table-btn:hover {
-  background-color: var(--primary-red);
+  background-color: var(--accent-orange);
+  color: var(--primary-navy) !important;
   transform: translateX(3px);
 }
 
 /* --------------------------------------------------------------
-# Breadcrumbs
+# Breadcrumbs - KAUST Academy Navy Style
 -------------------------------------------------------------- */
 .breadcrumbs {
-  margin-top: 70px;
+  margin-top: 80px;
   text-align: center;
-  background: var(--primary-red);
+  background: var(--primary-navy);
   padding: 60px 0;
   color: white;
   margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative element */
+.breadcrumbs::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(240, 181, 0, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
 }
 
 .breadcrumbs h2 {
@@ -388,43 +632,73 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .breadcrumbs p {
-  color: rgba(255,255,255,0.9);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 16px;
 }
 
 /* --------------------------------------------------------------
-# Footer
+# Footer - KAUST Academy Style
 -------------------------------------------------------------- */
 #footer {
-  background: var(--bg-light);
-  padding: 30px 0;
-  color: var(--text-black);
+  background: var(--bg-cream);
+  padding: 40px 0;
+  color: var(--text-navy);
   font-size: 14px;
-  border-top: 1px solid #eaeaea;
+  border-top: 1px solid #e8e6e3;
   margin-top: 50px;
 }
 
 #footer .copyright {
   text-align: center;
   font-weight: 600;
+  color: var(--text-navy);
+}
+
+#footer .copyright span {
+  color: var(--primary-navy);
+}
+
+#footer .license {
+  color: var(--text-grey);
+}
+
+#footer .license a {
+  color: var(--primary-navy);
+  font-weight: 600;
+}
+
+#footer .license a:hover {
+  color: var(--accent-orange);
+}
+
+#footer .credits {
+  color: var(--text-grey);
 }
 
 /* --------------------------------------------------------------
-# Mobile View (Media Query) & Mobile Menu Styling
+# Mobile View & Mobile Menu Styling
 -------------------------------------------------------------- */
 @media (max-width: 991px) {
   .mobile-nav-toggle {
-    display: block; /* Show hamburger on mobile */
+    display: block;
     cursor: pointer;
   }
 
   .navbar ul {
-    display: none; /* Hide default horizontal menu on mobile */
+    display: none;
+  }
+
+  #hero h1 {
+    font-size: 36px;
+  }
+
+  #hero h2 {
+    font-size: 18px;
   }
 }
 
 /* --------------------------------------------------------------
-# Mobile Menu Active State (The "Open" Menu)
+# Mobile Menu Active State
 -------------------------------------------------------------- */
 .navbar-mobile {
   position: fixed;
@@ -433,7 +707,7 @@ h1, h2, h3, h4, h5, h6 {
   right: 0;
   left: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Dimmed background behind menu */
+  background: rgba(0, 38, 76, 0.9);
   transition: 0.3s;
   z-index: 999;
 }
@@ -442,43 +716,51 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   top: 15px;
   right: 15px;
+  color: var(--bg-white);
 }
 
 .navbar-mobile ul {
-  display: block !important; /* Force show list */
+  display: block !important;
   position: absolute;
   top: 55px;
   right: 15px;
   bottom: 15px;
   left: 15px;
   padding: 10px 0;
-  background-color: #fff;
+  background-color: var(--bg-white);
   overflow-y: auto;
   transition: 0.3s;
-  border-radius: 10px;
-  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
-  flex-direction: column; /* Stack links vertically */
+  border-radius: 16px;
+  box-shadow: 0px 0px 30px rgba(0, 38, 76, 0.25);
+  flex-direction: column;
   align-items: flex-start;
 }
 
 .navbar-mobile li {
-  margin: 0; /* Reset margin */
-  padding: 10px 20px;
+  margin: 0;
+  padding: 12px 20px;
   width: 100%;
 }
 
 .navbar-mobile a {
   font-size: 16px;
-  color: var(--text-black);
+  color: var(--text-navy);
   width: 100%;
 }
 
-.navbar-mobile a:hover, 
-.navbar-mobile .active, 
-.navbar-mobile li:hover > a {
-  color: var(--primary-red);
+.navbar-mobile a:hover,
+.navbar-mobile .active,
+.navbar-mobile li:hover>a {
+  color: var(--accent-orange);
 }
 
 .navbar-mobile .getstarted {
   margin: 15px;
+}
+
+/* --------------------------------------------------------------
+# Features Section Background
+-------------------------------------------------------------- */
+.features {
+  background: var(--bg-white);
 }
