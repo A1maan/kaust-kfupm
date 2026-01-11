@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Day 2 Quiz · Machine Learning Algorithms</title>
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/css/style.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .question-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .question-card {
+      border: 1px solid rgba(0, 38, 76, 0.15);
+      border-radius: 24px;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.95);
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .question-card.correct {
+      border-color: rgba(74, 211, 149, 0.8);
+      box-shadow: 0 12px 30px rgba(74, 211, 149, 0.15);
+    }
+
+    .question-card.incorrect {
+      border-color: rgba(255, 107, 107, 0.8);
+      box-shadow: 0 12px 30px rgba(255, 107, 107, 0.15);
+    }
+
+    .question-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .option-pill {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      border: 1px solid rgba(0, 38, 76, 0.15);
+      border-radius: 14px;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.95);
+      transition: border 0.2s ease, background 0.2s ease;
+    }
+
+    .option-pill:hover {
+      border-color: var(--accent-teal);
+      background: rgba(27, 197, 201, 0.08);
+    }
+
+    .option-pill input {
+      margin-top: 0.25rem;
+    }
+
+    .question-feedback {
+      margin-top: 1rem;
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+    }
+
+    .question-feedback.success {
+      background: rgba(74, 211, 149, 0.15);
+      color: #1f7a52;
+      border: 1px solid rgba(74, 211, 149, 0.6);
+    }
+
+    .question-feedback.error {
+      background: rgba(255, 107, 107, 0.15);
+      color: #a12b2b;
+      border: 1px solid rgba(255, 107, 107, 0.6);
+    }
+
+    #formNotice {
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <div class="logo">
+        <a href="../index.html">
+          <img src="../assets/img/kaust-academy-logo.png" alt="KAUST Academy">
+          <img class="logo-kfupm" src="../assets/img/KFUPM Seal White.png" alt="KFUPM Seal"/>
+        </a>
+      </div>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../day1/index.html">Day 1</a></li>
+          <li><a class="active" href="../day2/index.html">Day 2</a></li>
+          <li><a href="../day3/index.html">Day 3</a></li>
+          <li><a href="../day4/index.html">Day 4</a></li>
+          <li><a href="../day5/index.html">Day 5</a></li>
+          <li><a href="../day6/index.html">Day 6</a></li>
+          <li><a href="../extra/index.html">Extra</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="breadcrumbs animate-up">
+      <div class="container">
+        <h2>Day 2 · Machine Learning Algorithms Quiz</h2>
+        <p>Practice deck covering regression, classification, and model selection. Only KFUPM students in the KAUST
+          Academy program may use this quiz.</p>
+        <div class="mt-3">
+          <a href="../day2/index.html" class="table-btn">Back to Day 2 decks</a>
+        </div>
+      </div>
+    </div>
+
+    <section class="quiz-page-section">
+      <div class="container">
+        <div class="quiz-card list-card mb-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+            <div>
+              <p class="eyebrow mb-1">About this quiz</p>
+              <h4 class="mb-1">Machine Learning Algorithms · KFUPM</h4>
+              <p class="text-muted mb-1">Answer every question, submit, and review the rationale. You can retake the quiz
+                as many times as you need.</p>
+              <p class="text-muted small mb-0">Quiz authored by <strong>Qasim Mahfoodh</strong>.</p>
+            </div>
+            <div class="text-md-end">
+              <p class="text-muted small mb-1">Format</p>
+              <p class="mb-0 fw-semibold">Multiple choice · 10 questions</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="practice-panel">
+          <form id="quizForm" class="question-stack"></form>
+          <div class="practice-actions mt-4">
+            <button type="button" class="btn btn-primary" id="submitQuiz">Submit answers</button>
+            <button type="button" class="btn btn-outline-secondary" id="resetQuiz">Retake quiz</button>
+          </div>
+          <p class="practice-notice mt-3 d-none" id="formNotice">Answer every question before submitting.</p>
+        </div>
+
+        <div class="practice-panel mt-4 d-none" id="resultPanel">
+          <p class="eyebrow mb-1 text-muted text-uppercase">Score</p>
+          <h4 class="scoreline mb-2" id="scoreSummary"></h4>
+          <p class="text-muted mb-0">Scroll up to review the rationale above. New attempts reshuffle the options.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer">
+    <div class="container d-md-flex py-4">
+      <div class="me-md-auto text-center w-100">
+        <div class="copyright">
+          &copy; Copyright <strong><span>KAUST Academy</span></strong>. All Rights Reserved
+        </div>
+        <div class="license" style="font-size: 13px; margin-top: 8px; color: #555;">
+          Licensed under <a
+            href="https://github.com/KAUST-Academy/KAUST_Academy_2026_Introduction_To_AI?tab=GPL-3.0-1-ov-file#readme"
+            target="_blank" rel="noopener">GPL-3.0</a>.
+          Recording and uploading lectures online is not permitted.
+        </div>
+        <div class="credits" style="font-size: 14px; margin-top: 5px; color: #555;">
+          Website created and managed by <strong>Almaan Khan</strong> and the other <strong>KFUPM TAs</strong>.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+  <script>
+    AOS.init();
+
+    const on = (type, el, listener) => {
+      const selectEl = document.querySelector(el);
+      if (selectEl) {
+        selectEl.addEventListener(type, listener);
+      }
+    };
+
+    on('click', '.mobile-nav-toggle', function () {
+      document.querySelector('#navbar').classList.toggle('navbar-mobile');
+      this.classList.toggle('bi-list');
+      this.classList.toggle('bi-x');
+    });
+  </script>
+  <script>
+    const quizData = [
+      {
+        question: "Why do we prefer Cross-Entropy (Log Loss) over Mean Squared Error (MSE) for classification?",
+        hint: "Think: distance error vs probability confidence.",
+        options: [
+          { text: "MSE is too computationally expensive for binary data.", correct: false, rationale: "Computational cost isn’t the main issue. The key limitation is that MSE is not well matched to probabilistic classification." },
+          { text: "MSE focuses on distance rather than probability confidence.", correct: true, rationale: "MSE treats errors like numeric distances; Cross-Entropy directly rewards well-calibrated probabilities and heavily penalizes confident wrong predictions." },
+          { text: "Cross-Entropy creates a linear boundary for the model.", correct: false, rationale: "The decision boundary is defined by the model (e.g., linear logits), not by the loss." },
+          { text: "Cross-Entropy handles negative integers better than MSE.", correct: false, rationale: "This has nothing to do with the preference for Cross-Entropy." }
+        ]
+      },
+      {
+        question: "In Logistic Regression, what is the specific role of the Sigmoid function?",
+        hint: "What turns logits into probabilities?",
+        options: [
+          { text: "To calculate the Euclidean distance between features.", correct: false, rationale: "Distance measures are used in methods like k-NN, not logistic regression." },
+          { text: "To map raw output scores to a 0-1 probability range.", correct: true, rationale: "Sigmoid squashes any real-valued score into (0, 1), allowing interpretation as a probability." },
+          { text: "To ensure all model weights remain positive integers.", correct: false, rationale: "Weights in logistic regression can be negative or positive real numbers." },
+          { text: "To strictly prevent the model from overfitting data.", correct: false, rationale: "Overfitting is handled by regularization and validation, not the sigmoid itself." }
+        ]
+      },
+      {
+        question: "Which method gives a guaranteed global minimum for Linear Regression but scales poorly with large datasets?",
+        hint: "Which approach solves weights directly using linear algebra?",
+        options: [
+          { text: "Gradient Descent.", correct: false, rationale: "Gradient Descent is iterative; the question refers to a closed-form solution." },
+          { text: "Ridge Regression.", correct: false, rationale: "Ridge is a regularized variant; it still relies on solving a system of equations." },
+          { text: "Closed-Form Equation.", correct: true, rationale: "Computing matrix products and inverses becomes expensive as the dataset grows." },
+          { text: "K-Nearest Neighbors.", correct: false, rationale: "k-NN is not an optimizer for linear regression." }
+        ]
+      },
+      {
+        question: "Which regularization technique should you use if you want to drive specific weights exactly to zero (sparsity)?",
+        hint: "Which penalty produces exact zeros?",
+        options: [
+          { text: "Use Ridge (L2) regularization.", correct: false, rationale: "L2 shrinks weights toward zero smoothly but rarely makes them exactly zero." },
+          { text: "Use Lasso (L1) regularization.", correct: true, rationale: "L1 encourages sparsity by pushing some coefficients exactly to zero." },
+          { text: "Use Dropout regularization.", correct: false, rationale: "Dropout randomly removes activations during training; it doesn’t make coefficients zero." },
+          { text: "Use Softmax regularization.", correct: false, rationale: "Softmax is an activation for multi-class classification." }
+        ]
+      },
+      {
+        question: "What is the primary side effect of setting the regularization strength ($\\lambda$) too high?",
+        hint: "Too much penalty = too simple.",
+        options: [
+          { text: "The model overfits the training data.", correct: false, rationale: "High regularization reduces complexity; it fights overfitting rather than causing it." },
+          { text: "The weights explode to large values.", correct: false, rationale: "Regularization penalizes large weights, so it prevents weight explosion." },
+          { text: "The model becomes too simple (underfitting).", correct: true, rationale: "Excessive penalty forces weights toward zero, making the model unable to capture the signal." },
+          { text: "The training time increases drastically.", correct: false, rationale: "Training time isn’t the main impact; model capacity is." }
+        ]
+      },
+      {
+        question: "Why is the k-Nearest Neighbors (k-NN) algorithm classified as a \"lazy learner\"?",
+        hint: "Does it learn parameters during training?",
+        options: [
+          { text: "It requires significant time to train the model.", correct: false, rationale: "k-NN has minimal training time; it mainly stores the data." },
+          { text: "It memorizes data instead of learning parameters.", correct: true, rationale: "k-NN delays generalization until prediction time, using stored instances instead of a parametric model." },
+          { text: "It ignores the majority of the training dataset.", correct: false, rationale: "It can use any point in the dataset, depending on k and distance." },
+          { text: "It uses a very slow gradient descent optimizer.", correct: false, rationale: "k-NN does not use gradient descent at all." }
+        ]
+      },
+      {
+        question: "In Support Vector Machines (SVM), what is the consequence of using a large hyperparameter $C$?",
+        hint: "Bigger C = stricter about mistakes.",
+        options: [
+          { text: "It ignores errors to create a wider margin.", correct: false, rationale: "Ignoring errors corresponds to smaller C, which allows more slack." },
+          { text: "It forces the model to use a linear kernel.", correct: false, rationale: "Kernel choice is separate from C." },
+          { text: "It penalizes errors heavily, risking overfitting.", correct: true, rationale: "Large C punishes misclassifications strongly, which can fit noise and reduce generalization." },
+          { text: "It reduces the model's sensitivity to noise.", correct: false, rationale: "That’s the role of a smaller C." }
+        ]
+      },
+      {
+        question: "True or False: Decision Trees use Gradient Descent to find the optimal split.",
+        hint: "Is the split decision differentiable?",
+        options: [
+          { text: "True, they optimize the loss curve.", correct: false, rationale: "Standard decision trees evaluate discrete splits; they don’t rely on gradients." },
+          { text: "False, they use greedy search.", correct: true, rationale: "Decision trees typically choose splits greedily to reduce impurity." }
+        ]
+      },
+      {
+        question: "How does Gradient Boosting differ from Random Forest in terms of training?",
+        hint: "Parallel averaging vs sequential correction.",
+        options: [
+          { text: "It averages many independent trees in parallel.", correct: false, rationale: "That describes Random Forest more than boosting." },
+          { text: "It trains sequential trees to fix prior errors.", correct: true, rationale: "Boosting builds trees one after another, each focusing on correcting the mistakes of the prior ensemble." },
+          { text: "It increases the depth of the very first tree.", correct: false, rationale: "Boosting is about sequential correction, not deeper initial trees." },
+          { text: "It filters out outliers before training begins.", correct: false, rationale: "Outlier handling isn’t the defining feature of boosting." }
+        ]
+      },
+      {
+        question: "What does the \"No Free Lunch\" Theorem imply for Machine Learning?",
+        hint: "Different problems favor different inductive biases.",
+        options: [
+          { text: "Neural Networks are universally superior models.", correct: false, rationale: "No Free Lunch says there is no universally best model across all problems." },
+          { text: "Gradient Boosting wins on every tabular dataset.", correct: false, rationale: "It’s strong but not guaranteed best across all tasks." },
+          { text: "Support Vector Machines are mathematically best.", correct: false, rationale: "Even strong theory doesn’t make a model universally best." },
+          { text: "No single model is superior for all tasks.", correct: true, rationale: "Performance depends on the problem, data distribution, and objective." }
+        ]
+      }
+    ];
+
+    const quizForm = document.getElementById('quizForm');
+    const submitBtn = document.getElementById('submitQuiz');
+    const resetBtn = document.getElementById('resetQuiz');
+    const notice = document.getElementById('formNotice');
+    const resultPanel = document.getElementById('resultPanel');
+    const scoreSummary = document.getElementById('scoreSummary');
+
+    const renderQuiz = () => {
+      quizForm.innerHTML = '';
+      quizData.forEach((question, index) => {
+        const card = document.createElement('article');
+        card.className = 'question-card';
+        card.dataset.index = index.toString();
+
+        const header = document.createElement('div');
+        header.innerHTML = `
+          <p class="question-eyebrow">Question ${index + 1}</p>
+          <h5>${question.question}</h5>
+          <p class="text-muted small mb-0">${question.hint}</p>
+        `;
+        card.appendChild(header);
+
+        const optionsWrapper = document.createElement('div');
+        optionsWrapper.className = 'option-grid';
+        const shuffled = [...question.options].sort(() => Math.random() - 0.5);
+
+        shuffled.forEach((option, optionIndex) => {
+          const inputId = `q${index}-opt${optionIndex}`;
+          const label = document.createElement('label');
+          label.className = 'option-pill';
+          label.setAttribute('for', inputId);
+          label.innerHTML = `
+            <input type="radio" id="${inputId}" name="question-${index}" value="${question.options.indexOf(option)}">
+            <span>${option.text}</span>
+          `;
+          optionsWrapper.appendChild(label);
+        });
+
+        card.appendChild(optionsWrapper);
+
+        const feedback = document.createElement('div');
+        feedback.className = 'question-feedback d-none';
+        feedback.id = `feedback-${index}`;
+        card.appendChild(feedback);
+
+        quizForm.appendChild(card);
+      });
+
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
+    };
+
+    const gradeQuiz = () => {
+      let answeredAll = true;
+      let score = 0;
+
+      quizData.forEach((question, index) => {
+        const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+        const card = quizForm.querySelector(`.question-card[data-index="${index}"]`);
+        const feedback = document.getElementById(`feedback-${index}`);
+
+        card.classList.remove('correct', 'incorrect');
+        feedback.classList.add('d-none', 'text-muted');
+        feedback.classList.remove('success', 'error');
+        feedback.textContent = '';
+
+        if (!selected) {
+          answeredAll = false;
+          return;
+        }
+
+        const chosen = question.options[Number(selected.value)];
+        const correct = question.options.find((opt) => opt.correct);
+
+        if (chosen.correct) {
+          score += 1;
+          card.classList.add('correct');
+          feedback.innerHTML = `<strong>Correct.</strong> ${chosen.rationale}`;
+          feedback.classList.remove('d-none');
+          feedback.classList.add('success');
+        } else {
+          card.classList.add('incorrect');
+          feedback.innerHTML = `<strong>Incorrect.</strong> ${chosen.rationale}${correct ? `<br><em>Answer:</em> ${correct.text}` : ''}`;
+          feedback.classList.remove('d-none');
+          feedback.classList.add('error');
+        }
+      });
+
+      if (!answeredAll) {
+        notice.classList.remove('d-none');
+        resultPanel.classList.add('d-none');
+        return;
+      }
+
+      notice.classList.add('d-none');
+      scoreSummary.textContent = `${score} / ${quizData.length}`;
+      resultPanel.classList.remove('d-none');
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
+      window.scrollTo({ top: resultPanel.offsetTop - 120, behavior: 'smooth' });
+    };
+
+    const resetQuiz = () => {
+      quizForm.reset();
+      notice.classList.add('d-none');
+      resultPanel.classList.add('d-none');
+      quizForm.querySelectorAll('.question-card').forEach((card) => card.classList.remove('correct', 'incorrect'));
+      quizForm.querySelectorAll('.question-feedback').forEach((feedback) => {
+        feedback.classList.add('d-none');
+        feedback.classList.remove('success', 'error');
+        feedback.textContent = '';
+      });
+      renderQuiz();
+      window.scrollTo({ top: quizForm.offsetTop - 120, behavior: 'smooth' });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderQuiz();
+      submitBtn.addEventListener('click', gradeQuiz);
+      resetBtn.addEventListener('click', resetQuiz);
+    });
+  </script>
+</body>
+
+</html>

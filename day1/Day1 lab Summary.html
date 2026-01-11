@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1 Labs: Complete Summary & Lab 2 Walkthrough</title>
+    <style>
+        :root {
+            /* Core Layout Colors */
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --sidebar-bg: #ffffff;
+            --sidebar-border: #e2e8f0;
+            --heading-color: #1e293b;
+            
+            /* Primary Colors */
+            --primary-color: #2563eb;       /* Blue */
+            --secondary-color: #1e40af;     /* Dark Blue */
+            --accent-color: #f59e0b;        /* Amber */
+            --success-color: #10b981;       /* Green for graphs */
+            
+            /* Content Blocks - Light Mode Defaults */
+            --block-bg: #ffffff;
+            --block-shadow: rgba(0,0,0,0.05);
+            
+            /* Explanation Block */
+            --explanation-bg: #eff6ff;
+            --explanation-border: #bfdbfe;
+            --explanation-text: #1e3a8a;
+            
+            /* Analogy Block */
+            --analogy-bg: #f0fdf4;
+            --analogy-border: #bbf7d0;
+            --analogy-text: #14532d;
+            
+            /* Code Block */
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+            --code-border: #334155;
+            
+            /* Lab 2 Specific */
+            --lab2-container-bg: #ffffff;
+            --lab2-gradient-start: #fff7ed;
+            --lab2-gradient-end: #ffffff;
+            --lab2-border: #fed7aa;
+            
+            /* Nav */
+            --nav-hover: #f1f5f9;
+            --nav-text: #475569;
+            --nav-active-bg: #eff6ff;
+
+            /* Visual Elements (Graphs & Tables) */
+            --table-header-bg: #2563eb;
+            --table-row-hover: #f1f5f9;
+            --table-border: #e2e8f0;
+            --vis-bg: rgba(0,0,0,0.03);
+        }
+
+        /* Dark Mode Overrides */
+        body.dark-mode {
+            /* Core Layout Colors */
+            --bg-color: #0f172a;            /* Slate 900 */
+            --text-color: #e2e8f0;          /* Slate 200 */
+            --sidebar-bg: #1e293b;          /* Slate 800 */
+            --sidebar-border: #334155;
+            --heading-color: #f8fafc;
+            
+            /* Primary Colors */
+            --primary-color: #60a5fa;       /* Light Blue */
+            --secondary-color: #93c5fd;     /* Very Light Blue */
+            
+            /* Content Blocks */
+            --block-bg: #1e293b;
+            --block-shadow: rgba(0,0,0,0.3);
+            
+            /* Explanation Block */
+            --explanation-bg: #172554;      /* Blue 950 */
+            --explanation-border: #1e40af;
+            --explanation-text: #dbeafe;    /* Blue 100 */
+            
+            /* Analogy Block */
+            --analogy-bg: #064e3b;          /* Green 900 */
+            --analogy-border: #059669;
+            --analogy-text: #dcfce7;        /* Green 100 */
+            
+            /* Code Block */
+            --code-bg: #020617;             /* Slate 950 */
+            --code-text: #f8fafc;
+            --code-border: #1e293b;
+            
+            /* Lab 2 Specific */
+            --lab2-container-bg: #1e293b;
+            --lab2-gradient-start: #431407; /* Dark Orange/Brown */
+            --lab2-gradient-end: #1e293b;
+            --lab2-border: #9a3412;
+            
+            /* Nav */
+            --nav-hover: #334155;
+            --nav-text: #cbd5e1;
+            --nav-active-bg: #1e3a8a;
+
+            /* Visual Elements Dark Mode */
+            --table-header-bg: #1e40af;
+            --table-row-hover: #334155;
+            --table-border: #334155;
+            --vis-bg: rgba(255,255,255,0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        nav {
+            width: 250px;
+            background: var(--sidebar-bg);
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            border-right: 1px solid var(--sidebar-border);
+            padding: 2rem 1.5rem;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.03);
+            z-index: 100;
+        }
+
+        nav h1 {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--sidebar-border);
+        }
+
+        nav h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--nav-text);
+            opacity: 0.8;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        nav ul { list-style: none; }
+        nav li { margin-bottom: 0.4rem; }
+
+        nav a {
+            text-decoration: none;
+            color: var(--nav-text);
+            font-size: 0.95rem;
+            display: block;
+            padding: 0.6rem 0.8rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        nav a:hover {
+            background-color: var(--nav-hover);
+            color: var(--primary-color);
+        }
+
+        nav a.active-section {
+            background-color: var(--nav-active-bg);
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        nav a.lab2-link:hover, nav a.lab2-link.active-section {
+            color: #ea580c; 
+            border-left-color: #ea580c;
+        }
+        body.dark-mode nav a.lab2-link:hover, body.dark-mode nav a.lab2-link.active-section {
+            color: #fdba74;
+            border-left-color: #fdba74;
+            background-color: #431407;
+        }
+
+        /* Main Content */
+        main {
+            margin-left: 250px;
+            padding: 4rem 5rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* Headers */
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--secondary-color);
+            margin-top: 4rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--sidebar-border);
+        }
+
+        .lab2-section-title {
+            color: #c2410c; 
+            border-bottom-color: #fdba74;
+        }
+        body.dark-mode .lab2-section-title {
+            color: #fdba74;
+            border-bottom-color: #9a3412;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            color: var(--heading-color);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        h4 {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            opacity: 0.9;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Content Blocks */
+        .block {
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px var(--block-shadow);
+            border: 1px solid transparent;
+            position: relative;
+            background: var(--block-bg);
+        }
+
+        .block-label {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            padding: 0 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 4px;
+            border: 1px solid;
+            background: inherit;
+        }
+
+        .explanation {
+            background-color: var(--explanation-bg);
+            border-color: var(--explanation-border);
+            color: var(--explanation-text);
+        }
+        .explanation .block-label { 
+            color: var(--explanation-text); 
+            border-color: var(--explanation-border);
+            background-color: var(--explanation-bg);
+        }
+
+        .analogy {
+            background-color: var(--analogy-bg);
+            border-color: var(--analogy-border);
+            color: var(--analogy-text);
+        }
+        .analogy .block-label { 
+            color: var(--analogy-text); 
+            border-color: var(--analogy-border);
+            background-color: var(--analogy-bg);
+        }
+
+        .code-block {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            font-family: 'Consolas', 'Monaco', monospace;
+            overflow-x: auto;
+            border: 1px solid var(--code-border);
+        }
+        .code-block .block-label { 
+            background-color: var(--code-bg); 
+            color: #94a3b8; 
+            border-color: var(--code-border); 
+        }
+        
+        pre { margin: 0; font-size: 0.95rem; }
+
+        .lab2-container {
+            background-color: var(--lab2-container-bg);
+            border: 2px solid var(--lab2-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+            background: linear-gradient(to bottom, var(--lab2-gradient-start) 0%, var(--lab2-gradient-end) 100%);
+        }
+
+        strong {
+            color: var(--secondary-color);
+            font-weight: 700;
+        }
+
+        p { margin-bottom: 1rem; }
+        ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+        li { margin-bottom: 0.5rem; }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 2rem;
+            background: var(--bg-color);
+            border: 1px solid var(--sidebar-border);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s;
+        }
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            background-color: var(--sidebar-bg);
+        }
+
+        /* === GRAPH & TABLE CSS START === */
+        
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            background: var(--block-bg);
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            background-color: var(--block-bg);
+        }
+        .data-table th, .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--table-border);
+        }
+        .data-table th {
+            background-color: var(--table-header-bg);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tbody tr:hover { background-color: var(--table-row-hover); }
+        
+        /* Special Column Highlights */
+        .col-feature { border-left: 3px solid transparent; }
+        .col-target { background-color: rgba(245, 158, 11, 0.05); border-left: 3px solid var(--accent-color); font-weight: bold; color: var(--text-color); }
+        
+        /* Train/Test Split Bar */
+        .split-bar-container {
+            display: flex;
+            width: 100%;
+            height: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            font-weight: bold;
+            color: white;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .split-train {
+            width: 80%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+        }
+        .split-test {
+            width: 20%;
+            background-color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+        }
+        .split-train:hover, .split-test:hover { opacity: 0.9; }
+        
+        /* Scaling Visualization */
+        .scaling-vis {
+            display: flex;
+            gap: 20px;
+            background: var(--vis-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            justify-content: center;
+            align-items: flex-end;
+            border: 1px solid var(--sidebar-border);
+        }
+        .scale-group { text-align: center; }
+        .scale-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 5px;
+            height: 100px;
+            border-bottom: 2px solid var(--text-color);
+            padding-bottom: 2px;
+        }
+        .bar {
+            width: 20px;
+            background-color: var(--secondary-color);
+            border-radius: 3px 3px 0 0;
+            transition: height 0.5s;
+        }
+        .bar.scaled { background-color: var(--success-color); }
+        .scale-label { font-size: 0.8rem; margin-top: 8px; font-weight: 600; }
+
+        /* Before/After Container */
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .signature {
+            position: fixed;
+            bottom: 20px;
+            right: 25px;
+            font-family: 'Brush Script MT', 'Segoe Script', cursive;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 9999;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            user-select: none;
+            cursor: default;
+        }
+        .comparison-box h5 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: var(--nav-text);
+        }
+
+        /* === GRAPH CSS END === */
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            nav { width: 200px; }
+            main { margin-left: 200px; padding: 2rem; }
+        }
+
+        @media (max-width: 768px) {
+            nav { display: none; }
+            main { margin-left: 0; padding: 1.5rem; }
+            .section-title { font-size: 1.8rem; margin-top: 2rem; }
+            .theme-toggle { top: 1rem; right: 1rem; padding: 0.4rem 0.8rem; }
+            .comparison-container { grid-template-columns: 1fr; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Dark Mode Toggle -->
+    <button class="theme-toggle" id="themeToggle">
+        <span></span> Dark Mode
+    </button>
+
+    <!-- Sidebar Navigation -->
+    <nav>
+        <h1>Study Guide</h1>
+        
+        <h3>Part 1: Concepts</h3>
+        <ul>
+            <li><a href="#framework">1. Scikit-Learn Framework</a></li>
+            <li><a href="#preprocessing">2. Data Preprocessing</a></li>
+            <li><a href="#splitting">3. Data Splitting</a></li>
+            <li><a href="#training">4. Model Training</a></li>
+        </ul>
+
+        <h3 style="color: var(--accent-color); border-top: 1px solid var(--sidebar-border); padding-top: 1rem;">Part 2: Applications</h3>
+        <ul>
+            <li><a href="#lab2-intro" class="lab2-link">5. Lab 2: Intro & EDA</a></li>
+            <li><a href="#lab2-cleaning" class="lab2-link">6. Cleaning & Features</a></li>
+            <li><a href="#lab2-training" class="lab2-link">7. Training & Evaluation</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        
+        <!-- PART 1: CONCEPTS -->
+        <h1 class="section-title">Part 1: Scikit-Learn Basics</h1>
+
+        <!-- Section 1 -->
+        <section id="framework">
+            <h2>1. The Scikit-Learn Framework</h2>
+
+            <h3>1.1 Data Representation</h3>
+            
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <p>Scikit-learn is a powerful library for machine learning that requires data to be formatted in a specific way. This data is often structured as a table, much like a spreadsheet.</p>
+                <ul>
+                    <li><strong>Features (X):</strong> These are the inputs or independent variables. Each row corresponds to a different sample, while each column represents a different feature.</li>
+                    <li><strong>Target (y):</strong> This is the output or dependent variable you want to predict. Think of the target as the answer you are trying to find based on the features.</li>
+                </ul>
+
+                <!-- GRAPH ADDED: DATA TABLE -->
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--nav-text);"><em>Visual Structure of Data:</em></p>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Size (sq ft)</th>
+                                <th>Bedrooms</th>
+                                <th>Location Score</th>
+                                <th style="background-color: var(--accent-color);">Price (Target y)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-feature">1500</td>
+                                <td class="col-feature">3</td>
+                                <td class="col-feature">8.5</td>
+                                <td class="col-target">$300,000</td>
+                            </tr>
+                            <tr>
+                                <td class="col-feature">2000</td>
+                                <td class="col-feature">4</td>
+                                <td class="col-feature">9.0</td>
+                                <td class="col-target">$450,000</td>
+                            </tr>
+                            <tr>
+                                <td class="col-feature">800</td>
+                                <td class="col-feature">2</td>
+                                <td class="col-feature">6.0</td>
+                                <td class="col-target">$150,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align: center; font-size: 0.8rem; margin-top: -10px;">
+                    <span style="color: var(--primary-color);">🟦 Features (X)</span> &nbsp;|&nbsp; 
+                    <span style="color: var(--accent-color);">🟧 Target (y)</span>
+                </div>
+                <!-- END GRAPH -->
+
+            </div>
+
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <p>Imagine you are studying for a test. Your <strong>X (features)</strong> are the textbooks with all the information you need, while your <strong>y (target)</strong> is the answer sheet. You study (look at the features) so you can find the correct answers (the target) when the test comes.</p>
+            </div>
+
+            <div class="block code-block">
+                <div class="block-label">Code Example</div>
+                <pre>
+# This code prepares the input (X) and output (y).
+# X is created by dropping the 'price' column from the DataFrame (df)
+X = df.drop('price', axis=1)
+
+# y is just the 'price' column
+y = df['price']</pre>
+            </div>
+
+            <h3>1.2 The 3-Step API Pattern</h3>
+            
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <p>Almost every tool in scikit-learn follows a similar 3-step process when working with data:</p>
+                <ol>
+                    <li><strong>Instantiate:</strong> This is where you create an object. Think of it as deciding which tool you want to use for your task—like picking a hammer when you need to drive in a nail.</li>
+                    <li><strong>Fit:</strong> In this step, you teach the model what to learn from your data. This is like practicing for your test using your textbooks.</li>
+                    <li><strong>Predict/Transform:</strong> Now that the model has learned, it's time to use that knowledge. You input new data, and the model predicts the output.</li>
+                </ol>
+            </div>
+
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <ul>
+                    <li><strong>Instantiate:</strong> Buying a new empty notebook.</li>
+                    <li><strong>Fit:</strong> Writing notes and studying the subject (learning from the textbook).</li>
+                    <li><strong>Predict:</strong> Taking the final exam, where you use the notes and knowledge to answer questions.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="preprocessing">
+            <h2>2. Data Preprocessing (Transformers)</h2>
+            
+            <h3>2.1 Encoding Categorical Data</h3>
+            <p>Machines, including those in scikit-learn, operate using numbers. Therefore, any text labels must be converted into a numerical format.</p>
+
+            <h4>A. OneHotEncoder</h4>
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <p>This tool takes a categorical feature (like color) and converts it into several binary columns. Each column represents a category, and it gets a value of 1 if that category is present and 0 if it isn’t.</p>
+                
+                <!-- GRAPH ADDED: BEFORE/AFTER TABLE -->
+                <div class="comparison-container">
+                    <div class="comparison-box">
+                        <h5>Before</h5>
+                        <table class="data-table">
+                            <thead><tr><th>ID</th><th>Color</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>Red</td></tr>
+                                <tr><td>2</td><td>Blue</td></tr>
+                                <tr><td>3</td><td>Green</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="comparison-box">
+                        <h5>After (OneHot)</h5>
+                        <table class="data-table">
+                            <thead><tr><th>Is_Red</th><th>Is_Blue</th><th>Is_Green</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>0</td><td>0</td></tr>
+                                <tr><td>0</td><td>1</td><td>0</td></tr>
+                                <tr><td>0</td><td>0</td><td>1</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END GRAPH -->
+
+            </div>
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <p>Think of it as a checklist. Instead of just saying "Color: Red", you have checkboxes for [ ] Red, [ ] Blue, and [ ] Green. If the item is red, you mark the "Red" box (1) and leave others empty (0).</p>
+            </div>
+            <div class="block code-block">
+                <div class="block-label">Code Example</div>
+                <pre>
+from sklearn.preprocessing import OneHotEncoder
+enc = OneHotEncoder(sparse_output=False)
+X_encoded = enc.fit_transform(X[['Color']])</pre>
+            </div>
+
+            <h4>B. LabelEncoder</h4>
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <p>This tool is used to convert categorical labels into unique integers (0, 1, 2…). This is especially useful for the target variable (y), providing a simpler format for classification.</p>
+                <p><em>Example:</em> Categories "Cat", "Dog", "Bird" become 0, 1, 2.</p>
+            </div>
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <p>It’s similar to assigning jersey numbers to players on a sports team. "Messi" becomes #10, "Ronaldo" becomes #7.</p>
+            </div>
+             <div class="block code-block">
+                <div class="block-label">Code Example</div>
+                <pre>
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+y_encoded = le.fit_transform(y)</pre>
+            </div>
+
+            <h3>2.2 Feature Scaling</h3>
+            <p>When working with features that can have significantly different scales (e.g., height in cm vs income in thousands), it's important to scale them so that they are treated equally.</p>
+
+            <!-- GRAPH ADDED: SCALING VISUALIZATION -->
+            <div class="scaling-vis">
+                <div class="scale-group">
+                    <div class="scale-bars">
+                        <div class="bar" style="height: 20px;"></div>
+                        <div class="bar" style="height: 100px;"></div>
+                        <div class="bar" style="height: 60px;"></div>
+                    </div>
+                    <div class="scale-label">Original Data<br>(0 - 1000)</div>
+                </div>
+                <div style="align-self: center; font-size: 1.5rem;">➡️</div>
+                <div class="scale-group">
+                    <div class="scale-bars">
+                        <div class="bar scaled" style="height: 20px;"></div>
+                        <div class="bar scaled" style="height: 100px;"></div>
+                        <div class="bar scaled" style="height: 60px;"></div>
+                    </div>
+                    <div class="scale-label">Scaled Data<br>(0 - 1)</div>
+                </div>
+            </div>
+            <!-- END GRAPH -->
+
+            <h4>A. StandardScaler</h4>
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <p>This scaler standardizes features by centering the data around 0 and scaling it to have a standard deviation of 1. This method is best for normally distributed data.</p>
+            </div>
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <p>This is like "grading on a curve," where you adjust the scores based on the average performance of the class, instead of relying on the raw scores.</p>
+            </div>
+
+            <h4>B. MinMaxScaler</h4>
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <p>This scaler adjusts all data values to fit within a specified range (usually between 0 and 1). This ensures that the scaled data still retains the relationship between features.</p>
+            </div>
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <p>It’s akin to resizing a photo to make it fit a specific picture frame. The image maintains its contents but is simply made smaller to fit.</p>
+            </div>
+            <div class="block code-block">
+                <div class="block-label">Code Example</div>
+                <pre>
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+X_scaled = scaler.fit_transform(X)</pre>
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="splitting">
+            <h2>3. Data Splitting Strategies</h2>
+
+            <h3>3.1 train_test_split</h3>
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <p>This function divides your dataset into two distinct parts—a training set for the model to learn from and a testing set to evaluate its performance. Typically, you might allocate 80% for training and 20% for testing.</p>
+
+                <!-- GRAPH ADDED: SPLIT BAR -->
+                <div class="split-bar-container">
+                    <div class="split-train">
+                        Training Set (80%)
+                    </div>
+                    <div class="split-test">
+                        Test (20%)
+                    </div>
+                </div>
+                <!-- END GRAPH -->
+
+            </div>
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <p>Imagine using flashcards: you study using 80% of your cards but keep 20% hidden for testing yourself later to ensure you didn’t just memorize the specific cards you looked at.</p>
+            </div>
+            <div class="block code-block">
+                <div class="block-label">Code Example</div>
+                <pre>
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)</pre>
+            </div>
+
+            <h3>3.2 K-Fold Cross-Validation</h3>
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <p>This method splits the dataset into K equal parts. The model trains on K-1 parts and tests on the remaining part. This process repeats for each part so that every piece of your data gets to serve as a test set once.</p>
+            </div>
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <p>It’s like a round-robin tournament where each team plays against every other team. Doing this helps ensure a fair evaluation of the model’s performance across all data points.</p>
+            </div>
+             <div class="block code-block">
+                <div class="block-label">Code Example</div>
+                <pre>
+from sklearn.model_selection import KFold
+kf = KFold(n_splits=5, shuffle=True)</pre>
+            </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="training">
+            <h2>4. Model Training (Predictors)</h2>
+
+            <h3>4.1 Linear Regression</h3>
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <p>Linear regression attempts to find the best-fitting straight line through a set of data points to predict a continuous value, such as price.</p>
+            </div>
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <p>It’s like projecting how tall you will be as an adult based on your growth pattern over the years. If you've grown 2 inches last year and 2 inches the year before, you might predict you will grow another 2 inches next year.</p>
+            </div>
+            <div class="block code-block">
+                <div class="block-label">Code Example</div>
+                <pre>
+from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)</pre>
+            </div>
+
+            <h3>4.2 Logistic Regression</h3>
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <p>Despite its name, logistic regression is primarily used for classification tasks, predicting a binary outcome (yes/no). It estimates the probability of an observation belonging to a particular category by fitting an "S-curve" to the data.</p>
+            </div>
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <p>It’s like setting a pass/fail threshold: if you score above 50%, you pass (represented as 1), and if you score below 50%, you fail (represented as 0).</p>
+            </div>
+             <div class="block code-block">
+                <div class="block-label">Code Example</div>
+                <pre>
+from sklearn.linear_model import LogisticRegression
+model = LogisticRegression()
+model.fit(X_train, y_train)</pre>
+            </div>
+
+            <h3>4.3 Decision Trees & Random Forests</h3>
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <ul>
+                    <li><strong>Decision Tree:</strong> This method makes predictions by asking a series of yes/no questions based on the input features. Each question branches off the tree until a final decision is made.</li>
+                    <li><strong>Random Forest:</strong> This technique builds multiple decision trees and averages their predictions. It helps improve model accuracy by using the strength of the collective decision from several models instead of relying on one single tree.</li>
+                </ul>
+            </div>
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <ul>
+                    <li><strong>Decision Tree:</strong> It’s like playing the game "20 Questions," where you narrow down possibilities through targeted questions (e.g., Is it an animal? Does it fly?).</li>
+                    <li><strong>Random Forest:</strong> Think of it as asking a group of friends for their opinions to make a decision—collectively, they provide better insights than relying on one friend’s guess.</li>
+                </ul>
+            </div>
+            <div class="block code-block">
+                <div class="block-label">Code Example</div>
+                <pre>
+from sklearn.ensemble import RandomForestRegressor
+model = RandomForestRegressor(n_estimators=100)
+model.fit(X_train, y_train)</pre>
+            </div>
+        </section>
+        <div class="signature">made by Ahmad Alakhdhar</div>
+
+        <!-- PART 2: LAB 2 WALKTHROUGH -->
+        <h1 class="section-title lab2-section-title">Part 2: Lab 2 Walkthrough</h1>
+        
+        <div class="lab2-container">
+            <h2 style="margin-top:0">Used Car Price Prediction</h2>
+            <p><strong>Goal:</strong> Build a regression model to predict the price of used cars based on features like year, mileage, manufacturer, and condition.</p>
+            <p><strong>Dataset:</strong> Craigslist used car listings.</p>
+
+            <!-- GRAPH ADDED: USED CAR TABLE -->
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Manufacturer</th>
+                            <th>Odometer (Miles)</th>
+                            <th>Fuel</th>
+                            <th style="background-color: var(--accent-color);">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>2015</td><td>Ford</td><td>85,000</td><td>Gas</td><td class="col-target">$12,000</td></tr>
+                        <tr><td>2018</td><td>Toyota</td><td>45,000</td><td>Hybrid</td><td class="col-target">$18,500</td></tr>
+                        <tr><td>2010</td><td>Honda</td><td>120,000</td><td>Gas</td><td class="col-target">$6,500</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- END GRAPH -->
+        </div>
+
+        <!-- Lab 2 Section 1 -->
+        <section id="lab2-intro">
+            <h3>1. Exploratory Data Analysis (EDA)</h3>
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <p>EDA is the process of examining and visualizing data to understand its structure, identify patterns, and detect anomalies.</p>
+                <ul>
+                    <li><strong>Missing Values:</strong> Check for any missing values in data fields, especially in target fields like car prices. Missing prices prevent proper training.</li>
+                    <li><strong>Outliers:</strong> Identify extreme values that don't fit the pattern, such as cars priced at $0 (data entry errors).</li>
+                </ul>
+            </div>
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <p>Think of EDA like inspecting a car before buying it. You look for scratches, dents, and whether all parts are functioning. You want to ensure everything is in order before making a decision.</p>
+            </div>
+            <div class="block code-block">
+                <div class="block-label">Code Example</div>
+                <pre>
+# Check for missing values
+missing_values = df.isnull().sum()
+
+# Visualize distributions to find outliers
+import seaborn as sns
+sns.boxplot(x=df['price'])</pre>
+            </div>
+        </section>
+
+        <!-- Lab 2 Section 2 -->
+        <section id="lab2-cleaning">
+            <h3>2. Data Cleaning</h3>
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <p>Cleaning involves preparing the data by handling missing values and correcting errors.</p>
+                <ul>
+                    <li><strong>Dropping Rows:</strong> Remove rows where the target (price) is missing. If you can't predict a price, that data point is useless.</li>
+                    <li><strong>Imputation:</strong> If features like 'cylinders' have missing values, fill them using the median or mode.</li>
+                </ul>
+            </div>
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <p>This is similar to tidying up a messy room. You remove things that don’t belong (like trash) and organize everything so you can find it easily.</p>
+            </div>
+            <div class="block code-block">
+                <div class="block-label">Code Example</div>
+                <pre>
+# Dropping rows with missing target values
+df = df.dropna(subset=['price'])
+ 
+# Filling missing values for other features with the median
+df['cylinders'].fillna(df['cylinders'].median(), inplace=True)</pre>
+            </div>
+
+            <h3>3. Feature Engineering</h3>
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <p>Creating new features to make the data more informative. For example, deriving a <strong>"car_age"</strong> feature by subtracting the manufacture year from the current year.</p>
+            </div>
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <p>It’s like adding extra context to your notes. Noting that a 5-year-old car is less valuable than a 1-year-old car helps the model learn better.</p>
+            </div>
+            <div class="block code-block">
+                <div class="block-label">Code Example</div>
+                <pre>
+# Creating a new feature for car age
+current_year = 2023
+df['car_age'] = current_year - df['year']</pre>
+            </div>
+
+            <h3>4. Preprocessing</h3>
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <ul>
+                    <li><strong>Encoding:</strong> Convert categorical text labels (e.g., manufacturer names) to numerical values.</li>
+                    <li><strong>Scaling:</strong> Normalize numerical features (like mileage) to ensure they don't dominate features with smaller numbers (like year).</li>
+                </ul>
+            </div>
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <p>Imagine converting written notes into a presentation. The original notes (categorical) need to be converted to slides (numerical) and resized (scaled) for effective communication.</p>
+            </div>
+            <div class="block code-block">
+                <div class="block-label">Code Example</div>
+                <pre>
+# Encoding categorical features
+label_encoder = LabelEncoder()
+df['manufacturer'] = label_encoder.fit_transform(df['manufacturer'])
+ 
+# Scaling features
+scaler = StandardScaler()
+df[['mileage']] = scaler.fit_transform(df[['mileage']])</pre>
+            </div>
+        </section>
+
+        <!-- Lab 2 Section 3 -->
+        <section id="lab2-training">
+            <h3>5. Training the Model</h3>
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <p><strong>Choosing the Model:</strong> We use the <strong>Random Forest Regressor</strong>, which is effective for continuous values like price.</p>
+                <p><strong>Fitting:</strong> Train the model using the training set to learn the relationship between features and price.</p>
+            </div>
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <p>This step is like an athlete training for a competition. They practice repeatedly using their training routine to improve their skills.</p>
+            </div>
+            <div class="block code-block">
+                <div class="block-label">Code Example</div>
+                <pre>
+from sklearn.ensemble import RandomForestRegressor
+ 
+# Split data
+X = df.drop('price', axis=1)
+y = df['price']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+ 
+# Train
+model = RandomForestRegressor(n_estimators=100)
+model.fit(X_train, y_train)</pre>
+            </div>
+
+            <h3>6. Evaluation</h3>
+            <div class="block explanation">
+                <div class="block-label">Explanation</div>
+                <p>Evaluate using metrics like <strong>MAE (Mean Absolute Error)</strong>, which tells you how far off your predictions were from the actual prices on average.</p>
+            </div>
+            <div class="block analogy">
+                <div class="block-label">Real-World Analogy</div>
+                <p>It’s like receiving feedback after a performance evaluation. You learn what you did well and what you need to improve.</p>
+            </div>
+            <div class="block code-block">
+                <div class="block-label">Code Example</div>
+                <pre>
+from sklearn.metrics import mean_absolute_error
+ 
+# Predicting values
+y_pred = model.predict(X_test)
+ 
+# Calculating MAE
+mae = mean_absolute_error(y_test, y_pred)
+print("Mean Absolute Error (MAE):", mae)</pre>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Dark Mode Toggle Logic
+        const toggleButton = document.getElementById('themeToggle');
+        const body = document.body;
+        const iconSpan = toggleButton.querySelector('span');
+
+        // Check for saved preference
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            iconSpan.textContent = '';
+            toggleButton.innerHTML = '<span></span> Light Mode';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                toggleButton.innerHTML = '<span></span> Light Mode';
+            } else {
+                localStorage.setItem('theme', 'light');
+                toggleButton.innerHTML = '<span></span> Dark Mode';
+            }
+        });
+
+        // Highlight active section
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active-section');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active-section');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

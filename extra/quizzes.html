@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Extra Quizzes - Beyond the Core Days</title>
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/css/style.css" rel="stylesheet">
+</head>
+
+<body data-day-key="extra">
+
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+      <div class="logo me-auto">
+        <a href="../index.html">
+          <img src="../assets/img/kaust-academy-logo.png" alt="KAUST Academy">
+          <img class="logo-kfupm" src="../assets/img/KFUPM Seal White.png" alt="KFUPM Seal"/>
+        </a>
+      </div>
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../day1/quizzes.html">Day 1</a></li>
+          <li><a href="../day2/quizzes.html">Day 2</a></li>
+          <li><a href="../day3/quizzes.html">Day 3</a></li>
+          <li><a href="../day4/quizzes.html">Day 4</a></li>
+          <li><a href="../day5/quizzes.html">Day 5</a></li>
+          <li><a href="../day6/quizzes.html">Day 6</a></li>
+          <li><a class="active" href="../extra/quizzes.html">Extra Quizzes</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="breadcrumbs animate-up">
+      <div class="container">
+        <h2>Extra Quizzes · Cross-cutting Impact Work</h2>
+        <p>Keep iterating with sustainability, robotics, and innovation prompts beyond the daily schedule.</p>
+      </div>
+    </div>
+
+    <section class="quiz-lab-section">
+      <div class="container">
+        <div class="quiz-card list-card">
+          <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+            <div>
+              <h4 class="mb-1">Extra quiz deck</h4>
+              <p class="text-muted small mb-0">Choose a quiz to open its dedicated practice page.</p>
+            </div>
+            <span class="badge-soft" id="quizCount">0 decks</span>
+          </div>
+          <div id="quizListContainer" class="quiz-list"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer">
+    <div class="container d-md-flex py-4">
+      <div class="me-md-auto text-center w-100">
+        <div class="copyright">
+          &copy; Copyright <strong><span>KAUST Academy</span></strong>. All Rights Reserved
+        </div>
+        <div class="license" style="font-size: 13px; margin-top: 8px; color: #555;">
+          Licensed under <a
+            href="https://github.com/KAUST-Academy/KAUST_Academy_2026_Introduction_To_AI?tab=GPL-3.0-1-ov-file#readme"
+            target="_blank" rel="noopener">GPL-3.0</a>.
+          Recording and uploading lectures online is not permitted.
+        </div>
+        <div class="credits" style="font-size: 14px; margin-top: 5px; color: #555;">
+          Website created by <strong>Ali Habibullah</strong> and <strong>Sattam Altwaim</strong>.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+  <script>
+    AOS.init();
+
+    const on = (type, el, listener) => {
+      const selectEl = document.querySelector(el);
+      if (selectEl) {
+        selectEl.addEventListener(type, listener);
+      }
+    };
+
+    on('click', '.mobile-nav-toggle', function () {
+      document.querySelector('#navbar').classList.toggle('navbar-mobile');
+      this.classList.toggle('bi-list');
+      this.classList.toggle('bi-x');
+    });
+  </script>
+  <script src="../assets/js/quiz-data.js"></script>
+  <script src="../assets/js/day-quizzes.js"></script>
+</body>
+
+</html>
