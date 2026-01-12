@@ -32,7 +32,6 @@
     day3: 'Day 3: Fundamentals of Deep Learning',
     day4: 'Day 4: Deep Learning Continuation',
     day5: 'Day 5: Unsupervised Learning',
-    day6: 'Day 6: Exam Readiness',
     extra: 'Extra Practice Decks'
   };
 
@@ -42,7 +41,6 @@
     day3: 'day3/index.html',
     day4: 'day4/index.html',
     day5: 'day5/index.html',
-    day6: 'day6/index.html',
     extra: 'extra/index.html'
   };
 

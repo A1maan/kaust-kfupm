@@ -149,12 +149,12 @@ h6 {
 }
 
 .logo img.logo-kfupm {
-  height: 28px;
+  height: 26px;
   opacity: 0.95;
   margin-left: 14px;
   display: inline-block;
   vertical-align: baseline;
-  transform: translateY(8px);
+  transform: translateY(12px);
 }
 
 /* Navbar Container */
@@ -834,8 +834,8 @@ h6 {
   box-shadow: 0 20px 45px rgba(0, 38, 76, 0.08);
 }
 
-.quiz-lab-section .quiz-card + .quiz-card {
-  margin-top: 24px;
+.quiz-lab-section .container > .quiz-card:not(:last-child) {
+  margin-bottom: 24px;
 }
 
 .upload-card {

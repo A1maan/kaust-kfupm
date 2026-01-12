@@ -22,6 +22,16 @@ window.KfupmDayContent = {
         duration: 'Self-paced',
         questionCount: 10,
         link: 'mcq.html'
+      },
+      {
+        id: 'day2-complete-mcq',
+        title: 'Complete MCQ Deck',
+        description: '23-question written quiz covering generalization, losses, and regularization tips.',
+        level: 'Core',
+        focus: 'Theory refresh',
+        duration: 'Self-paced',
+        questionCount: 23,
+        link: 'day2-complete-mcq.html'
       }
     ]
   },
@@ -34,10 +44,6 @@ window.KfupmDayContent = {
     quizzes: []
   },
   day5: {
-    resources: [],
-    quizzes: []
-  },
-  day6: {
     resources: [],
     quizzes: []
   },

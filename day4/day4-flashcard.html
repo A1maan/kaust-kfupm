@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unsupervised Learning Flashcards</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- KaTeX for Math -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+        }
+
+        .math-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* 3D Flip Effects */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        .card-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        /* Progress Bar Transition */
+        .progress-transition {
+            transition: width 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-8 px-4 text-slate-800">
+
+    <div id="app" class="w-full max-w-4xl flex flex-col items-center">
+
+        <!-- Header -->
+        <div class="w-full flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-900 tracking-tight">Unsupervised Learning Flashcards</h1>
+                <p class="text-slate-500 font-medium mt-1">KAUST Academy - Day 4 Concepts - Prepared by Safwan</p>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 text-sm font-semibold text-slate-600">
+                    <span id="current-card-num">1</span> / <span id="total-cards-num">48</span>
+                </div>
+                <button onclick="shuffleCards()" class="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors" title="Shuffle Cards">
+                    <i data-lucide="shuffle" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full h-1.5 bg-slate-200 rounded-full mb-8 overflow-hidden">
+            <div id="progress-bar" class="h-full bg-blue-600 rounded-full progress-transition" style="width: 0%"></div>
+        </div>
+
+        <!-- Card Container -->
+        <div class="perspective-1000 w-full aspect-[4/3] md:aspect-[2/1] min-h-[400px] mb-8 group cursor-pointer" onclick="flipCard()">
+            <div id="card-inner" class="card-inner relative w-full h-full preserve-3d shadow-xl rounded-2xl">
+
+                <!-- Front Side (Question) -->
+                <div class="absolute w-full h-full backface-hidden bg-white rounded-2xl border-2 border-slate-100 flex flex-col items-center justify-center p-8 md:p-12 text-center select-none">
+                    <div class="absolute top-6 left-6">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Question</span>
+                    </div>
+                    <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6 text-blue-600">
+                        <i data-lucide="help-circle" class="w-8 h-8"></i>
+                    </div>
+                    <h2 id="card-front-text" class="text-2xl md:text-3xl font-bold text-slate-800 leading-snug">
+                        <!-- Content Injected via JS -->
+                    </h2>
+                    <p class="absolute bottom-6 text-slate-400 text-sm font-medium flex items-center animate-pulse">
+                        <i data-lucide="mouse-pointer-2" class="w-4 h-4 mr-2"></i> Click to flip
+                    </p>
+                </div>
+
+                <!-- Back Side (Answer) -->
+                <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-slate-900 rounded-2xl flex flex-col items-center justify-center p-8 md:p-12 text-center select-none overflow-y-auto">
+                    <div class="absolute top-6 left-6">
+                        <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-500/20">Answer</span>
+                    </div>
+                    <div id="card-back-content" class="text-xl md:text-2xl font-medium text-slate-100 leading-relaxed">
+                        <!-- Content Injected via JS -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center gap-4 md:gap-6">
+            <button onclick="prevCard()" class="flex items-center justify-center w-14 h-14 rounded-full bg-white border border-slate-200 text-slate-700 shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:shadow-md transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed" id="prev-btn">
+                <i data-lucide="arrow-left" class="w-6 h-6"></i>
+            </button>
+
+            <button onclick="flipCard()" class="flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 hover:shadow-xl transition-all active:scale-95 min-w-[160px] justify-center">
+                <i data-lucide="rotate-cw" class="w-5 h-5"></i>
+                <span id="flip-btn-text">Reveal Answer</span>
+            </button>
+
+            <button onclick="nextCard()" class="flex items-center justify-center w-14 h-14 rounded-full bg-white border border-slate-200 text-slate-700 shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:shadow-md transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed" id="next-btn">
+                <i data-lucide="arrow-right" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Keyboard Hint -->
+        <div class="mt-8 text-slate-400 text-xs font-medium flex gap-4">
+            <span class="flex items-center"><kbd class="bg-white border border-slate-200 px-2 py-0.5 rounded mr-1.5 font-sans">Space</kbd> Flip</span>
+            <span class="flex items-center"><kbd class="bg-white border border-slate-200 px-2 py-0.5 rounded mr-1.5 font-sans">Left</kbd> Prev</span>
+            <span class="flex items-center"><kbd class="bg-white border border-slate-200 px-2 py-0.5 rounded mr-1.5 font-sans">Right</kbd> Next</span>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Data ---
+        const initialCards = [
+            // Section 1: Unsupervised Learning Fundamentals
+            {
+                q: "What is unsupervised learning?",
+                a: "Learning from unlabeled data (only $x$, no $y$). The algorithm discovers hidden patterns and structure without target labels."
+            },
+            {
+                q: "What are the 4 main unsupervised learning tasks?",
+                a: "1) Clustering, 2) Dimensionality Reduction, 3) Anomaly Detection, 4) Generation"
+            },
+            {
+                q: "Why is unsupervised learning important?",
+                a: "Labels are expensive (time, effort, expertise). Most real-world data is unlabeled. Sometimes we do not know what labels to look for."
+            },
+            {
+                q: "Compare supervised vs unsupervised learning data structure.",
+                a: "Supervised: $(x, y)$ pairs with labels. Unsupervised: only $x$ (raw data, no targets)."
+            },
+            // Section 2: K-Means Clustering
+            {
+                q: "What is K-Means clustering?",
+                a: "An algorithm that groups data into $K$ clusters by representing each cluster by its center (mean/centroid)."
+            },
+            {
+                q: "What are the two main steps in the K-Means algorithm?",
+                a: "1) Assignment: assign each point to the nearest centroid. 2) Update: move centroids to the mean of assigned points."
+            },
+            {
+                q: "What is the assignment step formula in K-Means?",
+                a: "Assignment step: $c_i = \\arg\\min_{k=1,\\dots,K} \\lVert x_i - \\mu_k \\rVert^2$ (find closest center to point $x_i$)."
+            },
+            {
+                q: "What is the update step formula in K-Means?",
+                a: "Update step: $\\mu_k = \\frac{1}{|C_k|} \\sum_{i \\in C_k} x_i$ (mean of all points in cluster $k$)."
+            },
+            {
+                q: "When does K-Means stop iterating?",
+                a: "When assignments do not change or the maximum number of iterations is reached."
+            },
+            {
+                q: "What is WCSS in K-Means?",
+                a: "Within-Cluster Sum of Squares: $\\mathrm{WCSS} = \\sum_{k=1}^K \\sum_{i \\in C_k} \\lVert x_i - \\mu_k \\rVert^2$. It measures cluster compactness."
+            },
+            {
+                q: "What is the elbow method?",
+                a: "Plot WCSS vs $K$. Choose $K$ at the elbow where adding clusters provides diminishing returns (the curve flattens)."
+            },
+            {
+                q: "Name two real-world applications of K-Means.",
+                a: "1) Customer segmentation for targeted marketing. 2) Document clustering (for example, grouping news stories by topic)."
+            },
+            {
+                q: "What are 4 limitations of K-Means?",
+                a: "1) Assumes spherical, equal-sized clusters. 2) Sensitive to outliers. 3) Must specify $K$ in advance. 4) Random initialization matters."
+            },
+            {
+                q: "What shapes does K-Means fail on?",
+                a: "Non-spherical shapes (concentric circles, elongated clusters) and clusters of different sizes."
+            },
+            {
+                q: "What are alternatives to K-Means?",
+                a: "DBSCAN (density-based), Gaussian Mixture Models, and Hierarchical clustering."
+            },
+            // Section 3: Dimensionality Reduction - PCA
+            {
+                q: "What is the curse of dimensionality?",
+                a: "High-dimensional data (thousands of features) is hard to visualize, slow to compute, and has redundancy and noise."
+            },
+            {
+                q: "What does PCA stand for and do?",
+                a: "Principal Component Analysis. Finds a lower-dimensional representation capturing maximum variance."
+            },
+            {
+                q: "What are principal components?",
+                a: "New uncorrelated features ranked by importance that capture maximum variance in the data."
+            },
+            {
+                q: "What are the 4 steps of PCA?",
+                a: "1) Center data (subtract mean). 2) Compute covariance matrix. 3) Find eigenvectors/eigenvalues. 4) Select top $k$ and project."
+            },
+            {
+                q: "Why must you center data before PCA?",
+                a: "To shift data so the mean is at the origin. PCA finds variance directions from the center, not an arbitrary $(0, 0)$."
+            },
+            {
+                q: "What is the centering formula?",
+                a: "$X_{centered} = X - \\mu$ (subtract the mean from every feature)."
+            },
+            {
+                q: "What is the covariance matrix formula?",
+                a: "$C = \\frac{1}{n} X_{centered}^T X_{centered}$ (captures how features vary together)."
+            },
+            {
+                q: "What do eigenvectors represent in PCA?",
+                a: "The directions of the new axes (principal components) where data varies most."
+            },
+            {
+                q: "What do eigenvalues represent in PCA?",
+                a: "The amount of variance (information) along each principal component axis."
+            },
+            {
+                q: "What is the projection formula in PCA?",
+                a: "$Z = X_{centered} V_k$ (project data onto top $k$ eigenvectors, reducing $d$ dimensions to $k$ dimensions)."
+            },
+            {
+                q: "How do you choose how many components to keep?",
+                a: "Use the cumulative variance plot. Keep the smallest $k$ that preserves 80-95% of total variance."
+            },
+            {
+                q: "Give 2 applications of PCA.",
+                a: "1) Data visualization (784D MNIST -> 2D). 2) Data compression (store fewer values)."
+            },
+            {
+                q: "What are 4 limitations of PCA?",
+                a: "1) Linear only. 2) Sensitive to scale (must standardize). 3) Not interpretable (PCs mix all features). 4) Outliers distort components."
+            },
+            // Section 4: t-SNE
+            {
+                q: "What is t-SNE?",
+                a: "t-Distributed Stochastic Neighbor Embedding. Non-linear dimensionality reduction for visualization."
+            },
+            {
+                q: "What is t-SNE's main idea?",
+                a: "Build a 2D map where neighbors in high-D remain neighbors in 2D. It preserves local structure."
+            },
+            {
+                q: "Why is t-SNE better than PCA for visualization?",
+                a: "t-SNE is non-linear and preserves local neighborhoods, making clusters more separated. PCA is linear and mixes classes."
+            },
+            {
+                q: "When would you use PCA vs t-SNE?",
+                a: "PCA: compression, preprocessing, linear data. t-SNE: visualization only, non-linear manifolds."
+            },
+            // Section 5: Autoencoders - Basics
+            {
+                q: "What is an autoencoder?",
+                a: "A neural network that compresses data into compact form (encoder) then reconstructs it (decoder) to match the original input."
+            },
+            {
+                q: "What are the 3 parts of an autoencoder?",
+                a: "1) Encoder (compresses $x \\to z$). 2) Bottleneck/latent code ($z$). 3) Decoder (reconstructs $z \\to \\hat{x}$)."
+            },
+            {
+                q: "What is the autoencoder loss function?",
+                a: "$L = \\lVert x - \\hat{x} \\rVert^2$ (minimize reconstruction error between input and output)."
+            },
+            {
+                q: "Why is the bottleneck critical?",
+                a: "Forces information through a narrow layer, preventing trivial copying ($h_i = x_i$). The network must learn meaningful compressed features."
+            },
+            {
+                q: "What happens without a bottleneck?",
+                a: "The network learns the identity function (just copies input to output) without discovering useful structure."
+            },
+            // Section 6: Autoencoder Applications
+            {
+                q: "How do you use autoencoders for compression?",
+                a: "1) Train the full network. 2) Discard the decoder. 3) Use the encoder to map high-D data $x$ to low-D code $z$."
+            },
+            {
+                q: "How do you use autoencoders for generation?",
+                a: "1) Train the full network. 2) Discard the encoder. 3) Sample random $z$ vectors. 4) Pass through the decoder to generate new images."
+            },
+            {
+                q: "What is a denoising autoencoder?",
+                a: "Trained to recover clean original $x$ from corrupted input $\\tilde{x}$. It learns robust features by forcing reconstruction from noise."
+            },
+            {
+                q: "How does denoising autoencoder training work?",
+                a: "1) Take clean image $x$. 2) Corrupt it to $\\tilde{x}$. 3) Train the network to map $\\tilde{x} \\to x$. Loss: $\\lVert x - \\hat{x} \\rVert^2$."
+            },
+            {
+                q: "How do autoencoders detect anomalies?",
+                a: "Train on normal data. Normal data reconstructs well (low error). Anomalies fail to reconstruct (high error above a threshold)."
+            },
+            {
+                q: "Give 2 real-world anomaly detection applications.",
+                a: "1) Credit card fraud (normal transactions vs theft). 2) Manufacturing defect detection on assembly lines."
+            },
+            {
+                q: "Compare PCA vs Autoencoder for compression.",
+                a: "PCA: linear, fast, closed-form solution. Autoencoder: non-linear, learns complex features, requires training."
+            },
+            // Section 7: Integration and Comparison
+            {
+                q: "Which algorithms are linear vs non-linear?",
+                a: "Linear: PCA, K-Means. Non-linear: t-SNE, Autoencoders."
+            },
+            {
+                q: "Which methods require specifying parameters in advance?",
+                a: "K-Means (must specify $K$), PCA (choose $k$ components), t-SNE (perplexity), Autoencoders (bottleneck size)."
+            },
+            {
+                q: "Which unsupervised methods use neural networks?",
+                a: "Autoencoders only. K-Means, PCA, and t-SNE are traditional algorithms."
+            },
+            {
+                q: "What is the typical MNIST compression with PCA?",
+                a: "784 dimensions -> 50 components (about 93% compression, preserves around 90% variance)."
+            }
+        ];
+
+        // --- State ---
+        let cards = [...initialCards];
+        let currentIndex = 0;
+        let isFlipped = false;
+
+        // --- DOM Elements ---
+        const cardInner = document.getElementById('card-inner');
+        const cardFrontText = document.getElementById('card-front-text');
+        const cardBackContent = document.getElementById('card-back-content');
+        const currentNumEl = document.getElementById('current-card-num');
+        const totalNumEl = document.getElementById('total-cards-num');
+        const progressBar = document.getElementById('progress-bar');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const flipBtnText = document.getElementById('flip-btn-text');
+
+        // --- Functions ---
+
+        function init() {
+            renderCard();
+            updateMeta();
+            lucide.createIcons();
+
+            // Render Math on load
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ]
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space') {
+                    e.preventDefault();
+                    flipCard();
+                } else if (e.code === 'ArrowRight') {
+                    nextCard();
+                } else if (e.code === 'ArrowLeft') {
+                    prevCard();
+                }
+            });
+        }
+
+        function renderCard() {
+            // Reset state
+            isFlipped = false;
+            cardInner.classList.remove('is-flipped');
+            flipBtnText.innerText = "Reveal Answer";
+
+            // Update content with small animation delay to hide swap
+            setTimeout(() => {
+                const currentCard = cards[currentIndex];
+                cardFrontText.innerHTML = currentCard.q;
+                cardBackContent.innerHTML = currentCard.a;
+
+                // Re-render math
+                renderMathInElement(cardFrontText, {
+                     delimiters: [{left: '$', right: '$', display: false}]
+                });
+                renderMathInElement(cardBackContent, {
+                     delimiters: [{left: '$', right: '$', display: false}]
+                });
+            }, 150);
+        }
+
+        function updateMeta() {
+            currentNumEl.innerText = currentIndex + 1;
+            totalNumEl.innerText = cards.length;
+
+            const progress = ((currentIndex + 1) / cards.length) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === cards.length - 1;
+        }
+
+        function flipCard() {
+            isFlipped = !isFlipped;
+            cardInner.classList.toggle('is-flipped');
+            flipBtnText.innerText = isFlipped ? "Show Question" : "Reveal Answer";
+        }
+
+        function nextCard() {
+            if (currentIndex < cards.length - 1) {
+                currentIndex++;
+                renderCard();
+                updateMeta();
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCard();
+                updateMeta();
+            }
+        }
+
+        function shuffleCards() {
+            // Fisher-Yates shuffle
+            for (let i = cards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cards[i], cards[j]] = [cards[j], cards[i]];
+            }
+            currentIndex = 0;
+            renderCard();
+            updateMeta();
+        }
+
+        // --- Start ---
+        init();
+
+    </script>
+</body>
+</html>

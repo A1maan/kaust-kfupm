@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -26,7 +25,6 @@
       flex-direction: column;
       gap: 1.5rem;
     }
-
     .question-card {
       border: 1px solid rgba(0, 38, 76, 0.15);
       border-radius: 24px;
@@ -34,17 +32,14 @@
       background: rgba(255, 255, 255, 0.95);
       transition: border 0.2s ease, box-shadow 0.2s ease;
     }
-
     .question-card.correct {
       border-color: rgba(74, 211, 149, 0.8);
       box-shadow: 0 12px 30px rgba(74, 211, 149, 0.15);
     }
-
     .question-card.incorrect {
       border-color: rgba(255, 107, 107, 0.8);
       box-shadow: 0 12px 30px rgba(255, 107, 107, 0.15);
     }
-
     .question-eyebrow {
       text-transform: uppercase;
       letter-spacing: 0.2em;
@@ -52,14 +47,12 @@
       color: var(--text-dim);
       margin-bottom: 0.35rem;
     }
-
     .option-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 0.75rem;
       margin-top: 1rem;
     }
-
     .option-pill {
       display: flex;
       align-items: flex-start;
@@ -71,43 +64,35 @@
       background: rgba(255, 255, 255, 0.95);
       transition: border 0.2s ease, background 0.2s ease;
     }
-
     .option-pill:hover {
       border-color: var(--accent-teal);
       background: rgba(27, 197, 201, 0.08);
     }
-
     .option-pill input {
       margin-top: 0.25rem;
     }
-
     .question-feedback {
       margin-top: 1rem;
       border-radius: 12px;
       padding: 0.85rem 1rem;
       font-size: 0.95rem;
     }
-
     .question-feedback.success {
       background: rgba(74, 211, 149, 0.15);
       color: #1f7a52;
       border: 1px solid rgba(74, 211, 149, 0.6);
     }
-
     .question-feedback.error {
       background: rgba(255, 107, 107, 0.15);
       color: #a12b2b;
       border: 1px solid rgba(255, 107, 107, 0.6);
     }
-
     #formNotice {
       font-weight: 600;
     }
   </style>
 </head>
-
 <body>
-
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
       <div class="logo">
@@ -124,14 +109,12 @@
           <li><a href="../day3/index.html">Day 3</a></li>
           <li><a href="../day4/index.html">Day 4</a></li>
           <li><a href="../day5/index.html">Day 5</a></li>
-          <li><a href="../day6/index.html">Day 6</a></li>
           <li><a href="../extra/index.html">Extra</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
     </div>
   </header>
-
   <main id="main">
     <div class="breadcrumbs animate-up">
       <div class="container">
@@ -143,7 +126,6 @@
         </div>
       </div>
     </div>
-
     <section class="quiz-page-section">
       <div class="container">
         <div class="quiz-card list-card mb-4">
@@ -161,7 +143,6 @@
             </div>
           </div>
         </div>
-
         <div class="practice-panel">
           <form id="quizForm" class="question-stack"></form>
           <div class="practice-actions mt-4">
@@ -170,7 +151,6 @@
           </div>
           <p class="practice-notice mt-3 d-none" id="formNotice">Answer every question before submitting.</p>
         </div>
-
         <div class="practice-panel mt-4 d-none" id="resultPanel">
           <p class="eyebrow mb-1 text-muted text-uppercase">Score</p>
           <h4 class="scoreline mb-2" id="scoreSummary"></h4>
@@ -179,7 +159,6 @@
       </div>
     </section>
   </main>
-
   <footer id="footer">
     <div class="container d-md-flex py-4">
       <div class="me-md-auto text-center w-100">
@@ -198,19 +177,16 @@
       </div>
     </div>
   </footer>
-
   <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/vendor/aos/aos.js"></script>
   <script>
     AOS.init();
-
     const on = (type, el, listener) => {
       const selectEl = document.querySelector(el);
       if (selectEl) {
         selectEl.addEventListener(type, listener);
       }
     };
-
     on('click', '.mobile-nav-toggle', function () {
       document.querySelector('#navbar').classList.toggle('navbar-mobile');
       this.classList.toggle('bi-list');
@@ -318,21 +294,18 @@
         ]
       }
     ];
-
     const quizForm = document.getElementById('quizForm');
     const submitBtn = document.getElementById('submitQuiz');
     const resetBtn = document.getElementById('resetQuiz');
     const notice = document.getElementById('formNotice');
     const resultPanel = document.getElementById('resultPanel');
     const scoreSummary = document.getElementById('scoreSummary');
-
     const renderQuiz = () => {
       quizForm.innerHTML = '';
       quizData.forEach((question, index) => {
         const card = document.createElement('article');
         card.className = 'question-card';
         card.dataset.index = index.toString();
-
         const header = document.createElement('div');
         header.innerHTML = `
           <p class="question-eyebrow">Question ${index + 1}</p>
@@ -340,11 +313,9 @@
           <p class="text-muted small mb-0">${question.hint}</p>
         `;
         card.appendChild(header);
-
         const optionsWrapper = document.createElement('div');
         optionsWrapper.className = 'option-grid';
         const shuffled = [...question.options].sort(() => Math.random() - 0.5);
-
         shuffled.forEach((option, optionIndex) => {
           const inputId = `q${index}-opt${optionIndex}`;
           const label = document.createElement('label');
@@ -356,44 +327,34 @@
           `;
           optionsWrapper.appendChild(label);
         });
-
         card.appendChild(optionsWrapper);
-
         const feedback = document.createElement('div');
         feedback.className = 'question-feedback d-none';
         feedback.id = `feedback-${index}`;
         card.appendChild(feedback);
-
         quizForm.appendChild(card);
       });
-
       if (window.MathJax) {
         MathJax.typesetPromise();
       }
     };
-
     const gradeQuiz = () => {
       let answeredAll = true;
       let score = 0;
-
       quizData.forEach((question, index) => {
         const selected = document.querySelector(`input[name="question-${index}"]:checked`);
         const card = quizForm.querySelector(`.question-card[data-index="${index}"]`);
         const feedback = document.getElementById(`feedback-${index}`);
-
         card.classList.remove('correct', 'incorrect');
         feedback.classList.add('d-none', 'text-muted');
         feedback.classList.remove('success', 'error');
         feedback.textContent = '';
-
         if (!selected) {
           answeredAll = false;
           return;
         }
-
         const chosen = question.options[Number(selected.value)];
         const correct = question.options.find((opt) => opt.correct);
-
         if (chosen.correct) {
           score += 1;
           card.classList.add('correct');
@@ -407,13 +368,11 @@
           feedback.classList.add('error');
         }
       });
-
       if (!answeredAll) {
         notice.classList.remove('d-none');
         resultPanel.classList.add('d-none');
         return;
       }
-
       notice.classList.add('d-none');
       scoreSummary.textContent = `${score} / ${quizData.length}`;
       resultPanel.classList.remove('d-none');
@@ -422,7 +381,6 @@
       }
       window.scrollTo({ top: resultPanel.offsetTop - 120, behavior: 'smooth' });
     };
-
     const resetQuiz = () => {
       quizForm.reset();
       notice.classList.add('d-none');
@@ -436,7 +394,6 @@
       renderQuiz();
       window.scrollTo({ top: quizForm.offsetTop - 120, behavior: 'smooth' });
     };
-
     document.addEventListener('DOMContentLoaded', () => {
       renderQuiz();
       submitBtn.addEventListener('click', gradeQuiz);
@@ -444,5 +401,4 @@
     });
   </script>
 </body>
-
 </html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Learning Flashcards</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- KaTeX for Math -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+        }
+        
+        .math-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* 3D Flip Effects */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+        
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        .card-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-slide-in {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        /* Progress Bar Transition */
+        .progress-transition {
+            transition: width 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-8 px-4 text-slate-800">
+
+    <div id="app" class="w-full max-w-4xl flex flex-col items-center">
+        
+        <!-- Header -->
+        <div class="w-full flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-900 tracking-tight">Deep Learning Flashcards</h1>
+                <p class="text-slate-500 font-medium mt-1">KAUST Academy • Day 3 Concepts • Prepared by Safwan</p>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <div class="bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 text-sm font-semibold text-slate-600">
+                    <span id="current-card-num">1</span> / <span id="total-cards-num">42</span>
+                </div>
+                <button onclick="shuffleCards()" class="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors" title="Shuffle Cards">
+                    <i data-lucide="shuffle" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full h-1.5 bg-slate-200 rounded-full mb-8 overflow-hidden">
+            <div id="progress-bar" class="h-full bg-blue-600 rounded-full progress-transition" style="width: 0%"></div>
+        </div>
+
+        <!-- Card Container -->
+        <div class="perspective-1000 w-full aspect-[4/3] md:aspect-[2/1] min-h-[400px] mb-8 group cursor-pointer" onclick="flipCard()">
+            <div id="card-inner" class="card-inner relative w-full h-full preserve-3d shadow-xl rounded-2xl">
+                
+                <!-- Front Side (Question) -->
+                <div class="absolute w-full h-full backface-hidden bg-white rounded-2xl border-2 border-slate-100 flex flex-col items-center justify-center p-8 md:p-12 text-center select-none">
+                    <div class="absolute top-6 left-6">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Question</span>
+                    </div>
+                    <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6 text-blue-600">
+                        <i data-lucide="help-circle" class="w-8 h-8"></i>
+                    </div>
+                    <h2 id="card-front-text" class="text-2xl md:text-3xl font-bold text-slate-800 leading-snug">
+                        <!-- Content Injected via JS -->
+                    </h2>
+                    <p class="absolute bottom-6 text-slate-400 text-sm font-medium flex items-center animate-pulse">
+                        <i data-lucide="mouse-pointer-2" class="w-4 h-4 mr-2"></i> Click to flip
+                    </p>
+                </div>
+
+                <!-- Back Side (Answer) -->
+                <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-slate-900 rounded-2xl flex flex-col items-center justify-center p-8 md:p-12 text-center select-none overflow-y-auto">
+                    <div class="absolute top-6 left-6">
+                        <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-500/20">Answer</span>
+                    </div>
+                    <div id="card-back-content" class="text-xl md:text-2xl font-medium text-slate-100 leading-relaxed">
+                        <!-- Content Injected via JS -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center gap-4 md:gap-6">
+            <button onclick="prevCard()" class="flex items-center justify-center w-14 h-14 rounded-full bg-white border border-slate-200 text-slate-700 shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:shadow-md transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed" id="prev-btn">
+                <i data-lucide="arrow-left" class="w-6 h-6"></i>
+            </button>
+            
+            <button onclick="flipCard()" class="flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 hover:shadow-xl transition-all active:scale-95 min-w-[160px] justify-center">
+                <i data-lucide="rotate-cw" class="w-5 h-5"></i>
+                <span id="flip-btn-text">Reveal Answer</span>
+            </button>
+
+            <button onclick="nextCard()" class="flex items-center justify-center w-14 h-14 rounded-full bg-white border border-slate-200 text-slate-700 shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:shadow-md transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed" id="next-btn">
+                <i data-lucide="arrow-right" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Keyboard Hint -->
+        <div class="mt-8 text-slate-400 text-xs font-medium flex gap-4">
+            <span class="flex items-center"><kbd class="bg-white border border-slate-200 px-2 py-0.5 rounded mr-1.5 font-sans">Space</kbd> Flip</span>
+            <span class="flex items-center"><kbd class="bg-white border border-slate-200 px-2 py-0.5 rounded mr-1.5 font-sans">←</kbd> Prev</span>
+            <span class="flex items-center"><kbd class="bg-white border border-slate-200 px-2 py-0.5 rounded mr-1.5 font-sans">→</kbd> Next</span>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Data ---
+        const initialCards = [
+            // --- Easy / Definitions ---
+            {
+                q: "What is Deep Learning?",
+                a: "A subset of Machine Learning powered by Artificial Neural Networks with many layers, inspired by the human brain."
+            },
+            {
+                q: "What does the 'Deep' in Deep Learning refer to?",
+                a: "It refers to the depth of the network, specifically the number of hidden layers."
+            },
+            {
+                q: "What are the three main types of layers in a neural network?",
+                a: "Input Layer, Hidden Layer(s), and Output Layer."
+            },
+            {
+                q: "What is the Universal Approximation Theorem?",
+                a: "A theory stating that a neural network with enough neurons can theoretically approximate any continuous function to arbitrary accuracy."
+            },
+            {
+                q: "What determines the size of the Input Layer?",
+                a: "The number of neurons in the input layer must exactly match the number of features ($k$) in your data."
+            },
+            {
+                q: "What is an Epoch?",
+                a: "One complete pass through the entire training dataset."
+            },
+            {
+                q: "What is a Batch?",
+                a: "A small subset of the dataset used to calculate the gradient and update weights once."
+            },
+            {
+                q: "What is an Optimizer?",
+                a: "An algorithm (like SGD or Adam) that updates the weights of the network to minimize the loss function."
+            },
+            {
+                q: "What is a Loss Function?",
+                a: "A function $J(\\theta)$ that measures the error between the model's prediction $\\hat{y}$ and the true target $y$."
+            },
+            {
+                q: "What is Shuffling?",
+                a: "Randomizing the order of data samples before each epoch to ensure batches are representative and gradients are unbiased."
+            },
+            {
+                q: "What is the Forward Pass?",
+                a: "The process of passing data from input to output to generate a prediction and compute the loss."
+            },
+            {
+                q: "What is Backpropagation?",
+                a: "The process of calculating gradients by moving backward from the loss function to the weights using the Chain Rule."
+            },
+            {
+                q: "What is an MLP?",
+                a: "Multi-Layer Perceptron. A standard fully connected neural network, best suited for tabular data."
+            },
+            {
+                q: "What is a CNN?",
+                a: "Convolutional Neural Network. Best suited for Image data, as it captures spatial hierarchies."
+            },
+            
+            // --- Medium / Concepts ---
+            {
+                q: "What is the formula for the linear operation in a single neuron?",
+                a: "$z = w^T x + b$"
+            },
+            {
+                q: "Why are activation functions necessary?",
+                a: "To introduce non-linearity. Without them, stacking layers results in a single linear model ($Linear + Linear = Linear$)."
+            },
+            {
+                q: "What is ReLU and its formula?",
+                a: "Rectified Linear Unit. The most popular activation for hidden layers. $\\sigma(z) = \\max(0, z)$."
+            },
+            {
+                q: "What is the output range of the Sigmoid function?",
+                a: "It outputs values between **0 and 1**. Useful for binary classification probabilities."
+            },
+            {
+                q: "What is the output range of the Tanh function?",
+                a: "It outputs values between **-1 and 1**. It is zero-centered."
+            },
+            {
+                q: "What is Batch Gradient Descent?",
+                a: "Updating weights using the **entire** dataset. It is stable but slow and memory-heavy."
+            },
+            {
+                q: "What is Stochastic Gradient Descent (SGD)?",
+                a: "Updating weights using **one sample** at a time. It is fast but very noisy."
+            },
+            {
+                q: "Why is Mini-Batch Gradient Descent preferred?",
+                a: "It balances the stability of Batch GD with the speed and hardware efficiency of SGD."
+            },
+            {
+                q: "What does 'Momentum' do in optimization?",
+                a: "It accumulates a running average of past gradients (velocity) to smooth out updates and accelerate through flat areas."
+            },
+            {
+                q: "What is the 'Ravine Problem' in optimization?",
+                a: "When the loss surface is steep in one direction but flat in another, causing standard SGD to oscillate inefficiently."
+            },
+            {
+                q: "What is the main concept of AdaGrad?",
+                a: "Adaptive Learning Rates. It assigns smaller learning rates to frequently updated parameters and larger rates to infrequent ones."
+            },
+            {
+                q: "What is the major flaw of AdaGrad?",
+                a: "It accumulates all past squared gradients, causing the learning rate to shrink to zero effectively stopping training."
+            },
+            {
+                q: "How does RMSProp fix AdaGrad?",
+                a: "It uses an exponentially decaying average of squared gradients, allowing it to 'forget' old history and keep the learning rate active."
+            },
+            {
+                q: "What two concepts does Adam combine?",
+                a: "**Momentum** (for velocity/direction) and **RMSProp** (for adaptive learning rates)."
+            },
+            
+            // --- Hard / Math & Specifics ---
+            {
+                q: "What is the general update rule for Gradient Descent?",
+                a: "$\\theta_{new} = \\theta_{old} - \\alpha \\nabla_{\\theta} J(\\theta)$"
+            },
+            {
+                q: "What is the Chain Rule formula for a single weight $w$?",
+                a: "$\\frac{\\partial J}{\\partial w} = \\frac{\\partial J}{\\partial a} \\cdot \\frac{\\partial a}{\\partial z} \\cdot \\frac{\\partial z}{\\partial w}$"
+            },
+            {
+                q: "In Adam, what is the 'Bias Correction' step used for?",
+                a: "To correct the initial moving averages (which start at 0) so they are unbiased estimates early in training."
+            },
+            {
+                q: "What is the specific improvement of AdamW over Adam?",
+                a: "AdamW decouples weight decay from the gradient update, applying it directly to the parameters for better regularization."
+            },
+            {
+                q: "Mathematically, how is the 'velocity' ($v_t$) updated in Momentum?",
+                a: "$v_t = \\beta v_{t-1} + (1-\\beta) \\nabla J(\\theta)$"
+            },
+            {
+                q: "In Adam, what does the term $m_t$ represent?",
+                a: "The exponential moving average of the **gradients** (similar to Momentum)."
+            },
+            {
+                q: "In Adam, what does the term $v_t$ represent?",
+                a: "The exponential moving average of the **squared gradients** (similar to RMSProp)."
+            },
+            {
+                q: "What is the mathematical update for accumulated gradients in AdaGrad?",
+                a: "$G_t = G_{t-1} + g_t^2$ (Sum of squares)"
+            },
+            {
+                q: "What is the mathematical update for the squared gradient average in RMSProp?",
+                a: "$E[g^2]_t = \\alpha E[g^2]_{t-1} + (1-\\alpha)g_t^2$ (Exponential moving average)"
+            },
+            {
+                q: "How many neurons are needed in the Output Layer for Multiclass Classification with $C$ classes?",
+                a: "$C$ neurons (typically using a Softmax activation)."
+            },
+            {
+                q: "If the input $x$ has shape $(k, 1)$ and weights $W$ have shape $(m, k)$, what is the shape of $z$?",
+                a: "$(m, 1)$, because $z = Wx + b$."
+            },
+            {
+                q: "What is the typical value for the momentum coefficient $\\beta$?",
+                a: "0.9 is the standard default value."
+            },
+            {
+                q: "Why does shuffling specifically help with Gradient Descent stability?",
+                a: "It breaks correlations between consecutive samples, ensuring each batch gradient is an independent, unbiased estimate of the true gradient."
+            },
+            {
+                q: "What is the derivative of the linear function $z = wx + b$ with respect to $w$?",
+                a: "$\\frac{\\partial z}{\\partial w} = x$"
+            }
+        ];
+
+        // --- State ---
+        let cards = [...initialCards];
+        let currentIndex = 0;
+        let isFlipped = false;
+
+        // --- DOM Elements ---
+        const cardInner = document.getElementById('card-inner');
+        const cardFrontText = document.getElementById('card-front-text');
+        const cardBackContent = document.getElementById('card-back-content');
+        const currentNumEl = document.getElementById('current-card-num');
+        const totalNumEl = document.getElementById('total-cards-num');
+        const progressBar = document.getElementById('progress-bar');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const flipBtnText = document.getElementById('flip-btn-text');
+
+        // --- Functions ---
+        
+        function init() {
+            renderCard();
+            updateMeta();
+            lucide.createIcons();
+            
+            // Render Math on load
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ]
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space') {
+                    e.preventDefault(); 
+                    flipCard();
+                } else if (e.code === 'ArrowRight') {
+                    nextCard();
+                } else if (e.code === 'ArrowLeft') {
+                    prevCard();
+                }
+            });
+        }
+
+        function renderCard() {
+            // Reset state
+            isFlipped = false;
+            cardInner.classList.remove('is-flipped');
+            flipBtnText.innerText = "Reveal Answer";
+
+            // Update content with small animation delay to hide swap
+            setTimeout(() => {
+                const currentCard = cards[currentIndex];
+                cardFrontText.innerHTML = currentCard.q;
+                cardBackContent.innerHTML = currentCard.a;
+                
+                // Re-render math
+                renderMathInElement(cardFrontText, {
+                     delimiters: [{left: '$', right: '$', display: false}]
+                });
+                renderMathInElement(cardBackContent, {
+                     delimiters: [{left: '$', right: '$', display: false}]
+                });
+            }, 150);
+        }
+
+        function updateMeta() {
+            currentNumEl.innerText = currentIndex + 1;
+            totalNumEl.innerText = cards.length;
+            
+            const progress = ((currentIndex + 1) / cards.length) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === cards.length - 1;
+        }
+
+        function flipCard() {
+            isFlipped = !isFlipped;
+            cardInner.classList.toggle('is-flipped');
+            flipBtnText.innerText = isFlipped ? "Show Question" : "Reveal Answer";
+        }
+
+        function nextCard() {
+            if (currentIndex < cards.length - 1) {
+                currentIndex++;
+                renderCard();
+                updateMeta();
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCard();
+                updateMeta();
+            }
+        }
+
+        function shuffleCards() {
+            // Fisher-Yates shuffle
+            for (let i = cards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cards[i], cards[j]] = [cards[j], cards[i]];
+            }
+            currentIndex = 0;
+            renderCard();
+            updateMeta();
+        }
+
+        // --- Start ---
+        init();
+
+    </script>
+</body>
+</html>

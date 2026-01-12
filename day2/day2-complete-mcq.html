@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Day 2 Quiz · Complete MCQ Deck</title>
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/css/style.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .question-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .question-card {
+      border: 1px solid rgba(0, 38, 76, 0.15);
+      border-radius: 24px;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.95);
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .question-card.correct {
+      border-color: rgba(74, 211, 149, 0.8);
+      box-shadow: 0 12px 30px rgba(74, 211, 149, 0.15);
+    }
+
+    .question-card.incorrect {
+      border-color: rgba(255, 107, 107, 0.8);
+      box-shadow: 0 12px 30px rgba(255, 107, 107, 0.15);
+    }
+
+    .question-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .option-pill {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      border: 1px solid rgba(0, 38, 76, 0.15);
+      border-radius: 14px;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.95);
+      transition: border 0.2s ease, background 0.2s ease;
+    }
+
+    .option-pill:hover {
+      border-color: var(--accent-teal);
+      background: rgba(27, 197, 201, 0.08);
+    }
+
+    .option-pill input {
+      margin-top: 0.25rem;
+    }
+
+    .question-feedback {
+      margin-top: 1rem;
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+    }
+
+    .question-feedback.success {
+      background: rgba(74, 211, 149, 0.15);
+      color: #1f7a52;
+      border: 1px solid rgba(74, 211, 149, 0.6);
+    }
+
+    .question-feedback.error {
+      background: rgba(255, 107, 107, 0.15);
+      color: #a12b2b;
+      border: 1px solid rgba(255, 107, 107, 0.6);
+    }
+
+    #formNotice {
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <div class="logo">
+        <a href="../index.html">
+          <img src="../assets/img/kaust-academy-logo.png" alt="KAUST Academy">
+          <img class="logo-kfupm" src="../assets/img/KFUPM Seal White.png" alt="KFUPM Seal" />
+        </a>
+      </div>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../day1/index.html">Day 1</a></li>
+          <li><a class="active" href="../day2/index.html">Day 2</a></li>
+          <li><a href="../day3/index.html">Day 3</a></li>
+          <li><a href="../day4/index.html">Day 4</a></li>
+          <li><a href="../day5/index.html">Day 5</a></li>
+          <li><a href="../extra/index.html">Extra</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="breadcrumbs animate-up">
+      <div class="container">
+        <h2>Day 2 · Complete MCQ Deck</h2>
+        <p>Model generalization, loss functions, and regularization refresh for the KAUST Academy KFUPM cohort.</p>
+        <div class="mt-3">
+          <a href="../day2/index.html" class="table-btn">Back to Day 2 decks</a>
+        </div>
+      </div>
+    </div>
+
+    <section class="quiz-page-section">
+      <div class="container">
+        <div class="quiz-card list-card mb-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+            <div>
+              <p class="eyebrow mb-1">About this quiz</p>
+              <h4 class="mb-1">Complete Algorithms MCQ · KFUPM</h4>
+              <p class="text-muted mb-1">Answer every question, submit, and review the rationale. You can retake the quiz as many
+                times as you need.</p>
+              <p class="text-muted small mb-0">Quiz authored by <strong>KAUST Academy TA team</strong>.</p>
+            </div>
+            <div class="text-md-end">
+              <p class="text-muted small mb-1">Format</p>
+              <p class="mb-0 fw-semibold">Multiple choice · 23 questions</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="practice-panel">
+          <form id="quizForm" class="question-stack"></form>
+          <div class="practice-actions mt-4">
+            <button type="button" class="btn btn-primary" id="submitQuiz">Submit answers</button>
+            <button type="button" class="btn btn-outline-secondary" id="resetQuiz">Retake quiz</button>
+          </div>
+          <p class="practice-notice mt-3 d-none" id="formNotice">Answer every question before submitting.</p>
+        </div>
+
+        <div class="practice-panel mt-4 d-none" id="resultPanel">
+          <p class="eyebrow mb-1 text-muted text-uppercase">Score</p>
+          <h4 class="scoreline mb-2" id="scoreSummary"></h4>
+          <p class="text-muted mb-0">Scroll up to review the rationale above. New attempts reshuffle the options.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer">
+    <div class="container d-md-flex py-4">
+      <div class="me-md-auto text-center w-100">
+        <div class="copyright">
+          &copy; Copyright <strong><span>KAUST Academy</span></strong>. All Rights Reserved
+        </div>
+        <div class="license" style="font-size: 13px; margin-top: 8px; color: #555;">
+          Licensed under <a href="https://github.com/KAUST-Academy/KAUST_Academy_2026_Introduction_To_AI?tab=GPL-3.0-1-ov-file#readme" target="_blank" rel="noopener">GPL-3.0</a>.
+          Recording and uploading lectures online is not permitted.
+        </div>
+        <div class="credits" style="font-size: 14px; margin-top: 5px; color: #555;">
+          Website created and managed by <strong>Almaan Khan</strong> and the other <strong>KFUPM TAs</strong>.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+  <script>
+    AOS.init();
+    const on = (type, el, listener) => {
+      const selectEl = document.querySelector(el);
+      if (selectEl) {
+        selectEl.addEventListener(type, listener);
+      }
+    };
+    on('click', '.mobile-nav-toggle', function () {
+      document.querySelector('#navbar').classList.toggle('navbar-mobile');
+      this.classList.toggle('bi-list');
+      this.classList.toggle('bi-x');
+    });
+  </script>
+  <script>
+    const quizData = [
+      {
+        question: 'In supervised learning, what does it mean for a model to "generalize"?',
+        hint: 'Concept: generalization',
+        options: [
+          { text: 'It achieves minimal loss on the training dataset.', correct: false, rationale: 'Training loss alone does not capture behavior on unseen inputs.' },
+          { text: 'It learns parameters that minimize the expected loss on unseen data.', correct: true, rationale: 'Generalization is about strong performance on future data sampled from the same distribution.' },
+          { text: 'It perfectly reconstructs the input-output mapping in the dataset.', correct: false, rationale: 'Perfect reconstruction usually indicates memorization, not generalization.' },
+          { text: 'It converges to a global minimum of the loss function.', correct: false, rationale: 'Even global minima can overfit; generalization is evaluated on held-out data.' }
+        ]
+      },
+      {
+        question: 'The formula \\(\\phi(z) = 1 / (1 + e^{-z})\\) represents which function?',
+        hint: 'Activation refresher',
+        options: [
+          { text: 'Linear function.', correct: false, rationale: 'Linear activations do not bend and cannot squash to (0, 1).' },
+          { text: 'Sigmoid function.', correct: true, rationale: 'Sigmoid is defined as \\(1/(1+e^{-z})\\) and squashes scores to (0, 1).' },
+          { text: 'Softmax function.', correct: false, rationale: 'Softmax uses exponentials per class and normalizes across classes.' },
+          { text: 'Polynomial function.', correct: false, rationale: 'No polynomial uses the reciprocal exponential structure shown.' }
+        ]
+      },
+      {
+        question: 'Which property of Mean Squared Error (MSE) most directly explains its sensitivity to outliers?',
+        hint: 'Loss behavior',
+        options: [
+          { text: 'It is convex with respect to model parameters.', correct: false, rationale: 'Convexity helps optimization but does not cause outlier sensitivity.' },
+          { text: 'It aggregates errors across all samples.', correct: false, rationale: 'Aggregation alone is not the reason; the aggregation form matters.' },
+          { text: 'It squares the residual magnitude.', correct: true, rationale: 'Squaring amplifies large residuals, so outliers dominate the loss.' },
+          { text: 'It is differentiable everywhere.', correct: false, rationale: 'Differentiability is unrelated to outlier weight.' }
+        ]
+      },
+      {
+        question: 'In BCE loss, what causes a prediction with high confidence in the wrong class to incur a large penalty?',
+        hint: 'Binary cross-entropy',
+        options: [
+          { text: 'Normalization by sample size.', correct: false, rationale: 'Batch averaging does not cause the steep penalty.' },
+          { text: 'Subtraction of true and predicted labels.', correct: false, rationale: 'BCE does not rely on raw subtraction.' },
+          { text: 'The logarithmic transformation of predicted probabilities.', correct: true, rationale: 'The log term blows up when confident probability is assigned to the wrong label.' },
+          { text: 'Use of a threshold during classification.', correct: false, rationale: 'Thresholding happens after training, not inside the loss.' }
+        ]
+      },
+      {
+        question: 'In categorical cross-entropy, why does only the probability of the true class affect the loss?',
+        hint: 'One-hot labels',
+        options: [
+          { text: 'Other class probabilities are always zero.', correct: false, rationale: 'Non-true classes get non-zero probability mass.' },
+          { text: 'The softmax suppresses non-true classes.', correct: false, rationale: 'Softmax normalizes but does not erase other probabilities.' },
+          { text: 'The target labels are one-hot encoded.', correct: true, rationale: 'Only the true class entry is 1, so the loss samples the log probability at that index.' },
+          { text: 'The loss ignores incorrect classes.', correct: false, rationale: 'They matter indirectly via normalization, but only the true class term appears explicitly.' }
+        ]
+      },
+      {
+        question: 'Two linear models have the same MSE. One has very large weights; the other small weights. Why is the second model preferred?',
+        hint: 'Regularization intuition',
+        options: [
+          { text: 'Smaller weights reduce computational cost.', correct: false, rationale: 'Computation cost difference is marginal.' },
+          { text: 'Smaller weights imply fewer features were used.', correct: false, rationale: 'Weight magnitude alone does not reveal feature count.' },
+          { text: 'Smaller weights reduce sensitivity to small input changes.', correct: true, rationale: 'Compact weights usually produce smoother, more stable predictions on new data.' },
+          { text: 'Smaller weights guarantee convex optimization.', correct: false, rationale: 'Convexity is dictated by the loss, not the learned weights.' }
+        ]
+      },
+      {
+        question: 'Why does Lasso (L1) regularization often perform feature selection automatically?',
+        hint: 'Constraint geometry',
+        options: [
+          { text: 'It penalizes squared weights.', correct: false, rationale: 'Squared penalties correspond to L2/Ridge, not L1.' },
+          { text: 'Its constraint geometry has sharp corners.', correct: true, rationale: 'The diamond-shaped L1 ball intersects coordinate axes, encouraging exact zeros.' },
+          { text: 'It requires iterative optimization.', correct: false, rationale: 'Optimization procedure is not the core mechanism for sparsity.' },
+          { text: 'It minimizes variance more aggressively.', correct: false, rationale: 'Variance reduction is a side effect, not the reason for sparsity.' }
+        ]
+      },
+      {
+        question: 'Why do decision trees not use gradient descent for learning splits?',
+        hint: 'Training mechanics',
+        options: [
+          { text: 'Their loss function is non-convex.', correct: false, rationale: 'Convexity is not the blocker.' },
+          { text: 'Their parameters are discrete.', correct: false, rationale: 'Discrete parameters make gradients tricky but not impossible.' },
+          { text: 'Their splits are non-differentiable decisions.', correct: true, rationale: 'Choosing a threshold is a combinatorial, non-differentiable step, so trees use greedy search rather than gradients.' },
+          { text: 'Their objective function is undefined.', correct: false, rationale: 'Objectives exist (e.g., impurity) but are optimized via enumeration.' }
+        ]
+      },
+      {
+        question: 'What is the fundamental reason Random Forests reduce variance compared to single trees?',
+        hint: 'Ensemble effects',
+        options: [
+          { text: 'Trees are trained sequentially.', correct: false, rationale: 'Boosting trains sequentially; forests train in parallel.' },
+          { text: 'Trees are trained on correlated subsets.', correct: false, rationale: 'Random forests decorrelate trees via bagging and feature sampling.' },
+          { text: 'Predictions are averaged across independent models.', correct: true, rationale: 'Averaging multiple diverse trees smooths variance and reduces overfitting.' },
+          { text: 'Trees use entropy instead of Gini.', correct: false, rationale: 'Split metric choice is not the main factor.' }
+        ]
+      },
+      {
+        question: 'Why is feature scaling important for distance-based models like k-NN?',
+        hint: 'Distance metrics',
+        options: [
+          { text: 'To ensure convexity of the loss.', correct: false, rationale: 'k-NN has no loss surface to optimize.' },
+          { text: 'To reduce training time.', correct: false, rationale: 'Training time is already minimal because k-NN stores data.' },
+          { text: 'To stop features with large magnitudes from dominating distance calculation.', correct: true, rationale: 'Unscaled features skew distances, letting high-magnitude units drown out others.' },
+          { text: 'To allow probabilistic interpretation.', correct: false, rationale: 'Scaling does not change whether outputs are probabilistic.' }
+        ]
+      },
+      {
+        question: 'Output: [0.1, 0.7, 0.2] for [Dog, Cat, Bird]. Which class is predicted?',
+        hint: 'Argmax review',
+        options: [
+          { text: 'Dog.', correct: false, rationale: 'Dog has probability 0.1, not the maximum.' },
+          { text: 'Cat.', correct: true, rationale: 'Cat has the highest probability (0.7), so it is selected.' },
+          { text: 'Bird.', correct: false, rationale: 'Bird is 0.2, lower than Cat.' },
+          { text: 'None of the above.', correct: false, rationale: 'A class with the max probability is chosen when probabilities sum to 1.' }
+        ]
+      },
+      {
+        question: 'True or False: k-NN has low training cost but high inference cost.',
+        hint: 'Lazy learning',
+        options: [
+          { text: 'True.', correct: true, rationale: 'Training just stores the data, but inference scans many neighbors, which is costly.' },
+          { text: 'False.', correct: false, rationale: 'The computational bottleneck is during inference, not training.' }
+        ]
+      },
+      {
+        question: 'Using a simple linear model for complex image pixels often leads to:',
+        hint: 'Model capacity',
+        options: [
+          { text: 'Perfect accuracy.', correct: false, rationale: 'Linear models rarely capture complex visual patterns perfectly.' },
+          { text: 'Overfitting.', correct: false, rationale: 'Low-capacity models typically underfit visual data.' },
+          { text: 'High complexity.', correct: false, rationale: 'The model remains simple regardless of data.' },
+          { text: 'Underfitting.', correct: true, rationale: 'Insufficient capacity means the model cannot capture nonlinear relationships in pixels.' }
+        ]
+      },
+      {
+        question: 'Which is a defining characteristic of Deep Learning compared to traditional ML?',
+        hint: 'Feature engineering',
+        options: [
+          { text: 'Requires manual feature engineering.', correct: false, rationale: 'DL reduces manual feature design thanks to end-to-end learning.' },
+          { text: 'Best for structured table data.', correct: false, rationale: 'Traditional ML often excels on structured tables.' },
+          { text: 'Automated feature extraction.', correct: true, rationale: 'Deep networks learn hierarchical features directly from raw data.' },
+          { text: 'Lightweight and interpretable.', correct: false, rationale: 'DL models are often heavy and less interpretable.' }
+        ]
+      },
+      {
+        question: 'Why does increasing the regularization parameter \\(\\lambda\\) too much lead to underfitting?',
+        hint: 'Bias-variance trade-off',
+        options: [
+          { text: 'It removes noise from the data.', correct: false, rationale: 'Regularization impacts weights, not the data itself.' },
+          { text: 'It forces weights toward zero, reducing model flexibility.', correct: true, rationale: 'Excessive shrinkage prevents the model from fitting the true signal.' },
+          { text: 'It increases variance.', correct: false, rationale: 'Large regularization decreases variance but increases bias.' },
+          { text: 'It improves numerical stability.', correct: false, rationale: 'Stability benefits exist but do not explain underfitting.' }
+        ]
+      },
+      {
+        question: 'What does the sigmoid function primarily enable in logistic regression?',
+        hint: 'Logistic regression',
+        options: [
+          { text: 'Linear separation of data.', correct: false, rationale: 'Separation depends on learned weights, not sigmoid alone.' },
+          { text: 'Mapping real-valued scores to probabilities.', correct: true, rationale: 'Sigmoid converts logits into interpretable probabilities between 0 and 1.' },
+          { text: 'Reducing variance.', correct: false, rationale: 'Variance is controlled via data and model complexity, not the activation function.' },
+          { text: 'Feature normalization.', correct: false, rationale: 'Sigmoid operates on model outputs, not inputs.' }
+        ]
+      },
+      {
+        question: 'True or False: Softmax guarantees that predicted class probabilities sum to 1.',
+        hint: 'Softmax property',
+        options: [
+          { text: 'True.', correct: true, rationale: 'Softmax explicitly normalizes exponentiated logits to sum to 1.' },
+          { text: 'False.', correct: false, rationale: 'A properly computed softmax always forms a valid distribution.' }
+        ]
+      },
+      {
+        question: 'Why are Support Vectors critical in SVMs?',
+        hint: 'Margin intuition',
+        options: [
+          { text: 'They determine the learning rate.', correct: false, rationale: 'Learning rate relates to optimization, not support vectors.' },
+          { text: 'They are the farthest points from the boundary.', correct: false, rationale: 'Support vectors lie on or near the margin, not far away.' },
+          { text: 'They define the maximum-margin hyperplane.', correct: true, rationale: 'Only points on the margin influence the optimal separating boundary.' },
+          { text: 'They eliminate the need for regularization.', correct: false, rationale: 'Regularization is still required when kernels or slack variables are used.' }
+        ]
+      },
+      {
+        question: 'True or False: Gradient Boosting reduces error by training each new tree independently of the previous ones.',
+        hint: 'Boosting workflow',
+        options: [
+          { text: 'True.', correct: false, rationale: 'Boosting trains trees sequentially, each correcting residuals from the previous model.' },
+          { text: 'False.', correct: true, rationale: 'Dependence between trees is what lets boosting focus on remaining errors.' }
+        ]
+      },
+      {
+        question: 'Which loss should be used for spam vs not spam classification?',
+        hint: 'Binary classification',
+        options: [
+          { text: 'Mean Squared Error.', correct: false, rationale: 'MSE works but is not ideal for probabilistic binary outputs.' },
+          { text: 'Categorical Cross-Entropy.', correct: false, rationale: 'CCE targets multi-class tasks with more than two classes.' },
+          { text: 'Log Loss.', correct: true, rationale: 'Logistic (cross-entropy) loss is designed for binary classification probabilities.' },
+          { text: 'Hinge Loss.', correct: false, rationale: 'Hinge is used for SVM-style margin classifiers.' }
+        ]
+      },
+      {
+        question: 'Which loss is correct for digit classification (0–9), one digit per image?',
+        hint: 'Multi-class loss',
+        options: [
+          { text: 'Log Loss (binary).', correct: false, rationale: 'Binary log loss handles 2 classes, not 10.' },
+          { text: 'Mean Absolute Error.', correct: false, rationale: 'MAE is not standard for classification probabilities.' },
+          { text: 'Categorical Cross-Entropy.', correct: true, rationale: 'CCE aligns with softmax outputs and one label per sample.' },
+          { text: 'Hinge Loss.', correct: false, rationale: 'Hinge works for margin-based classifiers, usually with binary labels.' }
+        ]
+      },
+      {
+        question: 'What does a model output in multiclass classification?',
+        hint: 'Output format',
+        options: [
+          { text: 'One probability per sample.', correct: false, rationale: 'Each sample needs a distribution over classes.' },
+          { text: 'A binary label.', correct: false, rationale: 'Binary labels apply to two-class problems.' },
+          { text: 'A probability distribution over K classes.', correct: true, rationale: 'Softmax outputs reflect the likelihood of each of the K classes.' },
+          { text: 'Independent class scores with no normalization.', correct: false, rationale: 'While logits exist, final predictions use normalized probabilities.' }
+        ]
+      },
+      {
+        question: 'Which of the following is considered a deep learning model?',
+        hint: 'Model families',
+        options: [
+          { text: 'Linear Regression.', correct: false, rationale: 'Linear models use no hidden layers.' },
+          { text: 'k-NN.', correct: false, rationale: 'k-NN is a non-parametric neighbor method.' },
+          { text: 'MLP (multi-layer perceptron).', correct: true, rationale: 'An MLP stacks multiple nonlinear layers, satisfying the deep learning definition.' },
+          { text: 'Decision Tree.', correct: false, rationale: 'Single trees are not deep neural networks.' }
+        ]
+      }
+    ];
+
+    const quizForm = document.getElementById('quizForm');
+    const submitBtn = document.getElementById('submitQuiz');
+    const resetBtn = document.getElementById('resetQuiz');
+    const notice = document.getElementById('formNotice');
+    const resultPanel = document.getElementById('resultPanel');
+    const scoreSummary = document.getElementById('scoreSummary');
+
+    const renderQuiz = () => {
+      quizForm.innerHTML = '';
+      quizData.forEach((question, index) => {
+        const card = document.createElement('article');
+        card.className = 'question-card';
+        card.dataset.index = index.toString();
+
+        const header = document.createElement('div');
+        header.innerHTML = `
+          <p class="question-eyebrow">Question ${index + 1}</p>
+          <h5>${question.question}</h5>
+          <p class="text-muted small mb-0">${question.hint || ''}</p>
+        `;
+        card.appendChild(header);
+
+        const optionsWrapper = document.createElement('div');
+        optionsWrapper.className = 'option-grid';
+        const shuffled = [...question.options].sort(() => Math.random() - 0.5);
+
+        shuffled.forEach((option, optionIndex) => {
+          const inputId = `q${index}-opt${optionIndex}`;
+          const label = document.createElement('label');
+          label.className = 'option-pill';
+          label.setAttribute('for', inputId);
+          label.innerHTML = `
+            <input type="radio" id="${inputId}" name="question-${index}" value="${question.options.indexOf(option)}">
+            <span>${option.text}</span>
+          `;
+          optionsWrapper.appendChild(label);
+        });
+
+        card.appendChild(optionsWrapper);
+
+        const feedback = document.createElement('div');
+        feedback.className = 'question-feedback d-none';
+        feedback.id = `feedback-${index}`;
+        card.appendChild(feedback);
+
+        quizForm.appendChild(card);
+      });
+
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
+    };
+
+    const gradeQuiz = () => {
+      let answeredAll = true;
+      let score = 0;
+
+      quizData.forEach((question, index) => {
+        const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+        const card = quizForm.querySelector(`.question-card[data-index="${index}"]`);
+        const feedback = document.getElementById(`feedback-${index}`);
+
+        card.classList.remove('correct', 'incorrect');
+        feedback.classList.add('d-none', 'text-muted');
+        feedback.classList.remove('success', 'error');
+        feedback.textContent = '';
+
+        if (!selected) {
+          answeredAll = false;
+          return;
+        }
+
+        const chosen = question.options[Number(selected.value)];
+        const correct = question.options.find((opt) => opt.correct);
+
+        if (chosen.correct) {
+          score += 1;
+          card.classList.add('correct');
+          feedback.innerHTML = `<strong>Correct.</strong> ${chosen.rationale}`;
+          feedback.classList.remove('d-none');
+          feedback.classList.add('success');
+        } else {
+          card.classList.add('incorrect');
+          feedback.innerHTML = `<strong>Incorrect.</strong> ${chosen.rationale}<br><em>Answer:</em> ${correct ? correct.text : ''}`;
+          feedback.classList.remove('d-none');
+          feedback.classList.add('error');
+        }
+      });
+
+      if (!answeredAll) {
+        notice.classList.remove('d-none');
+        resultPanel.classList.add('d-none');
+        return;
+      }
+
+      notice.classList.add('d-none');
+      scoreSummary.textContent = `${score} / ${quizData.length}`;
+      resultPanel.classList.remove('d-none');
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
+      window.scrollTo({ top: resultPanel.offsetTop - 120, behavior: 'smooth' });
+    };
+
+    const resetQuiz = () => {
+      quizForm.reset();
+      notice.classList.add('d-none');
+      resultPanel.classList.add('d-none');
+      quizForm.querySelectorAll('.question-card').forEach((card) => card.classList.remove('correct', 'incorrect'));
+      quizForm.querySelectorAll('.question-feedback').forEach((feedback) => {
+        feedback.classList.add('d-none');
+        feedback.classList.remove('success', 'error');
+        feedback.textContent = '';
+      });
+      renderQuiz();
+      window.scrollTo({ top: quizForm.offsetTop - 120, behavior: 'smooth' });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderQuiz();
+      submitBtn.addEventListener('click', gradeQuiz);
+      resetBtn.addEventListener('click', resetQuiz);
+    });
+  </script>
+</body>
+
+</html>

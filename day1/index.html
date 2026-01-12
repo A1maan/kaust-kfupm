@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -27,7 +26,6 @@
 <li><a href="../day3/index.html">Day 3</a></li>
 <li><a href="../day4/index.html">Day 4</a></li>
 <li><a href="../day5/index.html">Day 5</a></li>
-<li><a href="../day6/index.html">Day 6</a></li>
 <li><a href="../extra/index.html">Extra</a></li>
 </ul>
 <i class="bi bi-list mobile-nav-toggle"></i>
@@ -85,14 +83,12 @@
 <script src="../assets/vendor/aos/aos.js"></script>
 <script>
     AOS.init();
-
     const on = (type, el, listener) => {
       const selectEl = document.querySelector(el);
       if (selectEl) {
         selectEl.addEventListener(type, listener);
       }
     };
-
     on('click', '.mobile-nav-toggle', function () {
       document.querySelector('#navbar').classList.toggle('navbar-mobile');
       this.classList.toggle('bi-list');

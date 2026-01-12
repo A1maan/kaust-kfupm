@@ -14,7 +14,6 @@
     day3: 'Day 3',
     day4: 'Day 4',
     day5: 'Day 5',
-    day6: 'Day 6',
     extra: 'Extra'
   };
 

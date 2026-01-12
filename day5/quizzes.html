@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -10,9 +9,7 @@
   <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="../assets/css/style.css" rel="stylesheet">
 </head>
-
 <body data-day-key="day5">
-
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
       <div class="logo me-auto">
@@ -29,14 +26,12 @@
           <li><a href="../day3/quizzes.html">Day 3</a></li>
           <li><a href="../day4/quizzes.html">Day 4</a></li>
           <li><a class="active" href="../day5/quizzes.html">Day 5 Quizzes</a></li>
-          <li><a href="../day6/quizzes.html">Day 6</a></li>
           <li><a href="../extra/quizzes.html">Extra</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
     </div>
   </header>
-
   <main id="main">
     <div class="breadcrumbs animate-up">
       <div class="container">
@@ -44,7 +39,6 @@
         <p>K-Means clustering, PCA, t-SNE visualization, and autoencoder-based representation learning.</p>
       </div>
     </div>
-
     <section class="quiz-lab-section">
       <div class="container">
         <div class="quiz-card list-card">
@@ -60,7 +54,6 @@
       </div>
     </section>
   </main>
-
   <footer id="footer">
     <div class="container d-md-flex py-4">
       <div class="me-md-auto text-center w-100">
@@ -74,24 +67,21 @@
           Recording and uploading lectures online is not permitted.
         </div>
         <div class="credits" style="font-size: 14px; margin-top: 5px; color: #555;">
-          Website created by <strong>Ali Habibullah</strong> and <strong>Sattam Altwaim</strong>.
+          Website created and managed by <strong>Almaan Khan</strong> and the other <strong>KFUPM TAs</strong>.
         </div>
       </div>
     </div>
   </footer>
-
   <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/vendor/aos/aos.js"></script>
   <script>
     AOS.init();
-
     const on = (type, el, listener) => {
       const selectEl = document.querySelector(el);
       if (selectEl) {
         selectEl.addEventListener(type, listener);
       }
     };
-
     on('click', '.mobile-nav-toggle', function () {
       document.querySelector('#navbar').classList.toggle('navbar-mobile');
       this.classList.toggle('bi-list');
@@ -101,5 +91,4 @@
   <script src="../assets/js/quiz-data.js"></script>
   <script src="../assets/js/day-quizzes.js"></script>
 </body>
-
 </html>

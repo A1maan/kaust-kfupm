@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Day 3 Quiz · Deep Learning Fundamentals</title>
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/css/style.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .question-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .question-card {
+      border: 1px solid rgba(0, 38, 76, 0.15);
+      border-radius: 24px;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.95);
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .question-card.correct {
+      border-color: rgba(74, 211, 149, 0.8);
+      box-shadow: 0 12px 30px rgba(74, 211, 149, 0.15);
+    }
+
+    .question-card.incorrect {
+      border-color: rgba(255, 107, 107, 0.8);
+      box-shadow: 0 12px 30px rgba(255, 107, 107, 0.15);
+    }
+
+    .question-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .option-pill {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      border: 1px solid rgba(0, 38, 76, 0.15);
+      border-radius: 14px;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.95);
+      transition: border 0.2s ease, background 0.2s ease;
+    }
+
+    .option-pill:hover {
+      border-color: var(--accent-teal);
+      background: rgba(27, 197, 201, 0.08);
+    }
+
+    .option-pill input {
+      margin-top: 0.25rem;
+    }
+
+    .question-feedback {
+      margin-top: 1rem;
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+    }
+
+    .question-feedback.success {
+      background: rgba(74, 211, 149, 0.15);
+      color: #1f7a52;
+      border: 1px solid rgba(74, 211, 149, 0.6);
+    }
+
+    .question-feedback.error {
+      background: rgba(255, 107, 107, 0.15);
+      color: #a12b2b;
+      border: 1px solid rgba(255, 107, 107, 0.6);
+    }
+
+    #formNotice {
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <div class="logo">
+        <a href="../index.html">
+          <img src="../assets/img/kaust-academy-logo.png" alt="KAUST Academy">
+          <img class="logo-kfupm" src="../assets/img/KFUPM Seal White.png" alt="KFUPM Seal" />
+        </a>
+      </div>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../day1/index.html">Day 1</a></li>
+          <li><a href="../day2/index.html">Day 2</a></li>
+          <li><a class="active" href="../day3/index.html">Day 3</a></li>
+          <li><a href="../day4/index.html">Day 4</a></li>
+          <li><a href="../day5/index.html">Day 5</a></li>
+          <li><a href="../extra/index.html">Extra</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="breadcrumbs animate-up">
+      <div class="container">
+        <h2>Day 3 · Deep Learning Fundamentals Quiz</h2>
+        <p>Practice deck covering neural networks, forward/backward passes, and modern optimizers. Only KFUPM students in
+          the KAUST Academy program may use this quiz.</p>
+        <div class="mt-3">
+          <a href="../day3/index.html" class="table-btn">Back to Day 3 decks</a>
+        </div>
+      </div>
+    </div>
+
+    <section class="quiz-page-section">
+      <div class="container">
+        <div class="quiz-card list-card mb-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+            <div>
+              <p class="eyebrow mb-1">About this quiz</p>
+              <h4 class="mb-1">Deep Learning Fundamentals · KFUPM</h4>
+              <p class="text-muted mb-1">Answer every question, submit, and review the rationale. You can retake the quiz
+                as many times as you need.</p>
+              <p class="text-muted small mb-0">Quiz authored by <strong>Safwan Nabeel</strong>.</p>
+            </div>
+            <div class="text-md-end">
+              <p class="text-muted small mb-1">Format</p>
+              <p class="mb-0 fw-semibold">Multiple choice · 20 questions</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="practice-panel">
+          <form id="quizForm" class="question-stack"></form>
+          <div class="practice-actions mt-4">
+            <button type="button" class="btn btn-primary" id="submitQuiz">Submit answers</button>
+            <button type="button" class="btn btn-outline-secondary" id="resetQuiz">Retake quiz</button>
+          </div>
+          <p class="practice-notice mt-3 d-none" id="formNotice">Answer every question before submitting.</p>
+        </div>
+
+        <div class="practice-panel mt-4 d-none" id="resultPanel">
+          <p class="eyebrow mb-1 text-muted text-uppercase">Score</p>
+          <h4 class="scoreline mb-2" id="scoreSummary"></h4>
+          <p class="text-muted mb-0">Scroll up to review the rationale above. New attempts reshuffle the options.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer">
+    <div class="container d-md-flex py-4">
+      <div class="me-md-auto text-center w-100">
+        <div class="copyright">
+          &copy; Copyright <strong><span>KAUST Academy</span></strong>. All Rights Reserved
+        </div>
+        <div class="license" style="font-size: 13px; margin-top: 8px; color: #555;">
+          Licensed under <a
+            href="https://github.com/KAUST-Academy/KAUST_Academy_2026_Introduction_To_AI?tab=GPL-3.0-1-ov-file#readme"
+            target="_blank" rel="noopener">GPL-3.0</a>.
+          Recording and uploading lectures online is not permitted.
+        </div>
+        <div class="credits" style="font-size: 14px; margin-top: 5px; color: #555;">
+          Website created and managed by <strong>Almaan Khan</strong> and the other <strong>KFUPM TAs</strong>.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+  <script>
+    AOS.init();
+
+    const on = (type, el, listener) => {
+      const selectEl = document.querySelector(el);
+      if (selectEl) {
+        selectEl.addEventListener(type, listener);
+      }
+    };
+
+    on('click', '.mobile-nav-toggle', function () {
+      document.querySelector('#navbar').classList.toggle('navbar-mobile');
+      this.classList.toggle('bi-list');
+      this.classList.toggle('bi-x');
+    });
+  </script>
+  <script>
+    const quizData = [
+      {
+        question: "What fundamentally distinguishes Deep Learning from traditional Machine Learning?",
+        hint: "Difficulty: Easy",
+        options: [
+          "It uses fixed equations carefully designed by domain experts.",
+          "It requires significantly less training data to perform well.",
+          "It is built from stackable layers of neurons.",
+          "It cannot process high-dimensional image or video data."
+        ],
+        answer: 2,
+        explanation: "Deep Learning models are built from simple, stackable blocks (layers) like LEGO, whereas traditional ML relies on fixed equations."
+      },
+      {
+        question: "According to the Universal Approximation Theorem, what can a neural network with enough neurons theoretically do?",
+        hint: "Difficulty: Easy",
+        options: [
+          "Train instantly regardless of the available hardware resources.",
+          "Approximate any continuous function to arbitrary accuracy.",
+          "Completely eliminate the need for activation functions.",
+          "Automatically detect and clean noisy or corrupted data."
+        ],
+        answer: 1,
+        explanation: "The theorem states that a network with enough neurons can approximate any continuous function to arbitrary accuracy."
+      },
+      {
+        question: "If you are building a neural network to predict house prices based on 4 features (Size, Bedrooms, Zip Code, Wealth), how many neurons must be in the Input Layer?",
+        hint: "Difficulty: Easy",
+        options: ["1", "3", "4", "10"],
+        answer: 2,
+        explanation: "The input layer must have k neurons if the data has k features. In this case, there are 4 features."
+      },
+      {
+        question: "What two operations does a single neuron perform?",
+        hint: "Difficulty: Easy",
+        options: [
+          "Data cleaning followed by statistical sorting of inputs.",
+          "Linear combination \\(z = wx + b\\) then non-linear activation.",
+          "Forward propagation followed by backward propagation.",
+          "Automatic feature extraction then final classification."
+        ],
+        answer: 1,
+        explanation: "A neuron performs a linear combination \\(z = w^T x + b\\) followed by a non-linear activation \\(a = \\sigma(z)\\)."
+      },
+      {
+        question: "What is an 'Epoch' in the context of training?",
+        hint: "Difficulty: Easy",
+        options: [
+          "Processing exactly one batch of data through the network.",
+          "One full pass over the entire training dataset.",
+          "The total time required to initialize all model weights.",
+          "The final accuracy score after training is complete."
+        ],
+        answer: 1,
+        explanation: "One epoch is defined as processing all batches in the dataset exactly once."
+      },
+      {
+        question: "What is the primary goal of the 'Forward Pass'?",
+        hint: "Difficulty: Easy",
+        options: [
+          "To update and refine the weights of the model.",
+          "To calculate gradients using backpropagation.",
+          "To shuffle the dataset before each training epoch.",
+          "To compute the prediction and measure the loss."
+        ],
+        answer: 3,
+        explanation: "The forward pass computes the prediction from the input and measures the error; no learning happens yet."
+      },
+      {
+        question: "Which activation function outputs values strictly between 0 and 1, similar to logistic regression?",
+        hint: "Difficulty: Easy",
+        options: ["ReLU", "Tanh", "Sigmoid", "Linear"],
+        answer: 2,
+        explanation: "The Sigmoid function outputs values in the range (0, 1)."
+      },
+      {
+        question: "Why are activation functions necessary in a neural network?",
+        hint: "Difficulty: Medium",
+        options: [
+          "To significantly accelerate the training convergence speed.",
+          "To guarantee that the output values are always positive.",
+          "To introduce non-linearity; otherwise it collapses to linear.",
+          "To automatically normalize the raw input feature data."
+        ],
+        answer: 2,
+        explanation: "Without activations, stacking linear layers results in just another linear function. Non-linearity is required to fit complex patterns."
+      },
+      {
+        question: "Which Gradient Descent variant is generally considered the 'best of both worlds' because it is stable, fast, and GPU efficient?",
+        hint: "Difficulty: Medium",
+        options: [
+          "Batch Gradient Descent using the full dataset each step.",
+          "Stochastic Gradient Descent updating on single samples.",
+          "Mini-Batch Gradient Descent.",
+          "Random Gradient Descent with uniform sampling strategy."
+        ],
+        answer: 2,
+        explanation: "Mini-Batch is the default choice because it offers stability and hardware efficiency compared to the noise of SGD and the memory cost of Batch GD."
+      },
+      {
+        question: "How does 'Momentum' improve standard Gradient Descent?",
+        hint: "Difficulty: Medium",
+        options: [
+          "It progressively increases the learning rate at every step.",
+          "It accumulates velocity from past gradients to accelerate.",
+          "It completely removes the need for backpropagation.",
+          "It resets all weights to zero at regular intervals."
+        ],
+        answer: 1,
+        explanation: "Momentum maintains a running average of past gradients to build velocity, helping the optimizer ignore small bumps (noise) and move faster downhill."
+      },
+      {
+        question: "What is the primary issue with the AdaGrad optimizer that RMSProp was designed to fix?",
+        hint: "Difficulty: Medium",
+        options: [
+          "It is far too computationally expensive for practical use.",
+          "It accumulates all squared gradients, shrinking the rate.",
+          "It introduces excessive noise into the gradient updates.",
+          "It does not support training of deep neural networks."
+        ],
+        answer: 1,
+        explanation: "AdaGrad accumulates all past gradients, which grows indefinitely, causing the effective learning rate to vanish. RMSProp fixes this by using a moving average."
+      },
+      {
+        question: "Why is shuffling the dataset before each epoch important?",
+        hint: "Difficulty: Medium",
+        options: [
+          "It reduces the overall size of the dataset considerably.",
+          "It varies batch composition for stable generalization.",
+          "It is a strict hardware requirement for modern GPUs.",
+          "It automatically removes outliers from the training data."
+        ],
+        answer: 1,
+        explanation: "Without shuffling, the model sees the same patterns repeatedly, leading to biased gradient estimates. Shuffling ensures a better mix and stable learning."
+      },
+      {
+        question: "In Backpropagation, how are gradients calculated?",
+        hint: "Difficulty: Medium",
+        options: [
+          "By propagating signals forward from input to output.",
+          "By applying Chain Rule backward from Loss to weights.",
+          "By random sampling from the parameter distribution.",
+          "By averaging the weights across all hidden layers."
+        ],
+        answer: 1,
+        explanation: "Backpropagation uses the Chain Rule to move from the end (Loss) backward to the beginning, multiplying partial derivatives."
+      },
+      {
+        question: "What are the three components combined in the Adam optimizer?",
+        hint: "Difficulty: Medium",
+        options: [
+          "Momentum, Batch Normalization, and Dropout regularization.",
+          "Momentum, Adaptive Learning Rates, and Bias Correction.",
+          "SGD, Momentum, and Sigmoid activation function layers.",
+          "AdaGrad, RMSProp, and explicit Weight Decay penalties."
+        ],
+        answer: 1,
+        explanation: "Adam combines Momentum (smooth trajectory) and Adaptive Learning Rates, along with Bias Correction for early training steps."
+      },
+      {
+        question: "Specifically, how does AdamW improve upon standard Adam?",
+        hint: "Difficulty: Hard",
+        options: [
+          "It removes the momentum term entirely from the update.",
+          "It applies weight decay directly to parameters, not gradients.",
+          "It uses a constant learning rate instead of adaptive scaling.",
+          "It replaces squared gradients with absolute gradient values."
+        ],
+        answer: 1,
+        explanation: "AdamW decouples weight decay. Standard Adam adds L2 regularization to the gradient, which interacts poorly with adaptive scaling. AdamW applies it directly to the parameters."
+      },
+      {
+        question: "Why does Adam require 'Bias Correction' at the start of training?",
+        hint: "Difficulty: Hard",
+        options: [
+          "Moving averages start at zero, biasing early estimates.",
+          "It prevents gradients from exploding during training.",
+          "It forces the model to overfit early for warm-up.",
+          "The initial learning rate is always set too high."
+        ],
+        answer: 0,
+        explanation: "Moving averages in Adam are initialized to zero. Bias correction scales these up so that early estimates are accurate before enough data has been seen."
+      },
+      {
+        question: "Mathematically, what is the update rule for the velocity term \\(v_t\\) in Momentum?",
+        hint: "Difficulty: Hard",
+        options: [
+          "\\(v_t = \\nabla_{\\theta} J(\\theta)\\)",
+          "\\(v_t = \\beta v_{t-1} + (1-\\beta) \\nabla_{\\theta} J(\\theta)\\)",
+          "\\(v_t = v_{t-1} - \\alpha\\)",
+          "\\(v_t = (1-\\beta) v_{t-1}\\)"
+        ],
+        answer: 1,
+        explanation: "The velocity is a moving average of past gradients: the previous velocity times a momentum factor \\(\\beta\\) plus the current gradient."
+      },
+      {
+        question: "If you use the Chain Rule to compute \\(\\frac{\\partial J}{\\partial w}\\) for a single neuron where \\(z = wx + b\\) and \\(a = \\sigma(z)\\), which is the correct expansion?",
+        hint: "Difficulty: Hard",
+        options: [
+          "\\(\\frac{\\partial J}{\\partial w} = \\frac{\\partial J}{\\partial z} \\cdot x\\)",
+          "\\(\\frac{\\partial J}{\\partial w} = \\frac{\\partial J}{\\partial a} \\cdot \\frac{\\partial a}{\\partial z} \\cdot \\frac{\\partial z}{\\partial w}\\)",
+          "\\(\\frac{\\partial J}{\\partial w} = \\frac{\\partial J}{\\partial a} + \\frac{\\partial a}{\\partial z} + \\frac{\\partial z}{\\partial w}\\)",
+          "\\(\\frac{\\partial J}{\\partial w} = \\frac{\\partial J}{\\partial a} \\cdot x\\)"
+        ],
+        answer: 1,
+        explanation: "The Chain Rule states that you multiply the partial derivatives of each step in the chain."
+      },
+      {
+        question: "What is the fundamental difference in how AdaGrad and RMSProp handle the history of gradients?",
+        hint: "Difficulty: Hard",
+        options: [
+          "AdaGrad forgets old gradients entirely; RMSProp keeps all.",
+          "AdaGrad sums all; RMSProp uses exponential decay.",
+          "AdaGrad uses absolute values; RMSProp uses square roots.",
+          "There is no difference; they are mathematically identical."
+        ],
+        answer: 1,
+        explanation: "AdaGrad accumulates \\(G_{t-1} + g^2\\), constantly growing. RMSProp uses decay \\(\\alpha E_{t-1} + (1-\\alpha) g^2\\), allowing it to forget ancient history."
+      },
+      {
+        question: "In the context of the 'Ravine Problem', why does standard SGD struggle while Momentum succeeds?",
+        hint: "Difficulty: Hard",
+        options: [
+          "SGD bounces across steep walls, making slow progress.",
+          "SGD gets stuck because the learning rate is always low.",
+          "Momentum ignores gradients and moves in a straight line.",
+          "SGD requires computing the expensive Hessian matrix."
+        ],
+        answer: 0,
+        explanation: "In a ravine (steep in one direction, flat in another), standard gradient descent oscillates between the steep walls. Momentum averages these oscillations out and accelerates along the valley floor."
+      }
+    ];
+
+    const quizForm = document.getElementById('quizForm');
+    const submitBtn = document.getElementById('submitQuiz');
+    const resetBtn = document.getElementById('resetQuiz');
+    const notice = document.getElementById('formNotice');
+    const resultPanel = document.getElementById('resultPanel');
+    const scoreSummary = document.getElementById('scoreSummary');
+
+    const renderQuiz = () => {
+      quizForm.innerHTML = '';
+      quizData.forEach((question, index) => {
+        const card = document.createElement('article');
+        card.className = 'question-card';
+        card.dataset.index = index.toString();
+
+        const header = document.createElement('div');
+        header.innerHTML = `
+          <p class="question-eyebrow">Question ${index + 1}</p>
+          <h5>${question.question}</h5>
+          <p class="text-muted small mb-0">${question.hint}</p>
+        `;
+        card.appendChild(header);
+
+        const optionsWrapper = document.createElement('div');
+        optionsWrapper.className = 'option-grid';
+        const shuffled = question.options.map((option, idx) => ({ option, idx })).sort(() => Math.random() - 0.5);
+
+        shuffled.forEach((item, optionIndex) => {
+          const inputId = `q${index}-opt${optionIndex}`;
+          const label = document.createElement('label');
+          label.className = 'option-pill';
+          label.setAttribute('for', inputId);
+          label.innerHTML = `
+            <input type="radio" id="${inputId}" name="question-${index}" value="${item.idx}">
+            <span>${item.option}</span>
+          `;
+          optionsWrapper.appendChild(label);
+        });
+
+        card.appendChild(optionsWrapper);
+
+        const feedback = document.createElement('div');
+        feedback.className = 'question-feedback d-none';
+        feedback.id = `feedback-${index}`;
+        card.appendChild(feedback);
+
+        quizForm.appendChild(card);
+      });
+
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
+    };
+
+    const gradeQuiz = () => {
+      let answeredAll = true;
+      let score = 0;
+
+      quizData.forEach((question, index) => {
+        const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+        const card = quizForm.querySelector(`.question-card[data-index="${index}"]`);
+        const feedback = document.getElementById(`feedback-${index}`);
+
+        card.classList.remove('correct', 'incorrect');
+        feedback.classList.add('d-none', 'text-muted');
+        feedback.classList.remove('success', 'error');
+        feedback.textContent = '';
+
+        if (!selected) {
+          answeredAll = false;
+          return;
+        }
+
+        const chosenIndex = Number(selected.value);
+        const correctText = question.options[question.answer];
+
+        if (chosenIndex === question.answer) {
+          score += 1;
+          card.classList.add('correct');
+          feedback.innerHTML = `<strong>Correct.</strong> ${question.explanation}`;
+          feedback.classList.remove('d-none');
+          feedback.classList.add('success');
+        } else {
+          card.classList.add('incorrect');
+          feedback.innerHTML = `<strong>Incorrect.</strong> ${question.explanation}<br><em>Answer:</em> ${correctText}`;
+          feedback.classList.remove('d-none');
+          feedback.classList.add('error');
+        }
+      });
+
+      if (!answeredAll) {
+        notice.classList.remove('d-none');
+        resultPanel.classList.add('d-none');
+        return;
+      }
+
+      notice.classList.add('d-none');
+      scoreSummary.textContent = `${score} / ${quizData.length}`;
+      resultPanel.classList.remove('d-none');
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
+      window.scrollTo({ top: resultPanel.offsetTop - 120, behavior: 'smooth' });
+    };
+
+    const resetQuiz = () => {
+      quizForm.reset();
+      notice.classList.add('d-none');
+      resultPanel.classList.add('d-none');
+      quizForm.querySelectorAll('.question-card').forEach((card) => card.classList.remove('correct', 'incorrect'));
+      quizForm.querySelectorAll('.question-feedback').forEach((feedback) => {
+        feedback.classList.add('d-none');
+        feedback.classList.remove('success', 'error');
+        feedback.textContent = '';
+      });
+      renderQuiz();
+      window.scrollTo({ top: quizForm.offsetTop - 120, behavior: 'smooth' });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderQuiz();
+      submitBtn.addEventListener('click', gradeQuiz);
+      resetBtn.addEventListener('click', resetQuiz);
+    });
+  </script>
+</body>
+
+</html>
