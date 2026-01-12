@@ -13,7 +13,7 @@ window.KfupmQuizSamples = {
     },
     {
       id: 'day2-complete-mcq',
-      title: 'Complete MCQ Deck',
+      title: 'Kahoot Quiz',
       description: '23-question written quiz on generalization, loss functions, and regularization heuristics.',
       level: 'Core',
       focus: 'Theory refresh',

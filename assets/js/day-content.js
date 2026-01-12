@@ -25,7 +25,7 @@ window.KfupmDayContent = {
       },
       {
         id: 'day2-complete-mcq',
-        title: 'Complete MCQ Deck',
+        title: 'Kahoot Quiz',
         description: 'Kahoot Quiz Authored by Boushra Al-Mazroua & Farah Alshiha.',
         level: 'Core',
         focus: 'Theory refresh',
