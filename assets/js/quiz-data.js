@@ -20,6 +20,16 @@ window.KfupmQuizSamples = {
       duration: 'Self-paced',
       questionCount: 23,
       link: 'day2/day2-complete-mcq.html'
+    },
+    {
+      id: 'day2-flashcards',
+      title: 'Day 2 Flashcards',
+      description: '50-card interactive deck covering algorithms, loss intuition, and regularization heuristics.',
+      level: 'Core',
+      focus: 'Concept reinforcement',
+      duration: 'Self-paced',
+      questionCount: 51,
+      link: 'day2/day2-flashcards.html'
     }
   ],
   day3: [],

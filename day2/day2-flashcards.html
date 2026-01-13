@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2 Flashcards</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- KaTeX for Math -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+        }
+
+        .math-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* 3D Flip Effects */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        .card-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        /* Progress Bar Transition */
+        .progress-transition {
+            transition: width 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-8 px-4 text-slate-800">
+
+    <div id="app" class="w-full max-w-4xl flex flex-col items-center">
+
+        <!-- Header -->
+        <div class="w-full flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-900 tracking-tight">Day 2 Flashcards</h1>
+                <p class="text-slate-500 font-medium mt-1">KAUST Academy - Day 2 Concepts - Prepared by Safwan Nabeel</p>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 text-sm font-semibold text-slate-600">
+                    <span id="current-card-num">1</span> / <span id="total-cards-num">51</span>
+                </div>
+                <button onclick="shuffleCards()" class="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors" title="Shuffle Cards">
+                    <i data-lucide="shuffle" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full h-1.5 bg-slate-200 rounded-full mb-8 overflow-hidden">
+            <div id="progress-bar" class="h-full bg-blue-600 rounded-full progress-transition" style="width: 0%"></div>
+        </div>
+
+        <!-- Card Container -->
+        <div class="perspective-1000 w-full aspect-[4/3] md:aspect-[2/1] min-h-[400px] mb-8 group cursor-pointer" onclick="flipCard()">
+            <div id="card-inner" class="card-inner relative w-full h-full preserve-3d shadow-xl rounded-2xl">
+
+                <!-- Front Side (Question) -->
+                <div class="absolute w-full h-full backface-hidden bg-white rounded-2xl border-2 border-slate-100 flex flex-col items-center justify-center p-8 md:p-12 text-center select-none">
+                    <div class="absolute top-6 left-6">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Question</span>
+                    </div>
+                    <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6 text-blue-600">
+                        <i data-lucide="help-circle" class="w-8 h-8"></i>
+                    </div>
+                    <h2 id="card-front-text" class="text-2xl md:text-3xl font-bold text-slate-800 leading-snug">
+                        <!-- Content Injected via JS -->
+                    </h2>
+                    <p class="absolute bottom-6 text-slate-400 text-sm font-medium flex items-center animate-pulse">
+                        <i data-lucide="mouse-pointer-2" class="w-4 h-4 mr-2"></i> Click to flip
+                    </p>
+                </div>
+
+                <!-- Back Side (Answer) -->
+                <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-slate-900 rounded-2xl flex flex-col items-center justify-center p-8 md:p-12 text-center select-none overflow-y-auto">
+                    <div class="absolute top-6 left-6">
+                        <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-500/20">Answer</span>
+                    </div>
+                    <div id="card-back-content" class="text-xl md:text-2xl font-medium text-slate-100 leading-relaxed">
+                        <!-- Content Injected via JS -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center gap-4 md:gap-6">
+            <button onclick="prevCard()" class="flex items-center justify-center w-14 h-14 rounded-full bg-white border border-slate-200 text-slate-700 shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:shadow-md transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed" id="prev-btn">
+                <i data-lucide="arrow-left" class="w-6 h-6"></i>
+            </button>
+
+            <button onclick="flipCard()" class="flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 hover:shadow-xl transition-all active:scale-95 min-w-[160px] justify-center">
+                <i data-lucide="rotate-cw" class="w-5 h-5"></i>
+                <span id="flip-btn-text">Reveal Answer</span>
+            </button>
+
+            <button onclick="nextCard()" class="flex items-center justify-center w-14 h-14 rounded-full bg-white border border-slate-200 text-slate-700 shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:shadow-md transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed" id="next-btn">
+                <i data-lucide="arrow-right" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Keyboard Hint -->
+        <div class="mt-8 text-slate-400 text-xs font-medium flex gap-4">
+            <span class="flex items-center"><kbd class="bg-white border border-slate-200 px-2 py-0.5 rounded mr-1.5 font-sans">Space</kbd> Flip</span>
+            <span class="flex items-center"><kbd class="bg-white border border-slate-200 px-2 py-0.5 rounded mr-1.5 font-sans">Left</kbd> Prev</span>
+            <span class="flex items-center"><kbd class="bg-white border border-slate-200 px-2 py-0.5 rounded mr-1.5 font-sans">Right</kbd> Next</span>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Data ---
+        const initialCards = [
+            {
+                q: "In supervised learning, what are we trying to learn from the data?",
+                a: "We are given examples $(x_i, y_i)$ and we want a rule $f(x)$ that predicts $y$ from $x$. We choose the model's parameters by making the average error (loss) as small as possible: $$\\min_\\theta \\frac{1}{n}\\sum_{i=1}^n L(f(x_i;\\theta), y_i).$$"
+            },
+            {
+                q: "What is the difference between parameters and hyperparameters?",
+                a: "Parameters are learned from data (like weights in linear regression). Hyperparameters are set before training (like learning rate, regularization strength, $k$ in k-NN). Hyperparameters control the learning process."
+            },
+            {
+                q: "What is the purpose of a loss function in supervised learning?",
+                a: "It quantifies how bad predictions are compared to true labels. The learning algorithm minimizes this loss to improve predictions. Different losses capture different notions of error."
+            },
+            // {
+            //     q: "What is the difference between empirical risk and true risk?",
+            //     a: "Empirical risk is the average loss on the training data (what you can compute). True risk is the expected loss on the real data distribution (what you actually care about). Overfitting happens when empirical risk is low but true risk is high."
+            // },
+            {
+                q: "Why do we split data into training and test (or validation)?",
+                a: "Training fits parameters. Validation tunes hyperparameters (like $k$, $C$, depth). Test is held out to estimate generalization. Without a holdout, you can overfit the evaluation."
+            },
+            {
+                q: "What is the bias-variance tradeoff in one practical sentence?",
+                a: "Simple models often have high bias (underfit) but low variance; complex models often have low bias (fit training well) but high variance (sensitive to data). Regularization and ensembling often reduce variance."
+            },
+            {
+                q: "Why is Mean Squared Error (MSE) common for regression?",
+                a: "MSE penalizes large errors strongly by squaring, which makes it smooth and differentiable for gradient-based optimization. It also matches the assumption of Gaussian noise (then MSE corresponds to maximum likelihood)."
+            },
+            {
+                q: "When might Mean Absolute Error (MAE) be preferred over MSE?",
+                a: "MAE is more robust to outliers because it grows linearly rather than quadratically. If you expect extreme errors and do not want them to dominate training, MAE is often better."
+            },
+            {
+                q: "Why is MSE usually a poor choice for classification probabilities?",
+                a: "Classification needs calibrated probabilities and strong penalties for confident wrong predictions. MSE does not punish confidently wrong predictions as effectively and can lead to slower or less stable learning."
+            },
+            {
+                q: "What does binary cross-entropy (log loss) measure intuitively?",
+                a: "It measures how surprised the model is by the true label. Predicting 0.99 for the wrong class gets punished heavily. This encourages correct probabilities, not just correct class labels."
+            },
+            {
+                q: "What is the multiclass cross-entropy loss conceptually?",
+                a: "It compares the predicted probability distribution (via softmax) to the true distribution (often one-hot). Minimizing it pushes probability mass toward the correct class and away from others."
+            },
+            {
+                q: "What is one-hot encoding and why is it used in multiclass loss?",
+                a: "A label for class $k$ becomes a vector with 1 at position $k$ and 0 elsewhere. This lets cross-entropy treat multiclass targets as a distribution and makes gradients clean and consistent."
+            },
+            {
+                q: "What is the vectorized form of linear regression prediction?",
+                a: "With design matrix $X$ (rows are samples) and weights $w$, predictions are $\\hat{y} = Xw$. This compact form helps derive gradients and closed-form solutions."
+            },
+            {
+                q: "What is the normal equation solution for linear regression?",
+                a: "For MSE without regularization, the minimizer is $$w = (X^T X)^{-1} X^T y$$ if $X^T X$ is invertible. It is fast for small or medium problems but can be expensive or unstable for large or high-dimensional data."
+            },
+            {
+                q: "Why might gradient descent be used instead of the normal equation?",
+                a: "Inverting $X^T X$ is costly and sometimes numerically unstable. Gradient methods scale better to large datasets and can be used even when the matrix is not nicely invertible."
+            },
+            {
+                q: "What does the learning rate do in gradient descent?",
+                a: "It controls step size. Too small means slow learning. Too large means overshoot and possible divergence. A good learning rate yields steady decrease in loss."
+            },
+            {
+                q: "What does it mean that the MSE objective for linear regression is convex?",
+                a: "Any local minimum is global. Gradient descent (with reasonable settings) can reliably find the best solution, and the optimization landscape has no bad traps."
+            },
+            {
+                q: "What is overfitting in terms of weights for linear models?",
+                a: "The model can assign very large magnitudes to weights to fit noise in training data, creating a fragile solution that does not generalize."
+            },
+            {
+                q: "What does L2 regularization (Ridge) do?",
+                a: "It adds a penalty $\\lambda \\|w\\|_2^2$ to the loss, encouraging smaller weights. Smaller weights often mean smoother models and better generalization."
+            },
+            {
+                q: "Why is Ridge said to shrink weights but not set them exactly to zero?",
+                a: "The squared penalty smoothly discourages large weights, pulling them toward 0 continuously. It rarely forces a weight to be exactly zero unless the feature has no effect."
+            },
+            {
+                q: "What does L1 regularization (Lasso) do differently?",
+                a: "It adds $\\lambda \\|w\\|_1 = \\lambda \\sum |w_j|$, which tends to create sparse models where some coefficients become exactly 0."
+            },
+            {
+                q: "Geometric intuition: why does Lasso create sparsity more than Ridge?",
+                a: "L1 constraint regions have corners aligned with axes. The optimum often lands on a corner so some coordinates become exactly zero. L2 regions are round so solutions typically have many small nonzero weights."
+            },
+            {
+                q: "What is the closed-form solution for Ridge regression?",
+                a: "$$w = (X^T X + \\lambda I)^{-1} X^T y.$$ Adding $\\lambda I$ improves numerical stability and reduces sensitivity to collinearity."
+            },
+            {
+                q: "What does logistic regression model?",
+                a: "It models the probability of class 1 as a sigmoid of a linear score: $$p(y=1|x)=\\sigma(w^T x + b).$$ It is a linear decision boundary but outputs probabilities."
+            },
+            {
+                q: "Why do we use a sigmoid function?",
+                a: "It squashes any real-valued score into $(0,1)$, making it valid as a probability. It also provides smooth gradients for training."
+            },
+            {
+                q: "What is the relationship between logistic regression and log-odds?",
+                a: "Logistic regression is linear in the log-odds: $$\\log\\frac{p}{1-p} = w^T x + b.$$ Each feature contributes additively to the log-odds."
+            },
+            {
+                q: "What is the key gradient form for logistic regression with cross-entropy?",
+                a: "The gradient looks like features weighted by prediction error: $$\\nabla_w \\propto X^T(\\hat{y} - y).$$"
+            },
+            {
+                q: "What does softmax do?",
+                a: "It turns a vector of class scores into a probability distribution: each probability is positive and all sum to 1. Larger scores get exponentially more probability."
+            },
+            {
+                q: "Why is multiclass cross-entropy natural with softmax?",
+                a: "Softmax outputs probabilities across classes, and cross-entropy measures how well that mass matches the true class. Together they provide clean gradients that push up the correct class score and push down others."
+            },
+            {
+                q: "What is a practical symptom of numerical instability in softmax and how is it fixed?",
+                a: "Exponentials can overflow if scores are large. Fix by subtracting the max score before exponentiating. This does not change the result but stabilizes computation."
+            },
+            {
+                q: "What does k-NN learn, and why is it called a lazy learner?",
+                a: "It does not fit parameters during training. It stores the training data and computes neighbors at prediction time, then votes (classification) or averages (regression)."
+            },
+            {
+                q: "How does $k$ control bias and variance in k-NN?",
+                a: "Small $k$ gives low bias but high variance. Large $k$ gives higher bias but lower variance, producing smoother decision regions."
+            },
+            {
+                q: "Why is feature scaling critical for k-NN?",
+                a: "Distances depend on feature magnitudes. If one feature has a much larger scale, it dominates the distance and drowns out other features."
+            },
+            {
+                q: "What is the curse of dimensionality in k-NN terms?",
+                a: "In high dimensions, points become far apart and nearest neighbors are not much closer than far points. Distance becomes less informative, so k-NN degrades unless you have enormous data or good features."
+            },
+            {
+                q: "What is the core idea of an SVM classifier?",
+                a: "Find a decision boundary that maximizes the margin, the distance between the boundary and the closest points from each class."
+            },
+            {
+                q: "What are support vectors?",
+                a: "The training points closest to the decision boundary. They define the margin and heavily influence the boundary."
+            },
+            {
+                q: "What is the difference between hard-margin and soft-margin SVM?",
+                a: "Hard-margin assumes perfectly separable data and allows no violations. Soft-margin allows some violations controlled by a penalty parameter, making it practical for noisy data."
+            },
+            {
+                q: "What does the $C$ parameter do in soft-margin SVM?",
+                a: "It controls the tradeoff between maximizing margin and penalizing classification errors. Large $C$ fits training data more strictly; small $C$ allows more violations for a wider margin."
+            },
+            {
+                q: "What problem do kernels solve in SVMs?",
+                a: "They let you learn nonlinear decision boundaries by implicitly mapping data into a higher-dimensional feature space without explicitly computing the mapping."
+            },
+            {
+                q: "What is the kernel trick in one sentence?",
+                a: "Replace dot products $\\phi(x)^T \\phi(z)$ with a kernel function $K(x,z)$ that computes that dot product directly."
+            },
+            {
+                q: "When is a linear kernel a strong choice?",
+                a: "When data is roughly linearly separable or you have many features (for example, sparse text). Linear kernels are fast and often effective."
+            },
+            {
+                q: "What is the intuition behind the RBF (Gaussian) kernel?",
+                a: "It measures similarity based on distance: points closer together are much more similar. It can create very flexible boundaries and model local neighborhoods."
+            },
+            {
+                q: "Why do SVMs with RBF kernels typically require scaling features?",
+                a: "The kernel depends on distances. If one feature scale dominates, distance becomes distorted and kernel similarity becomes meaningless."
+            },
+            {
+                q: "How does a decision tree make predictions?",
+                a: "It recursively splits the feature space with if/then rules. A sample follows a path from root to a leaf. The leaf outputs a class (majority vote) or a value (average)."
+            },
+            {
+                q: "What makes a good split in a classification tree?",
+                a: "A split that increases purity so each child node contains more of a single class. Measures like Gini impurity or entropy quantify purity."
+            },
+            {
+                q: "What is the difference between Gini impurity and entropy in practice?",
+                a: "Both measure how mixed classes are and usually choose similar splits. Gini is slightly simpler to compute; entropy has a stronger information-theory interpretation."
+            },
+            {
+                q: "Why do decision trees not use gradient descent like linear models?",
+                a: "Tree building involves discrete choices (which feature, what threshold), creating a non-smooth objective. Trees are learned via greedy search."
+            },
+            {
+                q: "What are the main overfitting signs for a single decision tree?",
+                a: "Very deep trees can memorize training data: many leaves, splits on tiny groups, near-perfect training accuracy but worse test performance. Limiting depth, minimum samples per leaf, or pruning helps."
+            },
+            {
+                q: "What does a Random Forest change compared to a single tree?",
+                a: "It trains many trees on bootstrapped samples and averages their predictions (or votes). It also uses random feature subsets at splits to decorrelate trees."
+            },
+            {
+                q: "Why does bagging (Random Forest) reduce overfitting?",
+                a: "Individual trees are high-variance. Averaging many diverse trees cancels out noise-driven quirks, reducing variance while keeping strong predictive power."
+            },
+            {
+                q: "How is gradient boosting different from Random Forest?",
+                a: "Random Forest trains trees independently and averages them. Gradient boosting trains trees sequentially, each new tree correcting mistakes of the existing ensemble."
+            },
+            {
+                q: "Why is it called gradient boosting?",
+                a: "Each step adds a model that approximates the negative gradient of the loss with respect to current predictions. This often looks like fitting the residuals so the ensemble improves in the direction that most reduces loss."
+            }
+        ];
+
+        // --- State ---
+        let cards = [...initialCards];
+        let currentIndex = 0;
+        let isFlipped = false;
+
+        // --- DOM Elements ---
+        const cardInner = document.getElementById('card-inner');
+        const cardFrontText = document.getElementById('card-front-text');
+        const cardBackContent = document.getElementById('card-back-content');
+        const currentNumEl = document.getElementById('current-card-num');
+        const totalNumEl = document.getElementById('total-cards-num');
+        const progressBar = document.getElementById('progress-bar');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const flipBtnText = document.getElementById('flip-btn-text');
+
+        // --- Functions ---
+
+        function init() {
+            renderCard();
+            updateMeta();
+            lucide.createIcons();
+
+            // Render Math on load
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ]
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space') {
+                    e.preventDefault();
+                    flipCard();
+                } else if (e.code === 'ArrowRight') {
+                    nextCard();
+                } else if (e.code === 'ArrowLeft') {
+                    prevCard();
+                }
+            });
+        }
+
+        function renderCard() {
+            // Reset state
+            isFlipped = false;
+            cardInner.classList.remove('is-flipped');
+            flipBtnText.innerText = "Reveal Answer";
+
+            // Update content with small animation delay to hide swap
+            setTimeout(() => {
+                const currentCard = cards[currentIndex];
+                cardFrontText.innerHTML = currentCard.q;
+                cardBackContent.innerHTML = currentCard.a;
+
+                // Re-render math
+                renderMathInElement(cardFrontText, {
+                     delimiters: [
+                         {left: '$$', right: '$$', display: true},
+                         {left: '$', right: '$', display: false}
+                     ]
+                });
+                renderMathInElement(cardBackContent, {
+                     delimiters: [
+                         {left: '$$', right: '$$', display: true},
+                         {left: '$', right: '$', display: false}
+                     ]
+                });
+            }, 150);
+        }
+
+        function updateMeta() {
+            currentNumEl.innerText = currentIndex + 1;
+            totalNumEl.innerText = cards.length;
+
+            const progress = ((currentIndex + 1) / cards.length) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === cards.length - 1;
+        }
+
+        function flipCard() {
+            isFlipped = !isFlipped;
+            cardInner.classList.toggle('is-flipped');
+            flipBtnText.innerText = isFlipped ? "Show Question" : "Reveal Answer";
+        }
+
+        function nextCard() {
+            if (currentIndex < cards.length - 1) {
+                currentIndex++;
+                renderCard();
+                updateMeta();
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCard();
+                updateMeta();
+            }
+        }
+
+        function shuffleCards() {
+            // Fisher-Yates shuffle
+            for (let i = cards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cards[i], cards[j]] = [cards[j], cards[i]];
+            }
+            currentIndex = 0;
+            renderCard();
+            updateMeta();
+        }
+
+        // --- Start ---
+        init();
+
+    </script>
+</body>
+</html>

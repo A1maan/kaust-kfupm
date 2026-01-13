@@ -26,12 +26,22 @@ window.KfupmDayContent = {
       {
         id: 'day2-complete-mcq',
         title: 'Kahoot Quiz',
-        description: 'Kahoot Quiz Authored by Boushra Al-Mazroua & Farah Alshiha.',
+        description: 'Kahoot Quiz authored by Boushra Al-Mazroua & Farah Alshiha.',
         level: 'Core',
         focus: 'Theory refresh',
         duration: 'Self-paced',
         questionCount: 23,
         link: 'day2-complete-mcq.html'
+      },
+      {
+        id: 'day2-flashcards',
+        title: 'Day 2 Flashcards',
+        description: '51-card interactive deck summarizing key ML algorithm ideas. Prepared by Safwan Nabeel.',
+        level: 'Core',
+        focus: 'Concept reinforcement',
+        duration: 'Self-paced',
+        questionCount: 51,
+        link: 'day2-flashcards.html'
       }
     ]
   },
