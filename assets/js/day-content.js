@@ -41,7 +41,8 @@ window.KfupmDayContent = {
         focus: 'Concept reinforcement',
         duration: 'Self-paced',
         questionCount: 51,
-        link: 'day2-flashcards.html'
+        link: 'day2-flashcards.html',
+        ctaLabel: 'Open flashcards'
       }
     ]
   },

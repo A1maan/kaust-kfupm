@@ -24,12 +24,13 @@ window.KfupmQuizSamples = {
     {
       id: 'day2-flashcards',
       title: 'Day 2 Flashcards',
-      description: '50-card interactive deck covering algorithms, loss intuition, and regularization heuristics.',
+      description: '51-card interactive deck covering algorithms, loss intuition, and regularization heuristics.',
       level: 'Core',
       focus: 'Concept reinforcement',
       duration: 'Self-paced',
       questionCount: 51,
-      link: 'day2/day2-flashcards.html'
+      link: 'day2/day2-flashcards.html',
+      ctaLabel: 'Open flashcards'
     }
   ],
   day3: [],

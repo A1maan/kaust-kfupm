@@ -63,7 +63,7 @@
           typeof quiz.link === 'string' && quiz.link.trim().length > 0
             ? quiz.link
             : `../quiz.html?day=${encodeURIComponent(dayKey)}&quizId=${encodeURIComponent(quiz.id)}`;
-        const buttonLabel = quiz.link ? 'Open quiz page' : 'Practice this quiz';
+        const buttonLabel = quiz.ctaLabel || (quiz.link ? 'Open quiz page' : 'Practice this quiz');
         const questionCount = Array.isArray(quiz.questions)
           ? quiz.questions.length
           : typeof quiz.questionCount === 'number'
