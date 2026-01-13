@@ -85,7 +85,14 @@ window.KfupmDayContent = {
     quizzes: []
   },
   extra: {
-    resources: [],
+    resources: [
+      {
+        title: 'Google Drive Resource Folder',
+        description: 'Shared Google Drive folder for KAUST AI Stage-2 at KFUPM.',
+        href: 'https://drive.google.com/drive/folders/1gzyOSxhVoZpMMUVt-MLncPmQj9RIYJop',
+        badge: 'Drive'
+      }
+    ],
     quizzes: []
   }
 };
