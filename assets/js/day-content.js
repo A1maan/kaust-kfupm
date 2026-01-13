@@ -6,12 +6,31 @@ window.KfupmDayContent = {
         description: 'Complete walkthrough + Lab 2 details. Summarized by Ahmad Alakhdhar.',
         href: 'Day1 lab Summary.html',
         badge: 'Lab insights'
+      },
+      {
+        title: 'Day 1 Annotated Slides (PDF)',
+        description: 'Stage 2 2026 Day 1 annotated PDF. Annotated by Rawan Alghamdi.',
+        href: '../day1/Stage_2_2026_Day1_annotated.pdf',
+        badge: 'Slides'
       }
     ],
     quizzes: []
   },
   day2: {
-    resources: [],
+    resources: [
+      {
+        title: 'Day 2 Revision Slides (PDF)',
+        description: 'Intro to AI Day 2 revision deck.',
+        href: '../day2/Intro into AI - Day 2 (Revision).pdf',
+        badge: 'Slides'
+      },
+      {
+        title: 'Day 2 Annotated Slides (PDF)',
+        description: 'Stage 2 2026 Day 2 annotated PDF. Annotated by Rawan Alghamdi.',
+        href: '../day2/Stage_2_2026_Day2_annotated.pdf',
+        badge: 'Slides'
+      }
+    ],
     quizzes: [
       {
         id: 'day2-algorithms-mcq',
