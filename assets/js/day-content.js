@@ -47,7 +47,14 @@ window.KfupmDayContent = {
     ]
   },
   day3: {
-    resources: [],
+    resources: [
+      {
+        title: 'Day 3 Lab 1 PDF',
+        description: 'Lab reference for Fundamentals of Deep Learning. Prepared by Farah Alshiha.',
+        href: '../day3/day3lab1.pdf',
+        badge: 'Lab'
+      }
+    ],
     quizzes: []
   },
   day4: {
