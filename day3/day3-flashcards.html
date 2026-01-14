@@ -14,13 +14,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-    
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc; /* Slate 50 */
         }
-        
+
         .math-font {
             font-family: 'JetBrains Mono', monospace;
         }
@@ -29,16 +29,16 @@
         .perspective-1000 {
             perspective: 1000px;
         }
-        
+
         .preserve-3d {
             transform-style: preserve-3d;
         }
-        
+
         .backface-hidden {
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
         }
-        
+
         .rotate-y-180 {
             transform: rotateY(180deg);
         }
@@ -56,7 +56,7 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .animate-slide-in {
             animation: slideIn 0.3s ease-out forwards;
         }
@@ -70,17 +70,17 @@
 <body class="min-h-screen flex flex-col items-center py-8 px-4 text-slate-800">
 
     <div id="app" class="w-full max-w-4xl flex flex-col items-center">
-        
+
         <!-- Header -->
         <div class="w-full flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
             <div>
                 <h1 class="text-3xl font-bold text-slate-900 tracking-tight">Deep Learning Flashcards</h1>
-                <p class="text-slate-500 font-medium mt-1">KAUST Academy • Day 3 Concepts • Prepared by Safwan</p>
+                <p class="text-slate-500 font-medium mt-1">KAUST Academy - Day 3 Concepts - Prepared by Safwan</p>
             </div>
-            
+
             <div class="flex items-center gap-4">
                 <div class="bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 text-sm font-semibold text-slate-600">
-                    <span id="current-card-num">1</span> / <span id="total-cards-num">42</span>
+                    <span id="current-card-num">1</span> / <span id="total-cards-num">45</span>
                 </div>
                 <button onclick="shuffleCards()" class="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors" title="Shuffle Cards">
                     <i data-lucide="shuffle" class="w-5 h-5"></i>
@@ -96,7 +96,7 @@
         <!-- Card Container -->
         <div class="perspective-1000 w-full aspect-[4/3] md:aspect-[2/1] min-h-[400px] mb-8 group cursor-pointer" onclick="flipCard()">
             <div id="card-inner" class="card-inner relative w-full h-full preserve-3d shadow-xl rounded-2xl">
-                
+
                 <!-- Front Side (Question) -->
                 <div class="absolute w-full h-full backface-hidden bg-white rounded-2xl border-2 border-slate-100 flex flex-col items-center justify-center p-8 md:p-12 text-center select-none">
                     <div class="absolute top-6 left-6">
@@ -131,7 +131,7 @@
             <button onclick="prevCard()" class="flex items-center justify-center w-14 h-14 rounded-full bg-white border border-slate-200 text-slate-700 shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:shadow-md transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed" id="prev-btn">
                 <i data-lucide="arrow-left" class="w-6 h-6"></i>
             </button>
-            
+
             <button onclick="flipCard()" class="flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 hover:shadow-xl transition-all active:scale-95 min-w-[160px] justify-center">
                 <i data-lucide="rotate-cw" class="w-5 h-5"></i>
                 <span id="flip-btn-text">Reveal Answer</span>
@@ -145,8 +145,8 @@
         <!-- Keyboard Hint -->
         <div class="mt-8 text-slate-400 text-xs font-medium flex gap-4">
             <span class="flex items-center"><kbd class="bg-white border border-slate-200 px-2 py-0.5 rounded mr-1.5 font-sans">Space</kbd> Flip</span>
-            <span class="flex items-center"><kbd class="bg-white border border-slate-200 px-2 py-0.5 rounded mr-1.5 font-sans">←</kbd> Prev</span>
-            <span class="flex items-center"><kbd class="bg-white border border-slate-200 px-2 py-0.5 rounded mr-1.5 font-sans">→</kbd> Next</span>
+            <span class="flex items-center"><kbd class="bg-white border border-slate-200 px-2 py-0.5 rounded mr-1.5 font-sans">Left</kbd> Prev</span>
+            <span class="flex items-center"><kbd class="bg-white border border-slate-200 px-2 py-0.5 rounded mr-1.5 font-sans">Right</kbd> Next</span>
         </div>
 
     </div>
@@ -154,178 +154,186 @@
     <script>
         // --- Data ---
         const initialCards = [
-            // --- Easy / Definitions ---
+            // Introduction and Fundamentals
             {
                 q: "What is Deep Learning?",
-                a: "A subset of Machine Learning powered by Artificial Neural Networks with many layers, inspired by the human brain."
+                a: "Machine Learning powered by Artificial Neural Networks with many layers. \'Neural\' is inspired by brain neurons; \'Deep\' refers to the number of layers."
             },
             {
-                q: "What does the 'Deep' in Deep Learning refer to?",
-                a: "It refers to the depth of the network, specifically the number of hidden layers."
+                q: "How does Deep Learning scale differently than traditional ML?",
+                a: "Traditional ML hits a performance ceiling as data increases. Deep Learning keeps improving with more data."
             },
             {
-                q: "What are the three main types of layers in a neural network?",
-                a: "Input Layer, Hidden Layer(s), and Output Layer."
+                q: "State the Universal Approximation Theorem.",
+                a: "A neural network with enough neurons can approximate any continuous function to arbitrary accuracy."
+            },
+            // Network Architecture
+            {
+                q: "What are the three essential parts of a neural network?",
+                a: "(1) Input layer receives raw data. (2) Hidden layers extract patterns and features. (3) Output layer produces the final prediction."
             },
             {
-                q: "What is the Universal Approximation Theorem?",
-                a: "A theory stating that a neural network with enough neurons can theoretically approximate any continuous function to arbitrary accuracy."
-            },
-            {
-                q: "What determines the size of the Input Layer?",
-                a: "The number of neurons in the input layer must exactly match the number of features ($k$) in your data."
-            },
-            {
-                q: "What is an Epoch?",
-                a: "One complete pass through the entire training dataset."
-            },
-            {
-                q: "What is a Batch?",
-                a: "A small subset of the dataset used to calculate the gradient and update weights once."
-            },
-            {
-                q: "What is an Optimizer?",
-                a: "An algorithm (like SGD or Adam) that updates the weights of the network to minimize the loss function."
-            },
-            {
-                q: "What is a Loss Function?",
-                a: "A function $J(\\theta)$ that measures the error between the model's prediction $\\hat{y}$ and the true target $y$."
-            },
-            {
-                q: "What is Shuffling?",
-                a: "Randomizing the order of data samples before each epoch to ensure batches are representative and gradients are unbiased."
-            },
-            {
-                q: "What is the Forward Pass?",
-                a: "The process of passing data from input to output to generate a prediction and compute the loss."
-            },
-            {
-                q: "What is Backpropagation?",
-                a: "The process of calculating gradients by moving backward from the loss function to the weights using the Chain Rule."
-            },
-            {
-                q: "What is an MLP?",
-                a: "Multi-Layer Perceptron. A standard fully connected neural network, best suited for tabular data."
-            },
-            {
-                q: "What is a CNN?",
-                a: "Convolutional Neural Network. Best suited for Image data, as it captures spatial hierarchies."
-            },
-            
-            // --- Medium / Concepts ---
-            {
-                q: "What is the formula for the linear operation in a single neuron?",
-                a: "$z = w^T x + b$"
+                q: "What two operations does a single neuron perform?",
+                a: "(1) Linear combination: $z = w^T x + b$. (2) Non-linear activation: $a = \\sigma(z)$."
             },
             {
                 q: "Why are activation functions necessary?",
-                a: "To introduce non-linearity. Without them, stacking layers results in a single linear model ($Linear + Linear = Linear$)."
+                a: "Without activations, stacking layers creates another linear function (Linear + Linear = Linear). Activations add non-linearity to fit complex patterns."
             },
             {
-                q: "What is ReLU and its formula?",
-                a: "Rectified Linear Unit. The most popular activation for hidden layers. $\\sigma(z) = \\max(0, z)$."
+                q: "Compare Sigmoid, Tanh, and ReLU activations.",
+                a: "Sigmoid: outputs $(0, 1)$, common in logistic regression. Tanh: outputs $(-1, 1)$, zero-centered. ReLU: $\\max(0, z)$, common for deep networks."
             },
             {
-                q: "What is the output range of the Sigmoid function?",
-                a: "It outputs values between **0 and 1**. Useful for binary classification probabilities."
+                q: "How do we represent a full layer mathematically?",
+                a: "$Z = W x + b$ (vectorized form). Each row of $W$ contains one neuron\'s weights, computing all neurons in parallel."
             },
             {
-                q: "What is the output range of the Tanh function?",
-                a: "It outputs values between **-1 and 1**. It is zero-centered."
+                q: "How do we determine the number of neurons in each layer?",
+                a: "Input layer matches the number of features. Output layer matches the task (1 for regression, $C$ for $C$-class classification). Hidden layers are a design choice."
             },
             {
-                q: "What is Batch Gradient Descent?",
-                a: "Updating weights using the **entire** dataset. It is stable but slow and memory-heavy."
+                q: "What network shapes are used for different tasks?",
+                a: "Regression: output 1 with MSE loss. Binary classification: output 1 with sigmoid and binary cross-entropy. Multiclass: output $C$ with softmax and cross-entropy."
+            },
+            // Forward Pass
+            {
+                q: "What is a forward pass?",
+                a: "Compute network output from input. Example: $a^{[0]} = x$, $z^{[1]} = W^{[1]} a^{[0]} + b^{[1]}$, $a^{[1]} = \\sigma(z^{[1]})$, ..., $\\hat{y} = a^{[L]}$."
             },
             {
-                q: "What is Stochastic Gradient Descent (SGD)?",
-                a: "Updating weights using **one sample** at a time. It is fast but very noisy."
+                q: "What happens after the forward pass?",
+                a: "Compute the loss $J(\\theta)$ comparing prediction $\\hat{y}$ with true target $y$, then run backpropagation to compute gradients."
+            },
+            // Backpropagation
+            {
+                q: "What is backpropagation?",
+                a: "Using the chain rule to calculate gradients of the loss with respect to all parameters by flowing backward through the network."
             },
             {
-                q: "Why is Mini-Batch Gradient Descent preferred?",
-                a: "It balances the stability of Batch GD with the speed and hardware efficiency of SGD."
+                q: "Write the chain rule for computing $\\frac{\\partial J}{\\partial w}$ in a neuron.",
+                a: "$\\frac{\\partial J}{\\partial w} = \\frac{\\partial J}{\\partial a} \\cdot \\frac{\\partial a}{\\partial z} \\cdot \\frac{\\partial z}{\\partial w}$."
             },
             {
-                q: "What does 'Momentum' do in optimization?",
-                a: "It accumulates a running average of past gradients (velocity) to smooth out updates and accelerate through flat areas."
+                q: "For sigmoid activation, what is $\\frac{\\partial J}{\\partial w}$?",
+                a: "If $z = wx + b$, $a = \\sigma(z)$, and $J = \\frac{1}{2}(a - y)^2$, then $\\frac{\\partial J}{\\partial w} = (a - y) \\cdot a(1 - a) \\cdot x$."
             },
             {
-                q: "What is the 'Ravine Problem' in optimization?",
-                a: "When the loss surface is steep in one direction but flat in another, causing standard SGD to oscillate inefficiently."
+                q: "Why is it called backpropagation?",
+                a: "Gradients are calculated starting from the loss and propagated backward through each layer to the beginning."
+            },
+            // Training Process
+            {
+                q: "What is the basic gradient descent update rule?",
+                a: "$\\theta_{new} = \\theta_{old} - \\alpha \\nabla_{\\theta} J(\\theta)$, where $\\alpha$ is the learning rate."
             },
             {
-                q: "What is the main concept of AdaGrad?",
-                a: "Adaptive Learning Rates. It assigns smaller learning rates to frequently updated parameters and larger rates to infrequent ones."
+                q: "What is a training step (iteration)?",
+                a: "One forward pass, loss calculation, backward pass, and parameter update on a single batch."
             },
             {
-                q: "What is the major flaw of AdaGrad?",
-                a: "It accumulates all past squared gradients, causing the learning rate to shrink to zero effectively stopping training."
+                q: "What is a batch in training?",
+                a: "A small subset of training samples (for example, 32, 64, or 128) used for one parameter update."
             },
+            {
+                q: "What is an epoch?",
+                a: "One complete pass through the entire training dataset, with all batches processed once."
+            },
+            {
+                q: "How many steps are in one epoch?",
+                a: "Steps per epoch $= \\lceil N / B \\rceil$, where $N$ is total samples and $B$ is batch size."
+            },
+            {
+                q: "Why shuffle the dataset between epochs?",
+                a: "Shuffling randomizes batch composition to prevent biased gradient estimates and improve generalization."
+            },
+            {
+                q: "Compare Batch GD vs Mini-Batch GD vs Stochastic GD.",
+                a: "Batch: uses all data (stable, slow, memory-intensive). Mini-Batch: uses small batches (best balance, GPU-efficient). Stochastic: uses 1 sample (very noisy, slow)."
+            },
+            // Optimizers - Basic
+            {
+                q: "What problem does Momentum solve?",
+                a: "Vanilla gradient descent oscillates in ravines and makes slow progress. Momentum accumulates velocity to smooth the trajectory and accelerate convergence."
+            },
+            {
+                q: "Write the Momentum update rule.",
+                a: "$v_t = \\beta v_{t-1} + (1 - \\beta) \\nabla J(\\theta)$, then $\\theta_{t+1} = \\theta_t - \\alpha v_t$. Typically $\\beta = 0.9$."
+            },
+            {
+                q: "What does AdaGrad do?",
+                a: "Gives each parameter its own adaptive learning rate based on gradient history: $\\theta_{t+1} = \\theta_t - \\frac{\\alpha}{\\sqrt{G_t} + \\epsilon} g_t$."
+            },
+            {
+                q: "What is the problem with AdaGrad?",
+                a: "$G_t$ accumulates all past squared gradients, so the learning rate shrinks toward zero and training stalls."
+            },
+            // Optimizers - Advanced
             {
                 q: "How does RMSProp fix AdaGrad?",
-                a: "It uses an exponentially decaying average of squared gradients, allowing it to 'forget' old history and keep the learning rate active."
+                a: "Uses an exponentially decaying average: $E[g^2]_t = \\beta E[g^2]_{t-1} + (1 - \\beta) g_t^2$ (often $\\beta \approx 0.9$)."
             },
             {
-                q: "What two concepts does Adam combine?",
-                a: "**Momentum** (for velocity/direction) and **RMSProp** (for adaptive learning rates)."
-            },
-            
-            // --- Hard / Math & Specifics ---
-            {
-                q: "What is the general update rule for Gradient Descent?",
-                a: "$\\theta_{new} = \\theta_{old} - \\alpha \\nabla_{\\theta} J(\\theta)$"
+                q: "What does Adam combine?",
+                a: "Momentum (smooth trajectory) + adaptive learning rates (RMSProp-style) + bias correction."
             },
             {
-                q: "What is the Chain Rule formula for a single weight $w$?",
-                a: "$\\frac{\\partial J}{\\partial w} = \\frac{\\partial J}{\\partial a} \\cdot \\frac{\\partial a}{\\partial z} \\cdot \\frac{\\partial z}{\\partial w}$"
+                q: "What are the two moving averages in Adam?",
+                a: "$m_t = \\beta_1 m_{t-1} + (1 - \\beta_1) g_t$ and $v_t = \\beta_2 v_{t-1} + (1 - \\beta_2) g_t^2$."
             },
             {
-                q: "In Adam, what is the 'Bias Correction' step used for?",
-                a: "To correct the initial moving averages (which start at 0) so they are unbiased estimates early in training."
+                q: "Why does Adam need bias correction?",
+                a: "Moving averages start at zero, biasing early estimates. Corrections: $\\hat{m}_t = m_t/(1 - \\beta_1^t)$ and $\\hat{v}_t = v_t/(1 - \\beta_2^t)$."
             },
             {
-                q: "What is the specific improvement of AdamW over Adam?",
-                a: "AdamW decouples weight decay from the gradient update, applying it directly to the parameters for better regularization."
+                q: "Write the Adam update rule.",
+                a: "$\\theta_{t+1} = \\theta_t - \\frac{\\alpha}{\\sqrt{\\hat{v}}_t + \\epsilon} \\hat{m}_t$."
             },
             {
-                q: "Mathematically, how is the 'velocity' ($v_t$) updated in Momentum?",
-                a: "$v_t = \\beta v_{t-1} + (1-\\beta) \\nabla J(\\theta)$"
+                q: "What is the problem with Adam\'s weight decay?",
+                a: "L2 regularization is added to the gradient before adaptive scaling, which can distort the intended regularization effect."
             },
             {
-                q: "In Adam, what does the term $m_t$ represent?",
-                a: "The exponential moving average of the **gradients** (similar to Momentum)."
+                q: "How does AdamW fix this?",
+                a: "Decouples weight decay from the gradient update: $\\theta_{t+1} = \\theta_t - \\frac{\\alpha}{\\sqrt{\\hat{v}}_t + \\epsilon} \\hat{m}_t - \\alpha \\lambda \\theta_t$."
             },
             {
-                q: "In Adam, what does the term $v_t$ represent?",
-                a: "The exponential moving average of the **squared gradients** (similar to RMSProp)."
+                q: "What optimizer should you use by default?",
+                a: "AdamW. It is robust and works well across many problems in practice."
+            },
+            // Design Decisions
+            {
+                q: "What are the key hyperparameters to set?",
+                a: "Learning rate $\\alpha$, batch size, number of epochs, momentum coefficients $\\beta_1$ and $\\beta_2$, and weight decay $\\lambda$."
             },
             {
-                q: "What is the mathematical update for accumulated gradients in AdaGrad?",
-                a: "$G_t = G_{t-1} + g_t^2$ (Sum of squares)"
+                q: "What architectural decisions must you make?",
+                a: "Number of layers, neurons per layer, activation functions, output layer shape and activation, and network type (MLP/CNN/RNN)."
             },
             {
-                q: "What is the mathematical update for the squared gradient average in RMSProp?",
-                a: "$E[g^2]_t = \\alpha E[g^2]_{t-1} + (1-\\alpha)g_t^2$ (Exponential moving average)"
+                q: "What are the three types of neural network architectures?",
+                a: "MLP (Multi-Layer Perceptron) for tabular data, CNN (Convolutional) for images, RNN (Recurrent) for sequences/time series."
+            },
+            // Context and Memory
+            {
+                q: "Why do we not compute gradients on the entire dataset?",
+                a: "It is computationally expensive, requires massive memory, and slows updates. Mini-batches provide frequent updates and good gradient estimates."
             },
             {
-                q: "How many neurons are needed in the Output Layer for Multiclass Classification with $C$ classes?",
-                a: "$C$ neurons (typically using a Softmax activation)."
+                q: "How does a neural network \"remember\" patterns?",
+                a: "Through learned weights (parameters). Training adjusts weights via gradient descent to encode patterns from data."
             },
             {
-                q: "If the input $x$ has shape $(k, 1)$ and weights $W$ have shape $(m, k)$, what is the shape of $z$?",
-                a: "$(m, 1)$, because $z = Wx + b$."
+                q: "What is the relationship between neurons, layers, and networks?",
+                a: "Neuron = basic unit. Layer = collection of neurons in parallel. Network = stack of layers with data flowing through them."
             },
             {
-                q: "What is the typical value for the momentum coefficient $\\beta$?",
-                a: "0.9 is the standard default value."
+                q: "Why is the loss function critical?",
+                a: "It is the objective we optimize. It defines good vs bad predictions and varies by task (MSE for regression, cross-entropy for classification)."
             },
             {
-                q: "Why does shuffling specifically help with Gradient Descent stability?",
-                a: "It breaks correlations between consecutive samples, ensuring each batch gradient is an independent, unbiased estimate of the true gradient."
-            },
-            {
-                q: "What is the derivative of the linear function $z = wx + b$ with respect to $w$?",
-                a: "$\\frac{\\partial z}{\\partial w} = x$"
+                q: "What is the difference between parameters and hyperparameters?",
+                a: "Parameters are learned during training (weights, biases). Hyperparameters are set before training (learning rate, batch size, layers)."
             }
         ];
 
@@ -346,12 +354,12 @@
         const flipBtnText = document.getElementById('flip-btn-text');
 
         // --- Functions ---
-        
+
         function init() {
             renderCard();
             updateMeta();
             lucide.createIcons();
-            
+
             // Render Math on load
             renderMathInElement(document.body, {
                 delimiters: [
@@ -363,7 +371,7 @@
             // Keyboard navigation
             document.addEventListener('keydown', (e) => {
                 if (e.code === 'Space') {
-                    e.preventDefault(); 
+                    e.preventDefault();
                     flipCard();
                 } else if (e.code === 'ArrowRight') {
                     nextCard();
@@ -384,7 +392,7 @@
                 const currentCard = cards[currentIndex];
                 cardFrontText.innerHTML = currentCard.q;
                 cardBackContent.innerHTML = currentCard.a;
-                
+
                 // Re-render math
                 renderMathInElement(cardFrontText, {
                      delimiters: [{left: '$', right: '$', display: false}]
@@ -398,7 +406,7 @@
         function updateMeta() {
             currentNumEl.innerText = currentIndex + 1;
             totalNumEl.innerText = cards.length;
-            
+
             const progress = ((currentIndex + 1) / cards.length) * 100;
             progressBar.style.width = `${progress}%`;
 
