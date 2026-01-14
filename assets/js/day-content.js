@@ -72,9 +72,37 @@ window.KfupmDayContent = {
         description: 'Lab reference for Fundamentals of Deep Learning. Prepared by Farah Alshiha.',
         href: '../day3/day3lab1.pdf',
         badge: 'Lab'
+      },
+      {
+        title: 'Day 3 Annotated Slides (PDF)',
+        description: 'Stage 2 2026 Day 3 annotated PDF. Annotated by Rawan Alghamdi.',
+        href: '../day3/Stage_2_2026_Day3_annotated.pdf',
+        badge: 'Slides'
       }
     ],
-    quizzes: []
+    quizzes: [
+      {
+        id: 'day3-deeplearning-drill',
+        title: 'Deep Learning Practice Deck',
+        description: '20-question review on layers, activations, and optimization techniques. Authored by Safwan Nabeel.',
+        level: 'Core',
+        focus: 'Neural networks & training',
+        duration: 'Self-paced',
+        questionCount: 20,
+        link: 'deep-learning-quiz.html'
+      },
+      {
+        id: 'day3-flashcards',
+        title: 'Deep Learning Flashcards',
+        description: '42-card flashcard deck on activations, optimizers, and training diagnostics. Prepared by Safwan Nabeel.',
+        level: 'Core',
+        focus: 'Concept reinforcement',
+        duration: 'Self-paced',
+        questionCount: 42,
+        link: 'day3-flashcards.html',
+        ctaLabel: 'Open flashcards'
+      }
+    ]
   },
   day4: {
     resources: [],
