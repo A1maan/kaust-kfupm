@@ -29,6 +29,12 @@ window.KfupmDayContent = {
         description: 'Stage 2 2026 Day 2 annotated PDF. Annotated by Rawan Alghamdi.',
         href: '../day2/Stage_2_2026_Day2_annotated.pdf',
         badge: 'Slides'
+      },
+      {
+        title: 'Day 2 Lab 1 Regression (Extra)',
+        description: 'Extra regression lab notebook for Day 2. Prepared by Boushra Al-Mazroua.',
+        href: '../day2/Day2_Lab1_Regression_(Extra).ipynb',
+        badge: 'Lab'
       }
     ],
     quizzes: [
@@ -78,6 +84,12 @@ window.KfupmDayContent = {
         description: 'Stage 2 2026 Day 3 annotated PDF. Annotated by Rawan Alghamdi.',
         href: '../day3/Stage_2_2026_Day3_annotated.pdf',
         badge: 'Slides'
+      },
+      {
+        title: 'Breast Cancer Pipeline (From Scratch)',
+        description: 'End-to-end notebook building a breast cancer pipeline from scratch. Prepared by Farah Alshiha.',
+        href: '../day3/breast_cancer_pipeline_FROM_SCRATCH.ipynb',
+        badge: 'Lab'
       }
     ],
     quizzes: [
