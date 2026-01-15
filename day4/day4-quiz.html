@@ -1,690 +1,644 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unsupervised Learning Quiz</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- MathJax for equation rendering -->
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['\\(', '\\)']],
-                displayMath: [['\\[', '\\]']]
-            }
-        };
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .fade-in {
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        .slide-up {
-            animation: slideUp 0.4s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Day 4 Quiz · Unsupervised Learning</title>
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/css/style.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .question-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .question-card {
+      border: 1px solid rgba(0, 38, 76, 0.15);
+      border-radius: 24px;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.95);
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+    .question-card.correct {
+      border-color: rgba(74, 211, 149, 0.8);
+      box-shadow: 0 12px 30px rgba(74, 211, 149, 0.15);
+    }
+    .question-card.incorrect {
+      border-color: rgba(255, 107, 107, 0.8);
+      box-shadow: 0 12px 30px rgba(255, 107, 107, 0.15);
+    }
+    .question-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+    }
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .option-pill {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      border: 1px solid rgba(0, 38, 76, 0.15);
+      border-radius: 14px;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.95);
+      transition: border 0.2s ease, background 0.2s ease;
+    }
+    .option-pill:hover {
+      border-color: var(--accent-teal);
+      background: rgba(27, 197, 201, 0.08);
+    }
+    .option-pill input {
+      margin-top: 0.25rem;
+    }
+    .question-feedback {
+      margin-top: 1rem;
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+    }
+    .question-feedback.success {
+      background: rgba(74, 211, 149, 0.15);
+      color: #1f7a52;
+      border: 1px solid rgba(74, 211, 149, 0.6);
+    }
+    .question-feedback.error {
+      background: rgba(255, 107, 107, 0.15);
+      color: #a12b2b;
+      border: 1px solid rgba(255, 107, 107, 0.6);
+    }
+    #formNotice {
+      font-weight: 600;
+    }
+  </style>
 </head>
-<body class="bg-slate-50 min-h-screen text-slate-800">
-
-    <div id="app" class="flex flex-col items-center py-8 px-4 min-h-screen">
-
-        <!-- Header -->
-        <div class="w-full max-w-3xl mb-8 flex justify-between items-center" id="header">
-            <div>
-                <h1 class="text-2xl font-bold text-slate-900">Unsupervised Learning</h1>
-                <p class="text-slate-500 text-sm mt-1">KAUST Academy - Day 4 Review - Prepared by Safwan</p>
-            </div>
-            <div class="bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 font-mono text-sm font-semibold text-slate-600">
-                Q<span id="q-current">1</span> / <span id="q-total">25</span>
-            </div>
-        </div>
-
-        <!-- Quiz Container -->
-        <div id="quiz-container" class="w-full max-w-3xl bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
-
-            <!-- Progress Bar -->
-            <div class="w-full h-2 bg-slate-100">
-                <div id="progress-bar" class="h-full bg-blue-600 transition-all duration-500 ease-out" style="width: 0%"></div>
-            </div>
-
-            <div class="p-6 md:p-8">
-
-                <!-- Meta Info -->
-                <div class="flex justify-between items-start mb-6">
-                    <span id="difficulty-badge" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border">
-                        <!-- Icon and Text injected via JS -->
-                    </span>
-                    <span class="text-sm font-medium text-slate-400">
-                        Score: <span id="current-score">0</span>
-                    </span>
-                </div>
-
-                <!-- Question Text -->
-                <h2 id="question-text" class="text-xl md:text-2xl font-bold text-slate-800 mb-8 leading-snug">
-                    <!-- Question goes here -->
-                </h2>
-
-                <!-- Options Grid -->
-                <div id="options-container" class="space-y-3">
-                    <!-- Buttons injected via JS -->
-                </div>
-
-                <!-- Feedback Section (Hidden by default) -->
-                <div id="feedback-container" class="mt-8 hidden slide-up">
-                    <div id="feedback-box" class="p-5 rounded-xl border mb-6">
-                        <h3 id="feedback-title" class="font-bold mb-2 flex items-center">
-                            <!-- Correct/Incorrect Title -->
-                        </h3>
-                        <p id="feedback-text" class="text-slate-700 leading-relaxed">
-                            <!-- Explanation -->
-                        </p>
-                    </div>
-
-                    <div class="flex justify-end">
-                        <button id="next-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl flex items-center shadow-lg shadow-blue-200 transition-all hover:scale-105 active:scale-95">
-                            Next Question
-                            <i data-lucide="chevron-right" class="ml-2 w-5 h-5"></i>
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Results Container (Hidden initially) -->
-        <div id="results-container" class="hidden w-full max-w-md bg-white rounded-2xl shadow-xl p-8 text-center border border-slate-200 mt-12 slide-up">
-            <div class="mb-6 flex justify-center">
-                <div class="bg-blue-100 p-4 rounded-full">
-                    <i data-lucide="award" class="w-16 h-16 text-blue-600"></i>
-                </div>
-            </div>
-            <h2 class="text-3xl font-bold text-slate-800 mb-2">Quiz Completed!</h2>
-            <p class="text-slate-600 mb-6">You have mastered the basics of Unsupervised Learning.</p>
-
-            <div class="bg-slate-50 rounded-xl p-6 mb-8">
-                <div class="text-sm text-slate-500 uppercase tracking-wider font-semibold mb-1">Your Score</div>
-                <div class="text-5xl font-extrabold text-blue-600 mb-2">
-                    <span id="final-score">0</span> / <span id="total-questions-count">25</span>
-                </div>
-                <div id="accuracy-text" class="text-slate-600 font-medium">
-                    0% Accuracy
-                </div>
-            </div>
-
-            <button id="restart-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-blue-200">
-                <i data-lucide="refresh-cw" class="mr-2 w-5 h-5"></i>
-                Retake Quiz
-            </button>
-        </div>
-
+<body>
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <div class="logo">
+        <a href="../index.html">
+          <img src="../assets/img/kaust-academy-logo.png" alt="KAUST Academy">
+          <img class="logo-kfupm" src="../assets/img/KFUPM Seal White.png" alt="KFUPM Seal"/>
+        </a>
+      </div>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../day1/index.html">Day 1</a></li>
+          <li><a href="../day2/index.html">Day 2</a></li>
+          <li><a href="../day3/index.html">Day 3</a></li>
+          <li><a class="active" href="../day4/index.html">Day 4</a></li>
+          <li><a href="../day5/index.html">Day 5</a></li>
+          <li><a href="../extra/index.html">Extra</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
     </div>
+  </header>
+  <main id="main">
+    <div class="breadcrumbs animate-up">
+      <div class="container">
+        <h2>Day 4 · Unsupervised Learning Quiz</h2>
+        <p>Practice deck covering clustering, PCA, autoencoders, and unsupervised workflows. Only KFUPM students in the
+          KAUST Academy program may use this quiz.</p>
+        <div class="mt-3">
+          <a href="../day4/index.html" class="table-btn">Back to Day 4 decks</a>
+        </div>
+      </div>
+    </div>
+    <section class="quiz-page-section">
+      <div class="container">
+        <div class="quiz-card list-card mb-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+            <div>
+              <p class="eyebrow mb-1">About this quiz</p>
+              <h4 class="mb-1">Unsupervised Learning · KFUPM</h4>
+              <p class="text-muted mb-1">Answer every question, submit, and review the rationale. You can retake the quiz
+                as many times as you need.</p>
+              <p class="text-muted small mb-0">Quiz authored by <strong>Safwan Nabeel</strong>.</p>
+            </div>
+            <div class="text-md-end">
+              <p class="text-muted small mb-1">Format</p>
+              <p class="mb-0 fw-semibold">Multiple choice · 25 questions</p>
+            </div>
+          </div>
+        </div>
+        <div class="practice-panel">
+          <form id="quizForm" class="question-stack"></form>
+          <div class="practice-actions mt-4">
+            <button type="button" class="btn btn-primary" id="submitQuiz">Submit answers</button>
+            <button type="button" class="btn btn-outline-secondary" id="resetQuiz">Retake quiz</button>
+          </div>
+          <p class="practice-notice mt-3 d-none" id="formNotice">Answer every question before submitting.</p>
+        </div>
+        <div class="practice-panel mt-4 d-none" id="resultPanel">
+          <p class="eyebrow mb-1 text-muted text-uppercase">Score</p>
+          <h4 class="scoreline mb-2" id="scoreSummary"></h4>
+          <p class="text-muted mb-0">Scroll up to review the rationale above. New attempts reshuffle the options.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer id="footer">
+    <div class="container d-md-flex py-4">
+      <div class="me-md-auto text-center w-100">
+        <div class="copyright">
+          &copy; Copyright <strong><span>KAUST Academy</span></strong>. All Rights Reserved
+        </div>
+        <div class="license" style="font-size: 13px; margin-top: 8px; color: #555;">
+          Licensed under <a
+            href="https://github.com/KAUST-Academy/KAUST_Academy_2026_Introduction_To_AI?tab=GPL-3.0-1-ov-file#readme"
+            target="_blank" rel="noopener">GPL-3.0</a>.
+          Recording and uploading lectures online is not permitted.
+        </div>
+        <div class="credits" style="font-size: 14px; margin-top: 5px; color: #555;">
+          Website created and managed by <strong>Almaan Khan</strong> and the other <strong>KFUPM TAs</strong>.
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+  <script>
+    AOS.init();
+    const on = (type, el, listener) => {
+      const selectEl = document.querySelector(el);
+      if (selectEl) {
+        selectEl.addEventListener(type, listener);
+      }
+    };
+    on('click', '.mobile-nav-toggle', function () {
+      document.querySelector('#navbar').classList.toggle('navbar-mobile');
+      this.classList.toggle('bi-list');
+      this.classList.toggle('bi-x');
+    });
+  </script>
+  <script>
+    const questions = [
+      {
+        id: 1,
+        difficulty: 'Easy',
+        question: 'What is the key difference between supervised and unsupervised learning?',
+        options: [
+          'Supervised learning uses neural networks, unsupervised does not.',
+          'Supervised learning has labeled data \\((x, y)\\), unsupervised only has \\(x\\).',
+          'Unsupervised learning is always more accurate.',
+          'Supervised learning only works with images.'
+        ],
+        answer: 1,
+        explanation: 'Supervised learning requires \\((x, y)\\) pairs where \\(y\\) is the label or target. Unsupervised learning only has \\(x\\) (raw data) with no labels.'
+      },
+      {
+        id: 2,
+        difficulty: 'Easy',
+        question: 'What does K represent in K-Means clustering?',
+        options: [
+          'The number of features.',
+          'The number of data points.',
+          'The number of clusters.',
+          'The number of iterations.'
+        ],
+        answer: 2,
+        explanation: 'K is the number of clusters you want to group your data into.'
+      },
+      {
+        id: 3,
+        difficulty: 'Easy',
+        question: 'What is the main goal of PCA?',
+        options: [
+          'To classify data into categories.',
+          'To reduce dimensionality while preserving variance.',
+          'To add more features to data.',
+          'To predict future values.'
+        ],
+        answer: 1,
+        explanation: 'PCA finds lower-dimensional representations that capture maximum variance from the original high-dimensional data.'
+      },
+      {
+        id: 4,
+        difficulty: 'Easy',
+        question: 'In an autoencoder, what is the purpose of the bottleneck layer?',
+        options: [
+          'To slow down training.',
+          'To force the network to learn compressed representations.',
+          'To prevent overfitting only.',
+          'To add noise to data.'
+        ],
+        answer: 1,
+        explanation: 'The bottleneck forces information through a narrow layer, making the network learn meaningful compressed features.'
+      },
+      {
+        id: 5,
+        difficulty: 'Easy',
+        question: 'Which unsupervised learning task groups similar data points together?',
+        options: [
+          'Regression.',
+          'Classification.',
+          'Clustering.',
+          'Generation.'
+        ],
+        answer: 2,
+        explanation: 'Clustering algorithms like K-Means group similar data points into clusters.'
+      },
+      {
+        id: 6,
+        difficulty: 'Easy',
+        question: 'What are the two main components of an autoencoder?',
+        options: [
+          'Input and Output.',
+          'Encoder and Decoder.',
+          'Generator and Discriminator.',
+          'Feature and Label.'
+        ],
+        answer: 1,
+        explanation: 'Autoencoders consist of an encoder (compresses) and decoder (reconstructs).'
+      },
+      {
+        id: 7,
+        difficulty: 'Easy',
+        question: 'Why is unsupervised learning important?',
+        options: [
+          'Labels are expensive and most real-world data is unlabeled.',
+          'It is always more accurate than supervised learning.',
+          'It requires less computational power.',
+          'It works only with small datasets.'
+        ],
+        answer: 0,
+        explanation: 'Labeling data requires time, effort, and expertise. Most real-world data lacks labels.'
+      },
+      {
+        id: 8,
+        difficulty: 'Easy',
+        question: 'In K-Means, what does each cluster center represent?',
+        options: [
+          'The largest data point.',
+          'The mean (average) of all points in that cluster.',
+          'The first data point assigned.',
+          'A random location.'
+        ],
+        answer: 1,
+        explanation: 'The cluster center (centroid) \\(\\mu_k\\) is the mean of all data points assigned to that cluster.'
+      },
+      {
+        id: 9,
+        difficulty: 'Medium',
+        question: 'What is the elbow method used for in K-Means?',
+        options: [
+          'To speed up computation.',
+          'To determine the optimal number of clusters.',
+          'To remove outliers.',
+          'To initialize centroids.'
+        ],
+        answer: 1,
+        explanation: 'The elbow method plots WCSS vs K and looks for the point where adding more clusters provides diminishing returns.'
+      },
+      {
+        id: 10,
+        difficulty: 'Medium',
+        question: 'What does WCSS stand for and measure?',
+        options: [
+          'Within-Cluster Sum of Squares - total distance of points to their centroids.',
+          'Weighted Cluster Statistical Score.',
+          'Whole Cluster Separation Standard.',
+          'Within-Class Sampling Size.'
+        ],
+        answer: 0,
+        explanation: 'WCSS = \\(\\sum_{k=1}^K \\sum_{i \\in C_k} \\|x_i - \\mu_k\\|^2\\) measures how compact clusters are by summing squared distances.'
+      },
+      {
+        id: 11,
+        difficulty: 'Medium',
+        question: 'In PCA, what do eigenvectors represent?',
+        options: [
+          'The amount of variance.',
+          'The directions of the new axes (principal components).',
+          'The number of features to keep.',
+          'The error in reconstruction.'
+        ],
+        answer: 1,
+        explanation: 'Eigenvectors define the directions of maximum variance, which become the new coordinate axes.'
+      },
+      {
+        id: 12,
+        difficulty: 'Medium',
+        question: 'How much variance should you typically preserve when choosing PCA components?',
+        options: [
+          'Exactly 50%.',
+          '80-95%.',
+          '100%.',
+          'Less than 70%.'
+        ],
+        answer: 1,
+        explanation: 'A common rule of thumb is to keep 80-95% of total variance for a good balance between compression and information retention.'
+      },
+      {
+        id: 13,
+        difficulty: 'Medium',
+        question: 'Why is t-SNE better than PCA for visualization?',
+        options: [
+          't-SNE is faster.',
+          't-SNE is linear.',
+          't-SNE preserves non-linear local neighborhood structure.',
+          't-SNE works in any dimension.'
+        ],
+        answer: 2,
+        explanation: "t-SNE preserves local neighborhoods and handles non-linear structures, making clusters more visible than PCA's linear approach."
+      },
+      {
+        id: 14,
+        difficulty: 'Medium',
+        question: 'What is a denoising autoencoder trained to do?',
+        options: [
+          'Add noise to clean images.',
+          'Recover original clean data from corrupted input.',
+          'Compress data maximally.',
+          'Generate new images.'
+        ],
+        answer: 1,
+        explanation: 'Denoising autoencoders learn to map corrupted input \\(\\tilde{x}\\) back to the original clean version \\(x\\).'
+      },
+      {
+        id: 15,
+        difficulty: 'Medium',
+        question: 'Which part of an autoencoder would you keep for data compression?',
+        options: [
+          'Only the decoder.',
+          'Only the encoder.',
+          'Both equally.',
+          'Neither, train a new model.'
+        ],
+        answer: 1,
+        explanation: 'The encoder maps high-dimensional data to the low-dimensional latent code \\(z\\) for compression.'
+      },
+      {
+        id: 16,
+        difficulty: 'Medium',
+        question: 'In K-Means, what happens in the assignment step?',
+        options: [
+          'Create new cluster centers.',
+          'Assign each point to its nearest centroid.',
+          'Remove outliers.',
+          'Calculate the final error.'
+        ],
+        answer: 1,
+        explanation: 'The assignment step assigns each point \\(x_i\\) to the cluster with the nearest centroid: \\(c_i = \\arg\\min_k \\|x_i - \\mu_k\\|^2\\).'
+      },
+      {
+        id: 17,
+        difficulty: 'Medium',
+        question: 'For anomaly detection with autoencoders, why do anomalies have high reconstruction error?',
+        options: [
+          'The network was trained only on normal data.',
+          'Anomalies are always larger files.',
+          'The decoder is broken.',
+          'Random chance.'
+        ],
+        answer: 0,
+        explanation: 'Since the autoencoder trained on normal data, it reconstructs normal patterns well but fails on unseen anomalies.'
+      },
+      {
+        id: 18,
+        difficulty: 'Hard',
+        question: 'What is a major limitation of K-Means clustering?',
+        options: [
+          'It is too slow for any dataset.',
+          'It assumes spherical, equal-sized clusters and is sensitive to initialization.',
+          'It only works with 2D data.',
+          'It requires labeled data.'
+        ],
+        answer: 1,
+        explanation: 'K-Means fails on non-spherical shapes, different-sized clusters, is sensitive to outliers, and depends on random initialization.'
+      },
+      {
+        id: 19,
+        difficulty: 'Hard',
+        question: 'Before applying PCA, why must you center the data?',
+        options: [
+          'To make computation faster.',
+          'PCA finds directions of maximum variance from the origin.',
+          'To remove outliers.',
+          'It is optional and not important.'
+        ],
+        answer: 1,
+        explanation: "Centering (subtracting the mean) ensures PCA finds variance directions from the data's center, not the arbitrary origin \\((0, 0)\\)."
+      },
+      {
+        id: 20,
+        difficulty: 'Hard',
+        question: 'What does the covariance matrix in PCA represent?',
+        options: [
+          'The distance between data points.',
+          'How features vary together and correlate.',
+          'The number of principal components.',
+          'The reconstruction error.'
+        ],
+        answer: 1,
+        explanation: 'The covariance matrix \\(C = (1/n) X_{centered}^T X_{centered}\\) captures how each pair of features covaries.'
+      },
+      {
+        id: 21,
+        difficulty: 'Hard',
+        question: 'Why can you not use an autoencoder without a bottleneck?',
+        options: [
+          'It would be too slow.',
+          'The network could just learn to copy input to output without learning useful features.',
+          'It would require more data.',
+          'The decoder would not work.'
+        ],
+        answer: 1,
+        explanation: 'Without a bottleneck constraint, the network can trivially learn the identity function \\(h_i = x_i\\) without discovering meaningful structure.'
+      },
+      {
+        id: 22,
+        difficulty: 'Hard',
+        question: 'In the customer segmentation example, what would you do after discovering 4 segments?',
+        options: [
+          'Run K-Means again with different K.',
+          'Apply different marketing strategies to each segment.',
+          'Delete the segments.',
+          'Combine all segments into one.'
+        ],
+        answer: 1,
+        explanation: 'The business value comes from applying targeted actions: re-engage inactive customers, offer loyalty programs to VIPs, and more.'
+      },
+      {
+        id: 23,
+        difficulty: 'Hard',
+        question: 'When would PCA perform poorly for visualization compared to t-SNE?',
+        options: [
+          'With linear, well-separated data.',
+          'With non-linear manifolds like concentric circles or swiss rolls.',
+          'With small datasets.',
+          'With normalized data.'
+        ],
+        answer: 1,
+        explanation: 'PCA only finds linear projections and fails to unfold curved, non-linear structures that t-SNE can handle.'
+      },
+      {
+        id: 24,
+        difficulty: 'Hard',
+        question: 'For image generation with autoencoders, what do you discard and what do you keep?',
+        options: [
+          'Keep encoder, discard decoder.',
+          'Keep decoder, discard encoder, sample random \\(z\\) vectors.',
+          'Keep both, no sampling needed.',
+          'Discard both, train from scratch.'
+        ],
+        answer: 1,
+        explanation: 'For generation, discard the encoder, sample random latent vectors \\(z\\), and pass them through the decoder to create new images.'
+      },
+      {
+        id: 25,
+        difficulty: 'Hard',
+        question: 'What is the mathematical objective that K-Means minimizes?',
+        options: [
+          'The number of clusters.',
+          'The sum of squared distances from points to their assigned centroids.',
+          'The maximum distance between any two points.',
+          'The variance of cluster sizes.'
+        ],
+        answer: 1,
+        explanation: 'K-Means minimizes \\(\\sum_{k=1}^K \\sum_{i \\in C_k} \\|x_i - \\mu_k\\|^2\\), the total within-cluster sum of squared distances.'
+      }
+    ];
 
-    <script>
-        // --- Data ---
-        const questions = [
-            // EASY
-            {
-                id: 1,
-                difficulty: "Easy",
-                question: "What is the key difference between supervised and unsupervised learning?",
-                options: [
-                    "Supervised learning uses neural networks, unsupervised does not.",
-                    "Supervised learning has labeled data \((x, y)\), unsupervised only has \(x\).",
-                    "Unsupervised learning is always more accurate.",
-                    "Supervised learning only works with images."
-                ],
-                answer: 1,
-                explanation: "Supervised learning requires \((x, y)\) pairs where \(y\) is the label or target. Unsupervised learning only has \(x\) (raw data) with no labels."
-            },
-            {
-                id: 2,
-                difficulty: "Easy",
-                question: "What does K represent in K-Means clustering?",
-                options: [
-                    "The number of features.",
-                    "The number of data points.",
-                    "The number of clusters.",
-                    "The number of iterations."
-                ],
-                answer: 2,
-                explanation: "K is the number of clusters you want to group your data into."
-            },
-            {
-                id: 3,
-                difficulty: "Easy",
-                question: "What is the main goal of PCA?",
-                options: [
-                    "To classify data into categories.",
-                    "To reduce dimensionality while preserving variance.",
-                    "To add more features to data.",
-                    "To predict future values."
-                ],
-                answer: 1,
-                explanation: "PCA finds lower-dimensional representations that capture maximum variance from the original high-dimensional data."
-            },
-            {
-                id: 4,
-                difficulty: "Easy",
-                question: "In an autoencoder, what is the purpose of the bottleneck layer?",
-                options: [
-                    "To slow down training.",
-                    "To force the network to learn compressed representations.",
-                    "To prevent overfitting only.",
-                    "To add noise to data."
-                ],
-                answer: 1,
-                explanation: "The bottleneck forces information through a narrow layer, making the network learn meaningful compressed features."
-            },
-            {
-                id: 5,
-                difficulty: "Easy",
-                question: "Which unsupervised learning task groups similar data points together?",
-                options: [
-                    "Regression.",
-                    "Classification.",
-                    "Clustering.",
-                    "Generation."
-                ],
-                answer: 2,
-                explanation: "Clustering algorithms like K-Means group similar data points into clusters."
-            },
-            {
-                id: 6,
-                difficulty: "Easy",
-                question: "What are the two main components of an autoencoder?",
-                options: [
-                    "Input and Output.",
-                    "Encoder and Decoder.",
-                    "Generator and Discriminator.",
-                    "Feature and Label."
-                ],
-                answer: 1,
-                explanation: "Autoencoders consist of an encoder (compresses) and decoder (reconstructs)."
-            },
-            {
-                id: 7,
-                difficulty: "Easy",
-                question: "Why is unsupervised learning important?",
-                options: [
-                    "Labels are expensive and most real-world data is unlabeled.",
-                    "It is always more accurate than supervised learning.",
-                    "It requires less computational power.",
-                    "It works only with small datasets."
-                ],
-                answer: 0,
-                explanation: "Labeling data requires time, effort, and expertise. Most real-world data lacks labels."
-            },
-            {
-                id: 8,
-                difficulty: "Easy",
-                question: "In K-Means, what does each cluster center represent?",
-                options: [
-                    "The largest data point.",
-                    "The mean (average) of all points in that cluster.",
-                    "The first data point assigned.",
-                    "A random location."
-                ],
-                answer: 1,
-                explanation: "The cluster center (centroid) \(\mu_k\) is the mean of all data points assigned to that cluster."
-            },
-            // MEDIUM
-            {
-                id: 9,
-                difficulty: "Medium",
-                question: "What is the elbow method used for in K-Means?",
-                options: [
-                    "To speed up computation.",
-                    "To determine the optimal number of clusters.",
-                    "To remove outliers.",
-                    "To initialize centroids."
-                ],
-                answer: 1,
-                explanation: "The elbow method plots WCSS vs K and looks for the point where adding more clusters provides diminishing returns."
-            },
-            {
-                id: 10,
-                difficulty: "Medium",
-                question: "What does WCSS stand for and measure?",
-                options: [
-                    "Within-Cluster Sum of Squares - total distance of points to their centroids.",
-                    "Weighted Cluster Statistical Score.",
-                    "Whole Cluster Separation Standard.",
-                    "Within-Class Sampling Size."
-                ],
-                answer: 0,
-                explanation: "WCSS = \(\sum_{k=1}^K \sum_{i \in C_k} \|x_i - \mu_k\|^2\) measures how compact clusters are by summing squared distances."
-            },
-            {
-                id: 11,
-                difficulty: "Medium",
-                question: "In PCA, what do eigenvectors represent?",
-                options: [
-                    "The amount of variance.",
-                    "The directions of the new axes (principal components).",
-                    "The number of features to keep.",
-                    "The error in reconstruction."
-                ],
-                answer: 1,
-                explanation: "Eigenvectors define the directions of maximum variance, which become the new coordinate axes."
-            },
-            {
-                id: 12,
-                difficulty: "Medium",
-                question: "How much variance should you typically preserve when choosing PCA components?",
-                options: [
-                    "Exactly 50%.",
-                    "80-95%.",
-                    "100%.",
-                    "Less than 70%."
-                ],
-                answer: 1,
-                explanation: "A common rule of thumb is to keep 80-95% of total variance for a good balance between compression and information retention."
-            },
-            {
-                id: 13,
-                difficulty: "Medium",
-                question: "Why is t-SNE better than PCA for visualization?",
-                options: [
-                    "t-SNE is faster.",
-                    "t-SNE is linear.",
-                    "t-SNE preserves non-linear local neighborhood structure.",
-                    "t-SNE works in any dimension."
-                ],
-                answer: 2,
-                explanation: "t-SNE preserves local neighborhoods and handles non-linear structures, making clusters more visible than PCA's linear approach."
-            },
-            {
-                id: 14,
-                difficulty: "Medium",
-                question: "What is a denoising autoencoder trained to do?",
-                options: [
-                    "Add noise to clean images.",
-                    "Recover original clean data from corrupted input.",
-                    "Compress data maximally.",
-                    "Generate new images."
-                ],
-                answer: 1,
-                explanation: "Denoising autoencoders learn to map corrupted input \(\tilde{x}\) back to the original clean version \(x\)."
-            },
-            {
-                id: 15,
-                difficulty: "Medium",
-                question: "Which part of an autoencoder would you keep for data compression?",
-                options: [
-                    "Only the decoder.",
-                    "Only the encoder.",
-                    "Both equally.",
-                    "Neither, train a new model."
-                ],
-                answer: 1,
-                explanation: "The encoder maps high-dimensional data to the low-dimensional latent code \(z\) for compression."
-            },
-            {
-                id: 16,
-                difficulty: "Medium",
-                question: "In K-Means, what happens in the assignment step?",
-                options: [
-                    "Create new cluster centers.",
-                    "Assign each point to its nearest centroid.",
-                    "Remove outliers.",
-                    "Calculate the final error."
-                ],
-                answer: 1,
-                explanation: "The assignment step assigns each point \(x_i\) to the cluster with the nearest centroid: \(c_i = \arg\min_k \|x_i - \mu_k\|^2\)."
-            },
-            {
-                id: 17,
-                difficulty: "Medium",
-                question: "For anomaly detection with autoencoders, why do anomalies have high reconstruction error?",
-                options: [
-                    "The network was trained only on normal data.",
-                    "Anomalies are always larger files.",
-                    "The decoder is broken.",
-                    "Random chance."
-                ],
-                answer: 0,
-                explanation: "Since the autoencoder trained on normal data, it reconstructs normal patterns well but fails on unseen anomalies."
-            },
-            // HARD
-            {
-                id: 18,
-                difficulty: "Hard",
-                question: "What is a major limitation of K-Means clustering?",
-                options: [
-                    "It is too slow for any dataset.",
-                    "It assumes spherical, equal-sized clusters and is sensitive to initialization.",
-                    "It only works with 2D data.",
-                    "It requires labeled data."
-                ],
-                answer: 1,
-                explanation: "K-Means fails on non-spherical shapes, different-sized clusters, is sensitive to outliers, and depends on random initialization."
-            },
-            {
-                id: 19,
-                difficulty: "Hard",
-                question: "Before applying PCA, why must you center the data?",
-                options: [
-                    "To make computation faster.",
-                    "PCA finds directions of maximum variance from the origin.",
-                    "To remove outliers.",
-                    "It is optional and not important."
-                ],
-                answer: 1,
-                explanation: "Centering (subtracting the mean) ensures PCA finds variance directions from the data's center, not the arbitrary origin \((0, 0)\)."
-            },
-            {
-                id: 20,
-                difficulty: "Hard",
-                question: "What does the covariance matrix in PCA represent?",
-                options: [
-                    "The distance between data points.",
-                    "How features vary together and correlate.",
-                    "The number of principal components.",
-                    "The reconstruction error."
-                ],
-                answer: 1,
-                explanation: "The covariance matrix \(C = (1/n) X_{centered}^T X_{centered}\) captures how each pair of features covaries."
-            },
-            {
-                id: 21,
-                difficulty: "Hard",
-                question: "Why can you not use an autoencoder without a bottleneck?",
-                options: [
-                    "It would be too slow.",
-                    "The network could just learn to copy input to output without learning useful features.",
-                    "It would require more data.",
-                    "The decoder would not work."
-                ],
-                answer: 1,
-                explanation: "Without a bottleneck constraint, the network can trivially learn the identity function \(h_i = x_i\) without discovering meaningful structure."
-            },
-            {
-                id: 22,
-                difficulty: "Hard",
-                question: "In the customer segmentation example, what would you do after discovering 4 segments?",
-                options: [
-                    "Run K-Means again with different K.",
-                    "Apply different marketing strategies to each segment.",
-                    "Delete the segments.",
-                    "Combine all segments into one."
-                ],
-                answer: 1,
-                explanation: "The business value comes from applying targeted actions: re-engage inactive customers, offer loyalty programs to VIPs, and more."
-            },
-            {
-                id: 23,
-                difficulty: "Hard",
-                question: "When would PCA perform poorly for visualization compared to t-SNE?",
-                options: [
-                    "With linear, well-separated data.",
-                    "With non-linear manifolds like concentric circles or swiss rolls.",
-                    "With small datasets.",
-                    "With normalized data."
-                ],
-                answer: 1,
-                explanation: "PCA only finds linear projections and fails to unfold curved, non-linear structures that t-SNE can handle."
-            },
-            {
-                id: 24,
-                difficulty: "Hard",
-                question: "For image generation with autoencoders, what do you discard and what do you keep?",
-                options: [
-                    "Keep encoder, discard decoder.",
-                    "Keep decoder, discard encoder, sample random \(z\) vectors.",
-                    "Keep both, no sampling needed.",
-                    "Discard both, train from scratch."
-                ],
-                answer: 1,
-                explanation: "For generation, discard the encoder, sample random latent vectors \(z\), and pass them through the decoder to create new images."
-            },
-            {
-                id: 25,
-                difficulty: "Hard",
-                question: "What is the mathematical objective that K-Means minimizes?",
-                options: [
-                    "The number of clusters.",
-                    "The sum of squared distances from points to their assigned centroids.",
-                    "The maximum distance between any two points.",
-                    "The variance of cluster sizes."
-                ],
-                answer: 1,
-                explanation: "K-Means minimizes \(\sum_{k=1}^K \sum_{i \in C_k} \|x_i - \mu_k\|^2\), the total within-cluster sum of squared distances."
-            }
-        ];
+    const quizData = questions.map((item) => ({
+      question: item.question,
+      hint: `Difficulty: ${item.difficulty}`,
+      options: item.options,
+      answer: item.answer,
+      explanation: item.explanation
+    }));
 
-        // --- State ---
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let isAnswered = false;
-        let quizQuestions = [];
+    const quizForm = document.getElementById('quizForm');
+    const submitBtn = document.getElementById('submitQuiz');
+    const resetBtn = document.getElementById('resetQuiz');
+    const notice = document.getElementById('formNotice');
+    const resultPanel = document.getElementById('resultPanel');
+    const scoreSummary = document.getElementById('scoreSummary');
 
-        // --- DOM Elements ---
-        const app = document.getElementById('app');
-        const header = document.getElementById('header');
-        const quizContainer = document.getElementById('quiz-container');
-        const resultsContainer = document.getElementById('results-container');
+    const renderQuiz = () => {
+      quizForm.innerHTML = '';
+      quizData.forEach((question, index) => {
+        const card = document.createElement('article');
+        card.className = 'question-card';
+        card.dataset.index = index.toString();
+        const header = document.createElement('div');
+        header.innerHTML = `
+          <p class="question-eyebrow">Question ${index + 1}</p>
+          <h5>${question.question}</h5>
+          <p class="text-muted small mb-0">${question.hint}</p>
+        `;
+        card.appendChild(header);
+        const optionsWrapper = document.createElement('div');
+        optionsWrapper.className = 'option-grid';
+        const shuffled = question.options.map((option, idx) => ({ option, idx })).sort(() => Math.random() - 0.5);
+        shuffled.forEach((item, optionIndex) => {
+          const inputId = `q${index}-opt${optionIndex}`;
+          const label = document.createElement('label');
+          label.className = 'option-pill';
+          label.setAttribute('for', inputId);
+          label.innerHTML = `
+            <input type="radio" id="${inputId}" name="question-${index}" value="${item.idx}">
+            <span>${item.option}</span>
+          `;
+          optionsWrapper.appendChild(label);
+        });
+        card.appendChild(optionsWrapper);
+        const feedback = document.createElement('div');
+        feedback.className = 'question-feedback d-none';
+        feedback.id = `feedback-${index}`;
+        card.appendChild(feedback);
+        quizForm.appendChild(card);
+      });
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
+    };
 
-        const qCurrentEl = document.getElementById('q-current');
-        const qTotalEl = document.getElementById('q-total');
-        const progressBar = document.getElementById('progress-bar');
-        const difficultyBadge = document.getElementById('difficulty-badge');
-        const currentScoreEl = document.getElementById('current-score');
-        const questionTextEl = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-
-        const feedbackContainer = document.getElementById('feedback-container');
-        const feedbackBox = document.getElementById('feedback-box');
-        const feedbackTitle = document.getElementById('feedback-title');
-        const feedbackText = document.getElementById('feedback-text');
-        const nextBtn = document.getElementById('next-btn');
-
-        const finalScoreEl = document.getElementById('final-score');
-        const totalQuestionsCountEl = document.getElementById('total-questions-count');
-        const accuracyTextEl = document.getElementById('accuracy-text');
-        const restartBtn = document.getElementById('restart-btn');
-
-        // --- Init ---
-        function init() {
-            setupQuestions();
-            qTotalEl.innerText = quizQuestions.length;
-            totalQuestionsCountEl.innerText = quizQuestions.length;
-            loadQuestion();
-            lucide.createIcons();
-
-            nextBtn.addEventListener('click', handleNext);
-            restartBtn.addEventListener('click', restartQuiz);
+    const gradeQuiz = () => {
+      let answeredAll = true;
+      let score = 0;
+      quizData.forEach((question, index) => {
+        const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+        const card = quizForm.querySelector(`.question-card[data-index="${index}"]`);
+        const feedback = document.getElementById(`feedback-${index}`);
+        card.classList.remove('correct', 'incorrect');
+        feedback.classList.add('d-none', 'text-muted');
+        feedback.classList.remove('success', 'error');
+        feedback.textContent = '';
+        if (!selected) {
+          answeredAll = false;
+          return;
         }
-
-        // --- Functions ---
-
-        function typesetMath(elements) {
-            if (!window.MathJax || !window.MathJax.typesetPromise) return;
-            const targets = Array.isArray(elements) ? elements : [elements];
-            window.MathJax.typesetPromise(targets);
+        const chosenIndex = Number(selected.value);
+        const correctText = question.options[question.answer];
+        if (chosenIndex === question.answer) {
+          score += 1;
+          card.classList.add('correct');
+          feedback.innerHTML = `<strong>Correct.</strong> ${question.explanation}`;
+          feedback.classList.remove('d-none');
+          feedback.classList.add('success');
+        } else {
+          card.classList.add('incorrect');
+          feedback.innerHTML = `<strong>Incorrect.</strong> ${question.explanation}<br><em>Answer:</em> ${correctText}`;
+          feedback.classList.remove('d-none');
+          feedback.classList.add('error');
         }
+      });
+      if (!answeredAll) {
+        notice.classList.remove('d-none');
+        resultPanel.classList.add('d-none');
+        return;
+      }
+      notice.classList.add('d-none');
+      scoreSummary.textContent = `${score} / ${quizData.length}`;
+      resultPanel.classList.remove('d-none');
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
+      window.scrollTo({ top: resultPanel.offsetTop - 120, behavior: 'smooth' });
+    };
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
+    const resetQuiz = () => {
+      quizForm.reset();
+      notice.classList.add('d-none');
+      resultPanel.classList.add('d-none');
+      quizForm.querySelectorAll('.question-card').forEach((card) => card.classList.remove('correct', 'incorrect'));
+      quizForm.querySelectorAll('.question-feedback').forEach((feedback) => {
+        feedback.classList.add('d-none');
+        feedback.classList.remove('success', 'error');
+        feedback.textContent = '';
+      });
+      renderQuiz();
+      window.scrollTo({ top: quizForm.offsetTop - 120, behavior: 'smooth' });
+    };
 
-        function shuffleOptions(question) {
-            const indexedOptions = question.options.map((option, index) => ({
-                option,
-                index
-            }));
-            shuffleArray(indexedOptions);
-            const shuffledOptions = indexedOptions.map((item) => item.option);
-            const newAnswerIndex = indexedOptions.findIndex((item) => item.index === question.answer);
-            return { ...question, options: shuffledOptions, answer: newAnswerIndex };
-        }
-
-        function setupQuestions() {
-            quizQuestions = questions.map(shuffleOptions);
-        }
-
-        function loadQuestion() {
-            isAnswered = false;
-            const q = quizQuestions[currentQuestionIndex];
-
-            // Update UI State
-            qCurrentEl.innerText = currentQuestionIndex + 1;
-            currentScoreEl.innerText = score;
-            questionTextEl.innerHTML = q.question;
-
-            // Progress Bar
-            const progress = (currentQuestionIndex / quizQuestions.length) * 100;
-            progressBar.style.width = `${progress}%`;
-
-            // Difficulty Badge Styling
-            difficultyBadge.className = `inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border transition-colors`;
-            let diffColorClass = "";
-            let diffIcon = "";
-
-            if (q.difficulty === "Easy") {
-                diffColorClass = "bg-green-100 text-green-800 border-green-200";
-                diffIcon = "book-open";
-            } else if (q.difficulty === "Medium") {
-                diffColorClass = "bg-yellow-100 text-yellow-800 border-yellow-200";
-                diffIcon = "brain";
-            } else {
-                diffColorClass = "bg-red-100 text-red-800 border-red-200";
-                diffIcon = "zap";
-            }
-            difficultyBadge.classList.add(...diffColorClass.split(' '));
-            difficultyBadge.innerHTML = `<i data-lucide="${diffIcon}" class="w-4 h-4 mr-1"></i> ${q.difficulty}`;
-
-            // Reset Feedback
-            feedbackContainer.classList.add('hidden');
-
-            // Render Options
-            optionsContainer.innerHTML = '';
-            q.options.forEach((opt, index) => {
-                const btn = document.createElement('button');
-                btn.className = `w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex items-center justify-between group border-slate-200 hover:border-blue-300 hover:bg-blue-50`;
-                btn.innerHTML = `<span class="text-base font-medium">${opt}</span>`;
-                btn.onclick = () => handleAnswer(index, btn);
-                optionsContainer.appendChild(btn);
-            });
-
-            // Refresh icons for new content
-            lucide.createIcons();
-            typesetMath([questionTextEl, optionsContainer]);
-        }
-
-        function handleAnswer(selectedIndex, clickedBtn) {
-            if (isAnswered) return;
-            isAnswered = true;
-
-            const q = quizQuestions[currentQuestionIndex];
-            const isCorrect = selectedIndex === q.answer;
-
-            if (isCorrect) {
-                score++;
-                currentScoreEl.innerText = score;
-            }
-
-            // Style buttons
-            const buttons = optionsContainer.querySelectorAll('button');
-            buttons.forEach((btn, idx) => {
-                btn.disabled = true;
-                // Default disabled state
-                btn.classList.remove('hover:border-blue-300', 'hover:bg-blue-50');
-                btn.classList.add('opacity-70', 'cursor-default');
-
-                // If this is the correct answer
-                if (idx === q.answer) {
-                    btn.classList.remove('border-slate-200', 'opacity-70');
-                    btn.classList.add('bg-green-50', 'border-green-500', 'text-green-900', 'ring-1', 'ring-green-500', 'opacity-100');
-                    btn.innerHTML += `<i data-lucide="check-circle" class="text-green-600 flex-shrink-0 w-5 h-5 ml-2"></i>`;
-                }
-                // If this was the selected WRONG answer
-                else if (idx === selectedIndex && !isCorrect) {
-                    btn.classList.remove('border-slate-200', 'opacity-70');
-                    btn.classList.add('bg-red-50', 'border-red-300', 'text-red-900', 'opacity-100');
-                    btn.innerHTML += `<i data-lucide="x-circle" class="text-red-500 flex-shrink-0 w-5 h-5 ml-2"></i>`;
-                }
-            });
-
-            // Show Feedback
-            feedbackContainer.classList.remove('hidden');
-
-            if (isCorrect) {
-                feedbackBox.className = "p-5 rounded-xl border mb-6 bg-green-50 border-green-200";
-                feedbackTitle.className = "font-bold mb-2 flex items-center text-green-800";
-                feedbackTitle.innerText = "Correct!";
-            } else {
-                feedbackBox.className = "p-5 rounded-xl border mb-6 bg-slate-50 border-slate-200";
-                feedbackTitle.className = "font-bold mb-2 flex items-center text-slate-800";
-                feedbackTitle.innerText = "Explanation:";
-            }
-
-            feedbackText.innerHTML = q.explanation;
-
-            // Change button text if it is the last question
-            if (currentQuestionIndex === quizQuestions.length - 1) {
-                nextBtn.innerHTML = `Finish Quiz <i data-lucide="award" class="ml-2 w-5 h-5"></i>`;
-            } else {
-                nextBtn.innerHTML = `Next Question <i data-lucide="chevron-right" class="ml-2 w-5 h-5"></i>`;
-            }
-
-            lucide.createIcons();
-            typesetMath(feedbackText);
-        }
-
-        function handleNext() {
-            if (currentQuestionIndex < quizQuestions.length - 1) {
-                currentQuestionIndex++;
-                loadQuestion();
-            } else {
-                showResults();
-            }
-        }
-
-        function showResults() {
-            header.classList.add('hidden');
-            quizContainer.classList.add('hidden');
-            resultsContainer.classList.remove('hidden');
-
-            finalScoreEl.innerText = score;
-            const accuracy = Math.round((score / quizQuestions.length) * 100);
-            accuracyTextEl.innerText = `${accuracy}% Accuracy`;
-        }
-
-        function restartQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            setupQuestions();
-            resultsContainer.classList.add('hidden');
-            header.classList.remove('hidden');
-            quizContainer.classList.remove('hidden');
-            loadQuestion();
-        }
-
-        // Start app
-        init();
-
-    </script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderQuiz();
+      submitBtn.addEventListener('click', gradeQuiz);
+      resetBtn.addEventListener('click', resetQuiz);
+    });
+  </script>
 </body>
 </html>

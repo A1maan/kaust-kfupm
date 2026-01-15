@@ -90,18 +90,6 @@ window.KfupmDayContent = {
         description: 'End-to-end notebook building a breast cancer pipeline from scratch. Prepared by Farah Alshiha.',
         href: '../day3/breast_cancer_pipeline_FROM_SCRATCH.ipynb',
         badge: 'Lab'
-      },
-      {
-        title: 'Day 3 Lab 2 - Tabular with PyTorch (Extra)',
-        description: 'Tabular modeling with PyTorch on Day 3 data. Prepared by Boushra Al-Mazroua.',
-        href: '../day3/Day3_Lab2_Tabular_With_Pytorch_(Extra).ipynb',
-        badge: 'Lab'
-      },
-      {
-        title: 'Day 3 Lab 2 - Tabular with PyTorch (One-Hot Encoder)',
-        description: 'One-hot encoder variant of the Day 3 tabular PyTorch lab. Prepared by Boushra Al-Mazroua.',
-        href: '../day3/Day3_Lab2_Tabular_With_Pytorch_(One_Hot_Encoder).ipynb',
-        badge: 'Lab'
       }
     ],
     quizzes: [
@@ -130,7 +118,29 @@ window.KfupmDayContent = {
   },
   day4: {
     resources: [],
-    quizzes: []
+    quizzes: [
+      {
+        id: 'day4-deeplearning-quiz',
+        title: 'Day 4 Deep Learning Quiz',
+        description: '25-question review on advanced deep learning topics. Authored by Safwan Nabeel.',
+        level: 'Core',
+        focus: 'Advanced deep learning',
+        duration: 'Self-paced',
+        questionCount: 25,
+        link: 'day4-quiz.html'
+      },
+      {
+        id: 'day4-flashcards',
+        title: 'Day 4 Flashcards',
+        description: '48-card flashcard deck covering Day 4 deep learning concepts. Prepared by Safwan Nabeel.',
+        level: 'Core',
+        focus: 'Concept reinforcement',
+        duration: 'Self-paced',
+        questionCount: 48,
+        link: 'day4-flashcard.html',
+        ctaLabel: 'Open flashcards'
+      }
+    ]
   },
   day5: {
     resources: [],

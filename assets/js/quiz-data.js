@@ -56,7 +56,29 @@ window.KfupmQuizSamples = {
       ctaLabel: 'Open flashcards'
     }
   ],
-  day4: [],
+  day4: [
+    {
+      id: 'day4-deeplearning-quiz',
+      title: 'Day 4 Deep Learning Quiz',
+      description: '25-question review on advanced deep learning topics. Authored by Safwan Nabeel.',
+      level: 'Core',
+      focus: 'Advanced deep learning',
+      duration: 'Self-paced',
+      questionCount: 25,
+      link: 'day4/day4-quiz.html'
+    },
+    {
+      id: 'day4-flashcards',
+      title: 'Day 4 Flashcards',
+      description: '48-card flashcard deck covering Day 4 deep learning concepts. Prepared by Safwan Nabeel.',
+      level: 'Core',
+      focus: 'Concept reinforcement',
+      duration: 'Self-paced',
+      questionCount: 48,
+      link: 'day4/day4-flashcard.html',
+      ctaLabel: 'Open flashcards'
+    }
+  ],
   day5: [],
   extra: []
 };
