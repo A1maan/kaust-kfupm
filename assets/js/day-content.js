@@ -117,7 +117,14 @@ window.KfupmDayContent = {
     ]
   },
   day4: {
-    resources: [],
+    resources: [
+      {
+        title: 'Day 4 Annotated Slides (PDF)',
+        description: 'Stage 2 2026 Day 4 slide deck. Annotated by Rawan Alghamdi.',
+        href: '../day4/Stage_2_2026_Day4.pdf',
+        badge: 'Slides'
+      }
+    ],
     quizzes: [
       {
         id: 'day4-deeplearning-quiz',
