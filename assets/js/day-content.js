@@ -150,8 +150,33 @@ window.KfupmDayContent = {
     ]
   },
   day5: {
-    resources: [],
-    quizzes: []
+    resources: [
+      {
+        title: 'PyTorch Documentation (PDF)',
+        description: 'Quick PyTorch reference for Exam Day.',
+        href: '../day5/pytorch.pdf',
+        badge: 'Reference'
+      },
+      {
+        title: 'scikit-learn Documentation (PDF)',
+        description: 'sklearn user guide for Exam Day. Prepared by Safwan Nabeel.',
+        href: '../day5/sklearn_user_guide.pdf',
+        badge: 'Reference'
+      }
+    ],
+    quizzes: [
+      {
+        id: 'day5-quiz',
+        title: 'Day 5 Quiz',
+        description: 'Practice quiz for the Day 5 assessment material. Prepared by Rawan Alghamdi.',
+        level: 'Core',
+        focus: 'Final review',
+        duration: 'Self-paced',
+        questionCount: 72,
+        link: 'day5-quiz.html',
+        ctaLabel: 'Open quiz'
+      }
+    ]
   },
   extra: {
     resources: [

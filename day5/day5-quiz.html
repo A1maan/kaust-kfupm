@@ -1,0 +1,1029 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Day 5 Quiz - Final Review</title>
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/css/style.css" rel="stylesheet">
+  <style>
+    .question-stack { display: flex; flex-direction: column; gap: 1.5rem; }
+    .question-card { border: 1px solid rgba(0, 38, 76, 0.15); border-radius: 24px; padding: 1.5rem; background: rgba(255, 255, 255, 0.95); transition: border 0.2s ease, box-shadow 0.2s ease; }
+    .question-card.correct { border-color: rgba(74, 211, 149, 0.8); box-shadow: 0 12px 30px rgba(74, 211, 149, 0.15); }
+    .question-card.incorrect { border-color: rgba(255, 107, 107, 0.8); box-shadow: 0 12px 30px rgba(255, 107, 107, 0.15); }
+    .question-eyebrow { text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.35rem; }
+    .question-number { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.82rem; color: var(--text-dim); display: block; margin-bottom: 0.35rem; }
+    .question-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .options-list { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem; }
+    .option-item { display: flex; align-items: flex-start; gap: 0.65rem; border: 1px solid rgba(0, 38, 76, 0.15); border-radius: 14px; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.95); transition: border 0.2s ease, background 0.2s ease; cursor: pointer; }
+    .option-item.option-pill:hover { border-color: var(--accent-teal); background: rgba(27, 197, 201, 0.08); }
+    .option-item input[type="radio"] { appearance: none; width: 18px; height: 18px; border: 2px solid var(--accent-teal, #1bc5c9); border-radius: 50%; margin-top: 2px; position: relative; flex-shrink: 0; background: #fff; transition: box-shadow 0.2s ease, background 0.2s ease, border 0.2s ease; }
+    .option-item input[type="radio"]:checked { background: var(--accent-teal, #1bc5c9); box-shadow: inset 0 0 0 4px #fff; }
+    .option-item input[type="radio"]:focus-visible { outline: 2px solid var(--primary-red, #d63b41); outline-offset: 2px; }
+    .question-feedback { margin-top: 1rem; border-radius: 12px; padding: 0.85rem 1rem; font-size: 0.95rem; }
+    .question-feedback.success { background: rgba(74, 211, 149, 0.15); color: #1f7a52; border: 1px solid rgba(74, 211, 149, 0.6); }
+    .question-feedback.error { background: rgba(255, 107, 107, 0.15); color: #a12b2b; border: 1px solid rgba(255, 107, 107, 0.6); }
+    .practice-panel { background: rgba(255, 255, 255, 0.92); border: 1px solid rgba(0, 38, 76, 0.1); border-radius: 24px; padding: 1.5rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); }
+  </style>
+</head>
+<body>
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <div class="logo">
+        <a href="../index.html">
+          <img src="../assets/img/kaust-academy-logo.png" alt="KAUST Academy">
+          <img class="logo-kfupm" src="../assets/img/KFUPM Seal White.png" alt="KFUPM Seal" />
+        </a>
+      </div>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../day1/index.html">Day 1</a></li>
+          <li><a href="../day2/index.html">Day 2</a></li>
+          <li><a href="../day3/index.html">Day 3</a></li>
+          <li><a href="../day4/index.html">Day 4</a></li>
+          <li><a class="active" href="../day5/index.html">Day 5</a></li>
+          <li><a href="../extra/index.html">Extra</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="breadcrumbs animate-up">
+      <div class="container">
+        <h2>Day 5 - Final Review Quiz</h2>
+        <p>Comprehensive MCQ deck to review exam topics. Authored by Rawan Alghamdi.</p>
+        <div class="mt-3">
+          <a href="../day5/index.html" class="table-btn">Back to Day 5 decks</a>
+        </div>
+      </div>
+    </div>
+
+    <section class="quiz-page-section">
+      <div class="container">
+        <div class="quiz-card list-card mb-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+            <div>
+              <p class="eyebrow mb-1">About this quiz</p>
+              <h4 class="mb-1">Day 5 - Final Review</h4>
+              <p class="text-muted mb-1">Answer each question, submit, and check your score. Retake as needed to prepare for the final assessment.</p>
+              <p class="text-muted small mb-0">Quiz authored by <strong>Rawan Alghamdi</strong>.</p>
+            </div>
+            <div class="text-md-end">
+              <p class="text-muted small mb-1">Format</p>
+              <p class="mb-0 fw-semibold">Multiple choice - 72 questions</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="practice-panel">
+          <div class="question-stack" id="questionStack"><div class="question-card">
+        <span class="question-number">Question 1</span>
+        <div class="question-text">How does the ML approach differ from traditional programming in terms of "inputs" & "outputs" during the training phase?</div>
+        <ul class="options-list">
+            <li class="option-item">It takes Data and Answers as input to produce Rules as output.</li>
+            <li class="option-item">It takes Data and random Noise as input to produce Answers.</li>
+            <li class="option-item">It takes Rules and Data as input to produce Answers as output.</li>
+            <li class="option-item">It takes Rules and Answers as input to produce Data as output.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 2</span>
+        <div class="question-text">If your Training Loss is very low, but your Validation Loss is high and increasing. What is the most likely diagnosis?</div>
+        <ul class="options-list">
+            <li class="option-item">Good Fit (Low Variance) with optimal generalization.</li>
+            <li class="option-item">The learning rate is set too low for convergence.</li>
+            <li class="option-item">Underfitting (High Bias) where the model is too simple.</li>
+            <li class="option-item">Overfitting (High Variance) where the model memorizes noise.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 3</span>
+        <div class="question-text">Why is Stratified K-Fold splitting often preferred over a simple random split, especially for medical datasets?</div>
+        <ul class="options-list">
+            <li class="option-item">It guarantees that the training and test sets have the same class ratios.</li>
+            <li class="option-item">It ensures that the model processes each data point once during validation.</li>
+            <li class="option-item">It transforms the target variables from discrete labels into continuous.</li>
+            <li class="option-item">It speeds up the training process by removing statistical outliers.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 4</span>
+        <div class="question-text">In the context of optimization, what is the specific role of the "Gradient" in Gradient Descent?</div>
+        <ul class="options-list">
+            <li class="option-item">Responsible for randomly initializing the starting values of w and b.</li>
+            <li class="option-item">Measures the absolute error between the prediction and actual target value.</li>
+            <li class="option-item">Shows the direction of steepest increase in loss, so we move opposite to it.</li>
+            <li class="option-item">Mathematically modifies the loss function to ensure it's strictly convex.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 5</span>
+        <div class="question-text">MSE is not differentiable at 0.</div>
+        <ul class="options-list">
+            <li class="option-item">True</li>
+            <li class="option-item">False</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 6</span>
+        <div class="question-text">What function do we use for Binary Classification?</div>
+        <ul class="options-list">
+            <li class="option-item">Sin</li>
+            <li class="option-item">Sigmoid</li>
+            <li class="option-item">Softmax</li>
+            <li class="option-item">Cos</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 7</span>
+        <div class="question-text">What is true about Binary Classification?</div>
+        <ul class="options-list">
+            <li class="option-item">All of the above</li>
+            <li class="option-item">We use a threshold for evaluation</li>
+            <li class="option-item">The models output are continuous</li>
+            <li class="option-item">There is only one output</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 8</span>
+        <div class="question-text">-log(y) penalizes y=1</div>
+        <ul class="options-list">
+            <li class="option-item">True</li>
+            <li class="option-item">False</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 9</span>
+        <div class="question-text">How many loss terms are effective in BCE loss for one sample?</div>
+        <ul class="options-list">
+            <li class="option-item">Many</li>
+            <li class="option-item">It depends</li>
+            <li class="option-item">1</li>
+            <li class="option-item">2</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 10</span>
+        <div class="question-text">How many loss terms are effective in CE loss for one sample? (multiclass)</div>
+        <ul class="options-list">
+            <li class="option-item">Many</li>
+            <li class="option-item">It depends</li>
+            <li class="option-item">1</li>
+            <li class="option-item">2</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 11</span>
+        <div class="question-text">For multiclass classification, the model outputs probabilities.</div>
+        <ul class="options-list">
+            <li class="option-item">True</li>
+            <li class="option-item">False</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 12</span>
+        <div class="question-text">When doing multiclass classification with K classes and N samples, how many outputs should the model produce?</div>
+        <ul class="options-list">
+            <li class="option-item">K+N</li>
+            <li class="option-item">K</li>
+            <li class="option-item">N</li>
+            <li class="option-item">1</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 13</span>
+        <div class="question-text">How can we find the optimal parameters "w" in a linear regression?</div>
+        <ul class="options-list">
+            <li class="option-item">Gradient = 0 and solve for w</li>
+            <li class="option-item">All of the above</li>
+            <li class="option-item">Gradient Descent</li>
+            <li class="option-item">Closed Form Solution</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 14</span>
+        <div class="question-text">What is true about the normal equation for the closed form solution of Linear Regression?</div>
+        <ul class="options-list">
+            <li class="option-item">All of the above</li>
+            <li class="option-item">It scales cubically</li>
+            <li class="option-item">It includes a matrix inverse</li>
+            <li class="option-item">Solution might not exist</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 15</span>
+        <div class="question-text">Both Ridge and Lasso Regularizations modify which part of learning?</div>
+        <ul class="options-list">
+            <li class="option-item">The Loss</li>
+            <li class="option-item">The optimizer</li>
+            <li class="option-item">The model</li>
+            <li class="option-item">None of the above</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 16</span>
+        <div class="question-text">If we want to select only some features from the inputs when doing linear regression what should we do?</div>
+        <ul class="options-list">
+            <li class="option-item">Ridge</li>
+            <li class="option-item">LASSO</li>
+            <li class="option-item">None of the above</li>
+            <li class="option-item">Add nonlinearity</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 17</span>
+        <div class="question-text">In soft-margin SVM, what is true?</div>
+        <ul class="options-list">
+            <li class="option-item">Small C = Overfitting Risk</li>
+            <li class="option-item">Large C = More Violations</li>
+            <li class="option-item">Large C = Narrow margin / Strict</li>
+            <li class="option-item">Small C = Strict</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 18</span>
+        <div class="question-text">What is false about the RBF Kernel function in SVM?</div>
+        <ul class="options-list">
+            <li class="option-item">Avoid constructing high-dim</li>
+            <li class="option-item">Its nonlinear</li>
+            <li class="option-item">Finds Local Similarity</li>
+            <li class="option-item">Leads to a linear boundary</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 19</span>
+        <div class="question-text">How do Decision Trees take decisions?</div>
+        <ul class="options-list">
+            <li class="option-item">Minimize Impurity</li>
+            <li class="option-item">Minimize information Gain</li>
+            <li class="option-item">Gradient Descent</li>
+            <li class="option-item">All of the above</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 20</span>
+        <div class="question-text">What do Random Forests solve compared to Decision Trees?</div>
+        <ul class="options-list">
+            <li class="option-item">None of the above</li>
+            <li class="option-item">Faster Inference</li>
+            <li class="option-item">Less Memory</li>
+            <li class="option-item">Less Variance</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 21</span>
+        <div class="question-text">What is true about Boosting?</div>
+        <ul class="options-list">
+            <li class="option-item">Trees in series</li>
+            <li class="option-item">Can be parallelized</li>
+            <li class="option-item">Trained by Gradient Descent</li>
+            <li class="option-item">All of the above</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 22</span>
+        <div class="question-text">Which metric to optimize in cancer detection? We want to catch every sick patient, even if some healthy ones are flagged.</div>
+        <ul class="options-list">
+            <li class="option-item">Accuracy</li>
+            <li class="option-item">Precision</li>
+            <li class="option-item">Recall</li>
+            <li class="option-item">MSE</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 23</span>
+        <div class="question-text">Which of these are structured data?</div>
+        <ul class="options-list">
+            <li class="option-item">Spreadsheet</li>
+            <li class="option-item">SQL dataset</li>
+            <li class="option-item">CSV files</li>
+            <li class="option-item">All of the above</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 24</span>
+        <div class="question-text">Which of these models is best for time series?</div>
+        <ul class="options-list">
+            <li class="option-item">CNN</li>
+            <li class="option-item">SVM</li>
+            <li class="option-item">RNN</li>
+            <li class="option-item">Decision Tree</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 25</span>
+        <div class="question-text">How is AdamW different compared to Adam?</div>
+        <ul class="options-list">
+            <li class="option-item">AdamW is slower</li>
+            <li class="option-item">AdamW uses momentum</li>
+            <li class="option-item">AdamW decouples weight decay from the gradient update</li>
+            <li class="option-item">AdamW does not use adaptive learning rates</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 26</span>
+        <div class="question-text">AdaGrad keeps what information of past gradients?</div>
+        <ul class="options-list">
+            <li class="option-item">Minimum past gradient</li>
+            <li class="option-item">Average of past gradients</li>
+            <li class="option-item">Maximum past gradient</li>
+            <li class="option-item">Sum of squared past gradients</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 27</span>
+        <div class="question-text">What is NOT true about momentum optimizer?</div>
+        <ul class="options-list">
+            <li class="option-item">It always converges faster than SGD</li>
+            <li class="option-item">It uses a velocity term</li>
+            <li class="option-item">It helps accelerate gradients</li>
+            <li class="option-item">It reduces oscillations</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 28</span>
+        <div class="question-text">What makes deep learning more powerful than machine learning?</div>
+        <ul class="options-list">
+            <li class="option-item">Requires less data</li>
+            <li class="option-item">Simpler models</li>
+            <li class="option-item">Ability to learn hierarchical features</li>
+            <li class="option-item">No need for training</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 29</span>
+        <div class="question-text">Which of the following activation functions range is between -1 to 1?</div>
+        <ul class="options-list">
+            <li class="option-item">Sigmoid</li>
+            <li class="option-item">Softmax</li>
+            <li class="option-item">ReLU</li>
+            <li class="option-item">Tanh</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 30</span>
+        <div class="question-text">What is true about stochastic gradient descent?</div>
+        <ul class="options-list">
+            <li class="option-item">It always converges to global minimum</li>
+            <li class="option-item">It uses the entire dataset for each update</li>
+            <li class="option-item">It updates parameters using a single or few samples</li>
+            <li class="option-item">It does not use gradients</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 31</span>
+        <div class="question-text">What is true about gradient boosting?</div>
+        <ul class="options-list">
+            <li class="option-item">It builds models independently</li>
+            <li class="option-item">It builds models sequentially to correct errors</li>
+            <li class="option-item">It does not use weak learners</li>
+            <li class="option-item">It is a type of neural network</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 32</span>
+        <div class="question-text">Which problem does random forest try to solve compared to decision trees?</div>
+        <ul class="options-list">
+            <li class="option-item">Less variance</li>
+            <li class="option-item">Less bias</li>
+            <li class="option-item">Faster inference</li>
+            <li class="option-item">All of the above</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 33</span>
+        <div class="question-text">How does decision tree select a feature?</div>
+        <ul class="options-list">
+            <li class="option-item">Gradient descent</li>
+            <li class="option-item">Minimize impurity</li>
+            <li class="option-item">All of the above</li>
+            <li class="option-item">Minimize information gain</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 34</span>
+        <div class="question-text">Which of the following is NOT a deep learning algorithm?</div>
+        <ul class="options-list">
+            <li class="option-item">LSTM</li>
+            <li class="option-item">RNN</li>
+            <li class="option-item">CNN</li>
+            <li class="option-item">Random Forest</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 35</span>
+        <div class="question-text">When are stratified K fold and F1 score especially useful?</div>
+        <ul class="options-list">
+            <li class="option-item">Imbalanced data</li>
+            <li class="option-item">Regression tasks</li>
+            <li class="option-item">Noisy data</li>
+            <li class="option-item">Clean data</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 36</span>
+        <div class="question-text">Which is NOT true about ridge?</div>
+        <ul class="options-list">
+            <li class="option-item">It uses L2 regularization</li>
+            <li class="option-item">It removes some features</li>
+            <li class="option-item">It reduces model complexity</li>
+            <li class="option-item">It prevents overfitting</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 37</span>
+        <div class="question-text">Which function do we use for predicting multi class classification?</div>
+        <ul class="options-list">
+            <li class="option-item">Softmax</li>
+            <li class="option-item">ReLU</li>
+            <li class="option-item">Linear function</li>
+            <li class="option-item">Sigmoid</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 38</span>
+        <div class="question-text">MSE is not differentiable at 0</div>
+        <ul class="options-list">
+            <li class="option-item">True</li>
+            <li class="option-item">False</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 39</span>
+        <div class="question-text">We can use the accuracy as a loss function</div>
+        <ul class="options-list">
+            <li class="option-item">True</li>
+            <li class="option-item">False</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 40</span>
+        <div class="question-text">If the training and validation losses are not decreasing, this is:</div>
+        <ul class="options-list">
+            <li class="option-item">Overfitting</li>
+            <li class="option-item">Normal</li>
+            <li class="option-item">Good</li>
+            <li class="option-item">Underfitting</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 41</span>
+        <div class="question-text">Clustering and PCA are unsupervised learning techniques</div>
+        <ul class="options-list">
+            <li class="option-item">True</li>
+            <li class="option-item">False</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 42</span>
+        <div class="question-text">What type of learning predicts y=f(x)?</div>
+        <ul class="options-list">
+            <li class="option-item">Supervised learning</li>
+            <li class="option-item">Self-supervised learning</li>
+            <li class="option-item">Unsupervised learning</li>
+            <li class="option-item">Reinforcement learning</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 43</span>
+        <div class="question-text">What is the key difference in unsupervised learning?</div>
+        <ul class="options-list">
+            <li class="option-item">No labels used</li>
+            <li class="option-item">Predicts targets</li>
+            <li class="option-item">Requires supervision</li>
+            <li class="option-item">Uses labeled data</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 44</span>
+        <div class="question-text">Which task is NOT typical for unsupervised learning?</div>
+        <ul class="options-list">
+            <li class="option-item">Anomaly detection</li>
+            <li class="option-item">Dimensionality reduction</li>
+            <li class="option-item">Clustering</li>
+            <li class="option-item">Image classification</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 45</span>
+        <div class="question-text">What does K represent in K-Means?</div>
+        <ul class="options-list">
+            <li class="option-item">Number of clusters</li>
+            <li class="option-item">Number of data points</li>
+            <li class="option-item">Number of iterations</li>
+            <li class="option-item">Number of features</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 46</span>
+        <div class="question-text">How does K-Means assign points to clusters?</div>
+        <ul class="options-list">
+            <li class="option-item">Equal distribution</li>
+            <li class="option-item">Furthest center</li>
+            <li class="option-item">Randomly</li>
+            <li class="option-item">Nearest center</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 47</span>
+        <div class="question-text">What method helps choose the number of clusters?</div>
+        <ul class="options-list">
+            <li class="option-item">Gradient descent</li>
+            <li class="option-item">Cross-validation</li>
+            <li class="option-item">Random search</li>
+            <li class="option-item">Elbow method</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 48</span>
+        <div class="question-text">What is the main goal of PCA?</div>
+        <ul class="options-list">
+            <li class="option-item">Predict labels</li>
+            <li class="option-item">Minimize clusters</li>
+            <li class="option-item">Generate data</li>
+            <li class="option-item">Maximize variance</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 49</span>
+        <div class="question-text">Which problem does K-Means struggle with?</div>
+        <ul class="options-list">
+            <li class="option-item">Equal cluster sizes</li>
+            <li class="option-item">Non-spherical clusters</li>
+            <li class="option-item">Low dimensional data</li>
+            <li class="option-item">Small datasets</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 50</span>
+        <div class="question-text">What does PCA produce instead of original features?</div>
+        <ul class="options-list">
+            <li class="option-item">Principal components</li>
+            <li class="option-item">Noise</li>
+            <li class="option-item">Labels</li>
+            <li class="option-item">Cluster centers</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 51</span>
+        <div class="question-text">Which step is NOT part of PCA?</div>
+        <ul class="options-list">
+            <li class="option-item">Center data</li>
+            <li class="option-item">Calculate covariance</li>
+            <li class="option-item">Find eigenvectors</li>
+            <li class="option-item">Assign clusters</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 52</span>
+        <div class="question-text">What is a key limitation of PCA?</div>
+        <ul class="options-list">
+            <li class="option-item">Non-linear data (it assumes linearity)</li>
+            <li class="option-item">Only linear</li>
+            <li class="option-item">Works with labels</li>
+            <li class="option-item">Handles noise well</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 53</span>
+        <div class="question-text">What does t-SNE preserve in its 2D map?</div>
+        <ul class="options-list">
+            <li class="option-item">Cluster sizes</li>
+            <li class="option-item">Neighbor relationships</li>
+            <li class="option-item">Variance</li>
+            <li class="option-item">Data labels</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 54</span>
+        <div class="question-text">What is the main purpose of an autoencoder?</div>
+        <ul class="options-list">
+            <li class="option-item">Clustering</li>
+            <li class="option-item">Data compression / Representation Learning</li>
+            <li class="option-item">Label prediction</li>
+            <li class="option-item">Data generation only</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 55</span>
+        <div class="question-text">How does the autoencoder bottleneck help?</div>
+        <ul class="options-list">
+            <li class="option-item">Copies input</li>
+            <li class="option-item">Forces compression</li>
+            <li class="option-item">Increases dimensions</li>
+            <li class="option-item">Removes noise</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 56</span>
+        <div class="question-text">Why is Accuracy often a misleading metric for imbalanced datasets (e.g., 99% healthy, 1% sick)?</div>
+        <ul class="options-list">
+            <li class="option-item">Requires input features to be normalized between 0-1 to function correctly.</li>
+            <li class="option-item">Cannot be used for optimization because it is non-differentiable.</li>
+            <li class="option-item">Creates mathematical errors because it's unable to process negative integers.</li>
+            <li class="option-item">Lazy model predicts only the majority class can score 99% yet fail the task.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 57</span>
+        <div class="question-text">Which of the following best describes the difference between Parameters and Hyperparameters?</div>
+        <ul class="options-list">
+            <li class="option-item">Parameters are learned from data; Hyperparameters are set before training.</li>
+            <li class="option-item">Parameters is for Classification, while Hyperparameters is for Regression.</li>
+            <li class="option-item">Parameters are configured before training, Hyperparameters are learned.</li>
+            <li class="option-item">They're interchangeable synonyms describing the configuration variables.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 58</span>
+        <div class="question-text">According to the lectures, when we have limited data, what problem does this create for complex models?</div>
+        <ul class="options-list">
+            <li class="option-item">They're computationally efficient and train faster than linear models.</li>
+            <li class="option-item">They memorize noise instead of learning the true signal.</li>
+            <li class="option-item">They use built-in mechanisms to select features and remove irrelevant data.</li>
+            <li class="option-item">They lack the capacity to identify meaningful patterns within the dataset.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 59</span>
+        <div class="question-text">When evaluating regression with many extreme outliers, which metric is less sensitive to them?</div>
+        <ul class="options-list">
+            <li class="option-item">Mean Squared Error (MSE)</li>
+            <li class="option-item">Root Mean Squared Error (RMSE)</li>
+            <li class="option-item">Mean Absolute Error (MAE)</li>
+            <li class="option-item">R-Squared Score</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 60</span>
+        <div class="question-text">What is the primary purpose of the F1-Score, and why is the Harmonic Mean used instead of a simple average?</div>
+        <ul class="options-list">
+            <li class="option-item">To mathematically transform a continuous regression into a classification.</li>
+            <li class="option-item">To balance Precision and Recall, forcing the model to be good at both.</li>
+            <li class="option-item">To provide a smooth derivative to calculate gradients efficiently.</li>
+            <li class="option-item">To measure the distance between the predicted outputs and the targets.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 61</span>
+        <div class="question-text">Why do we square the residuals in Mean Squared Error (MSE)?</div>
+        <ul class="options-list">
+            <li class="option-item">To ensure that the resulting error is normalized to be &lt;1 for stability.</li>
+            <li class="option-item">To change the nature of the problem from a regression into a classification.</li>
+            <li class="option-item">To avoid error cancellation and strongly penalize large errors.</li>
+            <li class="option-item">To create a non-differentiable function that assists in the convergence.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 62</span>
+        <div class="question-text">In Logistic Regression, what is the specific purpose of the Sigmoid function?</div>
+        <ul class="options-list">
+            <li class="option-item">To map any real-valued number into a probability range of (0, 1).</li>
+            <li class="option-item">To explicitly construct a linear decision boundary.</li>
+            <li class="option-item">To directly minimize the weights of the model using a closed-form solution.</li>
+            <li class="option-item">To calculate the distance between data points in high-dimensional space.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 63</span>
+        <div class="question-text">What is the key distinguishing characteristic of Lasso Regression (L1) that makes it useful for feature selection?</div>
+        <ul class="options-list">
+            <li class="option-item">It shrinks weights to exactly zero, effectively removing features.</li>
+            <li class="option-item">It utilizes a closed-form solution that makes it faster to compute.</li>
+            <li class="option-item">It applies a penalty that shrinks all weights evenly toward zero.</li>
+            <li class="option-item">It constrains the weights within a circular region.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 64</span>
+        <div class="question-text">In k-NN, what is the main risk if you set k = 1?</div>
+        <ul class="options-list">
+            <li class="option-item">The model will detect and eliminate features that are irrelevant.</li>
+            <li class="option-item">The decision boundary will become smooth, resulting in underfitting.</li>
+            <li class="option-item">The model overfits due to high sensitivity to noise in individual points.</li>
+            <li class="option-item">The model will lose its non-linear capabilities and exhibit linear behavior.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 65</span>
+        <div class="question-text">What is the effect of using a very large value of C in Soft Margin SVM?</div>
+        <ul class="options-list">
+            <li class="option-item">It forces all the model weights to approach zero, to prevent overfitting.</li>
+            <li class="option-item">It penalizes misclassifications heavily, leading to a narrow margin.</li>
+            <li class="option-item">It becomes tolerant of misclassifications, and may lead to underfitting.</li>
+            <li class="option-item">It simplifies the SVM into a standard Linear Regression model.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 66</span>
+        <div class="question-text">What is the major disadvantage of using a single Decision Tree for predictions?</div>
+        <ul class="options-list">
+            <li class="option-item">It's incapable of processing categorical data without complex preprocessing.</li>
+            <li class="option-item">It requires the input data to undergo feature scaling and normalization.</li>
+            <li class="option-item">It has high variance (very unstable).</li>
+            <li class="option-item">It is considered a "black box" model.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 67</span>
+        <div class="question-text">In Gradient Boosting, what does each new tree actually predict?</div>
+        <ul class="options-list">
+            <li class="option-item">The target values, y, from scratch, ignoring previous model predictions.</li>
+            <li class="option-item">Optimal coefficients and weights that minimize the linear regression error.</li>
+            <li class="option-item">The probability estimates for each class calculated from the features.</li>
+            <li class="option-item">The residual errors (mistakes) from the previous model's predictions.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 68</span>
+        <div class="question-text">Which metrics are commonly used to measure node impurity when building Decision Trees?</div>
+        <ul class="options-list">
+            <li class="option-item">Gini Impurity or Entropy (Information Gain).</li>
+            <li class="option-item">Geometric distance metrics such as Euclidean Distance and L1 Distance.</li>
+            <li class="option-item">The Pearson Correlation Coefficient to measure linear relationships.</li>
+            <li class="option-item">Mean Squared Error (MSE) is the exclusive metric used for all tree types.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 69</span>
+        <div class="question-text">According to the "No Free Lunch" Theorem, what can we conclude about machine learning algorithms?</div>
+        <ul class="options-list">
+            <li class="option-item">SVM are theoretically proven to be the superior algorithm for any dataset.</li>
+            <li class="option-item">DL will invariably outperform traditional Machine Learning models.</li>
+            <li class="option-item">XGBoost is guaranteed to provide the optimal solution for tabular data.</li>
+            <li class="option-item">No single algorithm performs best across all possible problems.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 70</span>
+        <div class="question-text">Why don't Tree-based models (like Decision Trees and Random Forests) require feature scaling?</div>
+        <ul class="options-list">
+            <li class="option-item">They disregard the values of the features and only look at rank ordering.</li>
+            <li class="option-item">They make threshold-based decisions which are invariant to feature scales.</li>
+            <li class="option-item">They utilize a special gradient descent that's invariant to feature scale.</li>
+            <li class="option-item">They function by converting input features into integers during processing.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 71</span>
+        <div class="question-text">What is the main risk of setting the Max Depth hyperparameter too high in Decision Trees?</div>
+        <ul class="options-list">
+            <li class="option-item">The tree fails to capture complex patterns, resulting in underfitting.</li>
+            <li class="option-item">Computational speed of prediction will increase significantly with depth.</li>
+            <li class="option-item">The tree triggers early stopping that prevents learning the data fully.</li>
+            <li class="option-item">The tree overfits by memorizing noise and creating complex boundaries.</li>
+        </ul>
+    </div>
+
+    <div class="question-card">
+        <span class="question-number">Question 72</span>
+        <div class="question-text">When working with a small dataset, what issue makes K-Fold Cross-Validation better than a simple train-test split?</div>
+        <ul class="options-list">
+            <li class="option-item">It has built-in capabilities to automatically perform feature engineering.</li>
+            <li class="option-item">It completely eliminates the necessity of having a separate validation set.</li>
+            <li class="option-item">A single random split can be "lucky"; K-Fold tests on all data across folds.</li>
+            <li class="option-item">It is computationally more efficient and runs faster than a simple split.</li>
+        </ul>
+    </div>
+
+          </div>
+          <div class="practice-actions mt-4">
+            <button type="button" class="btn btn-primary" id="submitQuiz">Submit answers</button>
+            <button type="button" class="btn btn-outline-secondary" id="resetQuiz">Retake quiz</button>
+          </div>
+          <p class="practice-notice mt-3 d-none" id="formNotice">Answer every question before submitting.</p>
+        </div>
+        <div class="practice-panel mt-4 d-none" id="resultPanel">
+          <p class="eyebrow mb-1 text-muted text-uppercase">Score</p>
+          <h4 class="scoreline mb-2" id="scoreSummary"></h4>
+          <p class="text-muted mb-0">Scroll up to review your answers. Options reshuffle on retake.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer">
+    <div class="container d-md-flex py-4">
+      <div class="me-md-auto text-center w-100">
+        <div class="copyright">
+          &copy; Copyright <strong><span>KAUST Academy</span></strong>. All Rights Reserved
+        </div>
+        <div class="license" style="font-size: 13px; margin-top: 8px; color: #555;">
+          Licensed under <a href="https://github.com/KAUST-Academy/KAUST_Academy_2026_Introduction_To_AI?tab=GPL-3.0-1-ov-file#readme" target="_blank" rel="noopener">GPL-3.0</a>.
+          Recording and uploading lectures online is not permitted.
+        </div>
+        <div class="credits" style="font-size: 14px; margin-top: 5px; color: #555;">
+          Website created and managed by <strong>Almaan Khan</strong> and the other <strong>KFUPM TAs</strong>.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+  <script>
+    AOS.init();
+    const on = (type, el, listener) => {
+      const selectEl = document.querySelector(el);
+      if (selectEl) {
+        selectEl.addEventListener(type, listener);
+      }
+    };
+    on('click', '.mobile-nav-toggle', function () {
+      document.querySelector('#navbar').classList.toggle('navbar-mobile');
+      this.classList.toggle('bi-list');
+      this.classList.toggle('bi-x');
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+      const questionCards = Array.from(document.querySelectorAll('#questionStack .question-card'));
+      const answerKey = [
+        0, 3, 0, 2, 1, 1, 0, 1, 2, 2, 0, 1, 1, 0, 0, 1, 2, 3,
+        1, 3, 0, 2, 3, 2, 2, 3, 0, 2, 3, 2, 1, 0, 1, 3, 0, 1,
+        0, 1, 1, 3, 0, 0, 0, 3, 0, 3, 3, 3, 1, 1, 3, 0, 2, 1,
+        3, 0, 0, 2, 1, 1, 2, 0, 0, 2, 1, 2, 3, 1, 3, 2
+      ];
+
+      // Build radio inputs and apply consistent styling
+      questionCards.forEach((card, qIdx) => {
+        const numberEl = card.querySelector('.question-number');
+        if (numberEl) {
+          numberEl.classList.add('question-eyebrow');
+          numberEl.textContent = `Question ${qIdx + 1}`;
+        }
+        const options = Array.from(card.querySelectorAll('li'));
+        const optionsList = card.querySelector('.options-list');
+        options.forEach((li, optIdx) => {
+          li.classList.add('option-item', 'option-pill');
+          const optionText = li.textContent.trim();
+          li.textContent = '';
+          const input = document.createElement('input');
+          input.type = 'radio';
+          input.name = `question-${qIdx}`;
+          input.value = optIdx.toString();
+          const span = document.createElement('span');
+          span.textContent = optionText;
+          li.appendChild(input);
+          li.appendChild(span);
+          li.addEventListener('click', () => { input.checked = true; });
+        });
+
+        if (optionsList && !card.querySelector('.question-feedback')) {
+          const feedback = document.createElement('div');
+          feedback.className = 'question-feedback d-none';
+          feedback.id = `feedback-${qIdx}`;
+          optionsList.insertAdjacentElement('afterend', feedback);
+        }
+      });
+
+      const quizForm = document.getElementById('questionStack');
+      const submitBtn = document.getElementById('submitQuiz');
+      const resetBtn = document.getElementById('resetQuiz');
+      const notice = document.getElementById('formNotice');
+      const resultPanel = document.getElementById('resultPanel');
+      const scoreSummary = document.getElementById('scoreSummary');
+
+      const gradeQuiz = () => {
+        let answeredAll = true;
+        let score = 0;
+
+        questionCards.forEach((card, qIdx) => {
+          card.classList.remove('correct', 'incorrect');
+          const feedback = card.querySelector('.question-feedback');
+          if (feedback) {
+            feedback.classList.add('d-none');
+            feedback.classList.remove('success', 'error');
+            feedback.textContent = '';
+          }
+          const selected = card.querySelector('input[type="radio"]:checked');
+          if (!selected) {
+            answeredAll = false;
+            return;
+          }
+          const chosen = Number(selected.value);
+          const correct = answerKey[qIdx];
+          const optionTexts = Array.from(card.querySelectorAll('.option-item span')).map((el) => el.textContent.trim());
+
+          if (chosen === correct) {
+            score += 1;
+            card.classList.add('correct');
+            if (feedback) {
+              feedback.innerHTML = `<strong>Correct.</strong>`;
+              feedback.classList.remove('d-none');
+              feedback.classList.add('success');
+            }
+          } else {
+            card.classList.add('incorrect');
+            if (feedback) {
+              feedback.innerHTML = `<strong>Incorrect.</strong> Answer: ${optionTexts[correct] || ''}`;
+              feedback.classList.remove('d-none');
+              feedback.classList.add('error');
+            }
+          }
+        });
+
+        if (!answeredAll) {
+          notice.classList.remove('d-none');
+          resultPanel.classList.add('d-none');
+          return;
+        }
+
+        notice.classList.add('d-none');
+        scoreSummary.textContent = `${score} / ${questionCards.length}`;
+        resultPanel.classList.remove('d-none');
+        window.scrollTo({ top: resultPanel.offsetTop - 120, behavior: 'smooth' });
+      };
+
+      const resetQuiz = () => {
+        questionCards.forEach((card) => {
+          card.classList.remove('correct', 'incorrect');
+          card.querySelectorAll('input[type="radio"]').forEach((input) => { input.checked = false; });
+        });
+        notice.classList.add('d-none');
+        resultPanel.classList.add('d-none');
+        scoreSummary.textContent = '';
+        window.scrollTo({ top: quizForm.offsetTop - 120, behavior: 'smooth' });
+      };
+
+      submitBtn?.addEventListener('click', gradeQuiz);
+      resetBtn?.addEventListener('click', resetQuiz);
+    });
+  </script>
+</body>
+</html>
+
+

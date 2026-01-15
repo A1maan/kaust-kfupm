@@ -79,6 +79,17 @@ window.KfupmQuizSamples = {
       ctaLabel: 'Open flashcards'
     }
   ],
-  day5: [],
+  day5: [
+    {
+      id: 'day5-quiz',
+      title: 'Day 5 Final Review Quiz',
+      description: '72-question practice deck for the final assessment. Prepared by Rawan Alghamdi.',
+      level: 'Core',
+      focus: 'Exam review',
+      duration: 'Self-paced',
+      questionCount: 72,
+      link: 'day5/day5-quiz.html'
+    }
+  ],
   extra: []
 };
