@@ -123,6 +123,12 @@ window.KfupmDayContent = {
         description: 'Stage 2 2026 Day 4 slide deck. Annotated by Rawan Alghamdi.',
         href: '../day4/Stage_2_2026_Day4.pdf',
         badge: 'Slides'
+      },
+      {
+        title: 'Day 4 Lab 1 Images with PyTorch',
+        description: 'Updated PyTorch lab notebook for image workflows. Prepared by Qasim Mahfoodh and Safwan Nabeel.',
+        href: '../day4/Day4_Lab1_Images_with_PyTorch_UPDATEDDDD.ipynb',
+        badge: 'Lab'
       }
     ],
     quizzes: [
