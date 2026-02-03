@@ -217,6 +217,41 @@ h6 {
   width: 100%;
 }
 
+/* Stage Switch Button Styling */
+.navbar .stage-switch {
+  margin-left: 40px;
+  padding-left: 20px;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.navbar .stage-switch a {
+  background: linear-gradient(135deg, var(--accent-orange) 0%, #e5a800 100%);
+  color: var(--primary-navy) !important;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(240, 181, 0, 0.3);
+}
+
+.navbar .stage-switch a:hover {
+  background: linear-gradient(135deg, #ffcc00 0%, var(--accent-orange) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(240, 181, 0, 0.4);
+}
+
+.navbar .stage-switch a::after {
+  display: none;
+}
+
+.navbar .stage-switch a i {
+  font-size: 14px;
+}
+
 /* Hide Mobile Toggle on Desktop */
 .mobile-nav-toggle {
   color: var(--bg-white);
@@ -463,6 +498,24 @@ h6 {
 
 .btn-get-started:hover::after {
   transform: translateX(4px);
+}
+
+.btn-get-started.stage-secondary {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.95);
+  box-shadow: none;
+}
+
+.btn-get-started.stage-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--bg-white);
+  color: var(--bg-white);
+  transform: translateY(-3px);
+}
+
+.btn-get-started.stage-secondary::after {
+  content: "↗";
 }
 
 /* --------------------------------------------------------------
@@ -763,6 +816,26 @@ h6 {
 .navbar-mobile .active,
 .navbar-mobile li:hover>a {
   color: var(--accent-orange);
+}
+
+/* Stage Switch in Mobile Menu */
+.navbar-mobile .stage-switch {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #e8e6e3;
+  border-left: none;
+}
+
+.navbar-mobile .stage-switch a {
+  background: linear-gradient(135deg, var(--accent-orange) 0%, #e5a800 100%);
+  color: var(--primary-navy) !important;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(240, 181, 0, 0.3);
 }
 
 .navbar-mobile .getstarted {

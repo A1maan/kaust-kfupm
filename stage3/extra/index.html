@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Stage 3 · Extra Materials</title>
+  <link href="/stage2/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/stage2/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/stage2/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/stage2/assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <div class="logo">
+        <a href="/">
+          <img src="/stage2/assets/img/kaust-academy-logo.png" alt="KAUST Academy">
+          <img class="logo-kfupm" src="/stage2/assets/img/KFUPM Seal White.png" alt="KFUPM Seal"/>
+        </a>
+      </div>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="/stage3/">Home</a></li>
+          <li><a href="/stage3/day1/index.html">Day 1</a></li>
+          <li><a href="/stage3/day2/index.html">Day 2</a></li>
+          <li><a href="/stage3/day3/index.html">Day 3</a></li>
+          <li><a href="/stage3/day4/index.html">Day 4</a></li>
+          <li><a class="active" href="/stage3/extra/index.html">Extra</a></li>
+          <li class="stage-switch"><a href="/stage2/" title="Switch to Stage 2"><i class="bi bi-arrow-left-right"></i> Stage 2</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="breadcrumbs animate-up">
+      <div class="container">
+        <h2>Stage 3 · Extra Materials</h2>
+        <p>Supplementary Stage 3 practice content will be shared here.</p>
+      </div>
+    </div>
+    <section class="quiz-lab-section">
+      <div class="container">
+        <div class="quiz-card list-card text-center">
+          <h4 class="mb-2">Extra materials coming soon</h4>
+          <p class="text-muted mb-0">Check back for additional Stage 3 decks.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer id="footer">
+    <div class="container d-md-flex py-4">
+      <div class="me-md-auto text-center w-100">
+        <div class="copyright">
+          &copy; Copyright <strong><span>KAUST Academy</span></strong>. All Rights Reserved
+        </div>
+        <div class="license" style="font-size: 13px; margin-top: 8px; color: #555;">
+          Licensed under <a
+            href="https://github.com/KAUST-Academy/KAUST_Academy_2026_Introduction_To_AI?tab=GPL-3.0-1-ov-file#readme"
+            target="_blank" rel="noopener">GPL-3.0</a>.
+          Recording and uploading lectures online is not permitted.
+        </div>
+        <div class="credits" style="font-size: 14px; margin-top: 5px; color: #555;">
+          Website created and managed by <strong>Almaan Khan</strong> and the other <strong>KFUPM TAs</strong>.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/stage2/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/stage2/assets/vendor/aos/aos.js"></script>
+  <script>
+    AOS.init();
+    const on = (type, el, listener) => {
+      const selectEl = document.querySelector(el);
+      if (selectEl) {
+        selectEl.addEventListener(type, listener);
+      }
+    };
+    on('click', '.mobile-nav-toggle', function () {
+      document.querySelector('#navbar').classList.toggle('navbar-mobile');
+      this.classList.toggle('bi-list');
+      this.classList.toggle('bi-x');
+    });
+  </script>
+
+</body>
+</html>
