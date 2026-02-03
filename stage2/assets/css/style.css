@@ -743,21 +743,64 @@ h6 {
 # Mobile View & Mobile Menu Styling
 -------------------------------------------------------------- */
 @media (max-width: 991px) {
+  #header .container {
+    position: relative;
+  }
+
   .mobile-nav-toggle {
     display: block;
     cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
   }
 
   .navbar ul {
     display: none;
   }
 
+  .navbar {
+    position: static;
+  }
+
+  .logo {
+    flex: 1;
+  }
+
   #hero h1 {
-    font-size: 36px;
+    font-size: 32px;
+    padding: 0 15px;
   }
 
   #hero h2 {
-    font-size: 18px;
+    font-size: 16px;
+    padding: 0 15px;
+  }
+
+  /* Center buttons on mobile */
+  #hero .d-flex {
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  .btn-get-started {
+    padding: 12px 24px;
+    font-size: 14px;
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+
+  /* Logo sizing on mobile */
+  .logo img {
+    height: 50px;
+  }
+
+  .logo .logo-kfupm {
+    height: 45px;
+    transform: translateY(8px);
   }
 }
 
@@ -771,22 +814,23 @@ h6 {
   right: 0;
   left: 0;
   bottom: 0;
-  background: rgba(0, 38, 76, 0.9);
+  background: rgba(0, 38, 76, 0.95);
   transition: 0.3s;
   z-index: 999;
 }
 
 .navbar-mobile .mobile-nav-toggle {
-  position: absolute;
-  top: 15px;
+  position: fixed;
+  top: 35px;
   right: 15px;
   color: var(--bg-white);
+  z-index: 1001;
 }
 
 .navbar-mobile ul {
   display: block !important;
   position: absolute;
-  top: 55px;
+  top: 100px;
   right: 15px;
   bottom: 15px;
   left: 15px;
@@ -820,26 +864,68 @@ h6 {
 
 /* Stage Switch in Mobile Menu */
 .navbar-mobile .stage-switch {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #e8e6e3;
+  margin: 15px 20px;
+  padding: 0;
+  border-top: none;
   border-left: none;
+  width: calc(100% - 40px);
 }
 
 .navbar-mobile .stage-switch a {
   background: linear-gradient(135deg, var(--accent-orange) 0%, #e5a800 100%);
   color: var(--primary-navy) !important;
-  padding: 12px 20px;
+  padding: 14px 20px;
   border-radius: 12px;
   font-weight: 700;
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   box-shadow: 0 2px 8px rgba(240, 181, 0, 0.3);
+  width: 100%;
+  text-align: center;
 }
 
 .navbar-mobile .getstarted {
   margin: 15px;
+}
+
+/* Extra small devices */
+@media (max-width: 576px) {
+  #hero h1 {
+    font-size: 26px;
+  }
+
+  #hero h1 span {
+    padding: 2px 8px;
+    font-size: 22px;
+  }
+
+  #hero h2 {
+    font-size: 14px;
+    margin: 15px 0 20px 0;
+  }
+
+  .btn-get-started {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+
+  #header {
+    height: 70px;
+  }
+
+  .logo img {
+    height: 40px;
+  }
+
+  .logo .logo-kfupm {
+    height: 35px;
+  }
+
+  .navbar-mobile ul {
+    top: 70px;
+  }
 }
 
 /* --------------------------------------------------------------
