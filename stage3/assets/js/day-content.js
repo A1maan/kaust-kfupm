@@ -29,18 +29,7 @@ window.KfupmDayContent = {
   },
   day2: {
     resources: [],
-    quizzes: [
-      {
-        id: 'day2-practical-dl-quiz',
-        title: 'Computer Vision Practical Deep Learning Quiz',
-        description: 'Practice quiz on datasets, augmentations, transfer learning, and more. Authored by Safwan Nabeel.',
-        level: 'Core',
-        focus: 'Practical techniques',
-        duration: 'Self-paced',
-        questionCount: 62,
-        link: 'quiz.html'
-      }
-    ]
+    quizzes: []
   },
   day3: {
     resources: [],
