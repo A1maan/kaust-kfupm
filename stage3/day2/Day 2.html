@@ -1,265 +1,49 @@
-§<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Computer Vision Practical Deep Learning — Practice Quiz</title>
-  <style>
-    :root {
-      --bg: #0b0f17;
-      --card: #121a2a;
-      --text: #e8eefc;
-      --muted: #a9b4d0;
-      --accent: #5aa2ff;
-      --good: #38d996;
-      --bad: #ff6b6b;
-      --border: rgba(255,255,255,0.10);
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 700px at 20% 0%, rgba(90,162,255,0.18), transparent 60%),
-                  radial-gradient(900px 600px at 100% 20%, rgba(56,217,150,0.12), transparent 60%),
-                  var(--bg);
-      color: var(--text);
-      line-height: 1.45;
-    }
-    .wrap {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 28px 16px 60px;
-    }
-    header {
-      display: flex;
-      gap: 12px;
-      align-items: baseline;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-    h1 {
-      font-size: 20px;
-      margin: 0;
-      letter-spacing: 0.2px;
-    }
-    .sub {
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.35);
-    }
-    .row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .controls {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-    label {
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-      color: var(--muted);
-      font-size: 13px;
-      user-select: none;
-    }
-    input[type="checkbox"] { transform: translateY(1px); }
-    button {
-      appearance: none;
-      border: 1px solid var(--border);
-      background: rgba(90,162,255,0.12);
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-    button:hover { border-color: rgba(90,162,255,0.55); }
-    button.secondary {
-      background: rgba(255,255,255,0.06);
-      font-weight: 600;
-    }
-    button:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-    }
-    .progress {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      align-items: center;
-      margin: 14px 0 8px;
-    }
-    .bar {
-      height: 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.07);
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }
-    .bar > div {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, rgba(90,162,255,0.9), rgba(56,217,150,0.8));
-      transition: width 180ms ease;
-    }
-    .q {
-      font-size: 16px;
-      margin: 6px 0 14px;
-    }
-    .opts {
-      display: grid;
-      gap: 10px;
-    }
-    .opt {
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.04);
-      border-radius: 12px;
-      padding: 10px 12px;
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      cursor: pointer;
-    }
-    .opt:hover { border-color: rgba(255,255,255,0.22); }
-    .opt input { margin-top: 3px; }
-    .badge {
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.05);
-      color: var(--muted);
-    }
-    .feedback {
-      margin-top: 14px;
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.04);
-      display: none;
-    }
-    .feedback.good { border-color: rgba(56,217,150,0.55); }
-    .feedback.bad { border-color: rgba(255,107,107,0.55); }
-    .feedback .why { color: var(--muted); margin-top: 6px; }
-    .nav {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      margin-top: 14px;
-    }
-    .nav .left, .nav .right {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .results {
-      display: none;
-      margin-top: 16px;
-    }
-    .results h2 {
-      margin: 0 0 6px;
-      font-size: 18px;
-    }
-    .review {
-      margin-top: 10px;
-      display: grid;
-      gap: 10px;
-    }
-    .review .item {
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.03);
-      border-radius: 12px;
-      padding: 12px;
-    }
-    .item .meta {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 6px;
-    }
-    .item .meta .status.good { color: var(--good); font-weight: 700; }
-    .item .meta .status.bad { color: var(--bad); font-weight: 700; }
-    .small { font-size: 13px; color: var(--muted); }
-    a { color: var(--accent); }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Computer Vision Practice Quiz</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.4; }
+  .topbar { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:14px; }
+  button { padding: 8px 12px; cursor: pointer; }
+  .card { border: 1px solid #ddd; border-radius: 10px; padding: 14px; margin: 12px 0; }
+  .qtitle { font-weight: 700; margin-bottom: 10px; }
+  .opts { display:grid; gap:8px; }
+  label { display:flex; gap:10px; align-items:flex-start; border:1px solid #eee; border-radius:8px; padding:10px; }
+  label:hover { background:#fafafa; }
+  .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; border:1px solid #ddd; }
+  .correct { border-color: #2e7d32 !important; background: #f1fff3 !important; }
+  .wrong { border-color: #c62828 !important; background: #fff2f2 !important; }
+  .explain { margin-top:10px; font-size: 13px; color:#333; }
+  .muted { color:#666; font-size: 13px; }
+  .score { font-weight:700; }
+  .footer { margin-top: 18px; color:#666; font-size: 12px; }
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div>
-        <h1>Computer Vision Practical Deep Learning — Practice Quiz</h1>
-      </div>
-      <div class="badge" id="modeBadge">Not started</div>
-    </header>
-
-    <div class="card" id="setup">
-      <div class="controls">
-        <label><input type="checkbox" id="shuffleQ" checked /> Shuffle questions</label>
-        <label><input type="checkbox" id="shuffleO" checked /> Shuffle options</label>
-        <button id="startBtn">Start</button>
-        <button class="secondary" id="resetBtn" disabled>Reset</button>
-      </div>
-    </div>
-
-    <div class="card" id="quiz" style="display:none; margin-top:14px;">
-      <div class="progress">
-        <div class="bar"><div id="barFill"></div></div>
-        <div class="badge" id="counter">0 / 0</div>
-      </div>
-
-      <div class="q" id="qText"></div>
-      <div class="opts" id="opts"></div>
-
-      <div class="feedback" id="feedback">
-        <div id="fbTitle" style="font-weight:800;"></div>
-        <div class="why" id="fbWhy"></div>
-      </div>
-
-      <div class="nav">
-        <div class="left">
-          <button class="secondary" id="prevBtn">Back</button>
-          <button class="secondary" id="skipBtn">Skip</button>
-        </div>
-        <div class="right">
-          <button id="checkBtn">Check</button>
-          <button id="nextBtn" disabled>Next</button>
-          <button class="secondary" id="finishBtn">Finish</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card results" id="results" style="margin-top:14px;">
-      <h2>Results</h2>
-      <div class="small" id="scoreLine"></div>
-      <div class="controls" style="margin-top:10px;">
-        <button id="retryMissBtn">Retry missed</button>
-        <button class="secondary" id="showAllBtn">Show full review</button>
-      </div>
-      <div class="review" id="review"></div>
-    </div>
-  </div>
+<h1>Computer Vision Practice Quiz</h1>
+<div class="topbar">
+  <button id="shuffleBtn">Shuffle Questions</button>
+  <button id="resetBtn">Reset Answers</button>
+  <button id="checkBtn">Check Answers</button>
+  <span class="score" id="scoreText"></span>
+  <span class="muted" id="progressText"></span>
+</div>
+<div class="muted">Select one option per question. Click <b>Check Answers</b> to see feedback and short reasoning.</div>
+<div id="quiz"></div>
+<div class="footer">Tip: Shuffle repeatedly to practice recall, not position.</div>
 
 <script>
-const RAW = [{"q": "In PyTorch, what two methods must a custom Dataset implement to work properly with DataLoader?", "opts": ["__len__ and __getitem__", "forward and backward", "fit and predict", "step and zero_grad"], "ans": 0, "why": "Dataset must report size and return a sample by index."}, {"q": "Which DataLoader argument most directly enables different sample ordering each epoch to reduce training bias?", "opts": ["shuffle=True", "pin_memory=True", "drop_last=True", "persistent_workers=True"], "ans": 0, "why": "Shuffling changes the sample order each epoch."}, {"q": "The primary purpose of DataLoader multiprocessing (num_workers>0) is to:", "opts": ["load/transform data in parallel to keep the GPU busy", "increase model capacity automatically", "apply batch normalization faster", "perform gradient accumulation"], "ans": 0, "why": "Parallel workers reduce input bottlenecks."}, {"q": "In the slide pipeline (disk → Dataset → DataLoader → mini-batches), the Dataset object is mainly responsible for:", "opts": ["mapping an index to a single sample (and label)", "deciding the optimizer hyperparameters", "computing gradients for each layer", "saving model checkpoints"], "ans": 0, "why": "Dataset defines how to fetch one example from storage."}, {"q": "Why is data augmentation especially useful when the dataset is small?", "opts": ["it increases effective data diversity and reduces overfitting", "it guarantees 100% accuracy", "it removes the need for validation", "it replaces the loss function"], "ans": 0, "why": "Augmentation creates varied training examples, improving generalization."}, {"q": "Which augmentation choice is most justified if error analysis shows failures on rotated objects?", "opts": ["random rotations", "only horizontal flips", "label smoothing", "increasing batch size"], "ans": 0, "why": "Rotation augmentation targets rotation sensitivity."}, {"q": "Error analysis for augmentation typically starts after you:", "opts": ["train a baseline and inspect validation mistakes", "collect new test labels only", "freeze every layer permanently", "remove the validation set"], "ans": 0, "why": "You need baseline errors to decide targeted augmentations."}, {"q": "According to the workflow in the slides, where should augmentation be applied by default?", "opts": ["training set only", "validation set only", "test set only", "all splits equally"], "ans": 0, "why": "Augmenting val/test corrupts evaluation fairness."}, {"q": "Test-Time Augmentation (TTA) improves predictions by:", "opts": ["averaging model outputs over multiple augmented versions of the same test image", "training multiple models with different optimizers", "replacing softmax with sigmoid", "using only the center crop at inference"], "ans": 0, "why": "TTA ensembles predictions across transformed inputs."}, {"q": "Which TTA step is essential to make it work?", "opts": ["aggregate predictions (e.g., mean of probabilities) across test transforms", "turn off eval() mode so dropout stays on", "shuffle the test set each iteration", "update weights during inference"], "ans": 0, "why": "You must combine outputs from multiple views into one prediction."}, {"q": "Transfer learning is most beneficial when you have:", "opts": ["limited labeled data and access to a pretrained model", "unlimited compute but no data", "no need for validation metrics", "only random labels"], "ans": 0, "why": "Pretrained features help when labels are scarce."}, {"q": "If your new dataset is small but very similar to the pretraining dataset, a common approach is to:", "opts": ["freeze most feature layers and train a new classifier head", "train from scratch with random initialization", "remove the classifier head entirely and stop", "only train batch norm running averages"], "ans": 0, "why": "Similar tasks often need only a new head."}, {"q": "If your new dataset is small and very different from pretraining, the slides suggest you should often:", "opts": ["use the pretrained network as a feature extractor (or fine-tune later layers)", "always freeze all layers with no changes", "avoid any pretrained weights", "train only the first convolution"], "ans": 0, "why": "Different domains may need adaptation while leveraging learned features."}, {"q": "If you have a large new dataset, the recommended transfer learning strategy is typically to:", "opts": ["fine-tune the whole network", "freeze everything except the last layer", "use only hand-crafted features", "skip training and deploy directly"], "ans": 0, "why": "With enough data, full fine-tuning usually works best."}, {"q": "In ensembling, why can combining models outperform a single model?", "opts": ["different models make different errors, so averaging can cancel some mistakes", "it reduces dataset size", "it forces the loss to be zero", "it eliminates the need for regularization"], "ans": 0, "why": "Diversity reduces variance and improves robustness."}, {"q": "Bagging creates ensemble diversity primarily by:", "opts": ["training each model on a different bootstrapped subset of data", "training models sequentially on errors of prior models", "using a single model with dropout only", "sharing identical random seeds and data order"], "ans": 0, "why": "Bootstrapping changes the training set per model."}, {"q": "Boosting differs from bagging because boosting:", "opts": ["trains models sequentially to focus on prior errors", "always trains models on identical data subsets", "requires dropout at inference", "cannot be used for classification"], "ans": 0, "why": "Boosting re-weights/focuses on hard examples over iterations."}, {"q": "In classification ensembling, hard voting means:", "opts": ["take the most frequent predicted class label", "average predicted probabilities then argmax", "multiply logits across models", "choose the model with the smallest loss and ignore others"], "ans": 0, "why": "Hard voting counts class labels."}, {"q": "In classification ensembling, soft voting means:", "opts": ["average class probabilities (or logits) then choose the top class", "take the median of class labels", "randomly select one model per sample", "use majority vote on losses"], "ans": 0, "why": "Soft voting combines probability information."}, {"q": "For a regression ensemble, the slides recommend combining predictions by:", "opts": ["averaging the predicted values", "taking the most common value", "argmax over outputs", "converting to probabilities first"], "ans": 0, "why": "Averaging reduces variance in regression."}, {"q": "The simple ensemble error analysis slide assumes models’ errors are:", "opts": ["independent and identically distributed", "perfectly correlated", "always zero on training data", "only due to batch norm"], "ans": 0, "why": "Independence is the key assumption for majority vote gains."}, {"q": "Dropout is primarily used to:", "opts": ["reduce overfitting by randomly zeroing activations during training", "speed up inference by pruning permanently", "increase batch norm running variance", "make DataLoader shuffling unnecessary"], "ans": 0, "why": "Random dropping acts as regularization."}, {"q": "A key intuition behind dropout is that it:", "opts": ["approximates training many subnetworks and averaging them", "removes the need for any labels", "guarantees convergence in one epoch", "turns SGD into Adam automatically"], "ans": 0, "why": "Each dropout mask defines a subnetwork; training averages them implicitly."}, {"q": "During inference, standard dropout layers should be:", "opts": ["disabled by calling model.eval()", "kept active to increase randomness", "replaced with batch norm", "set to drop 90% of units"], "ans": 0, "why": "eval() turns dropout off for deterministic inference."}, {"q": "Why must dropout activations be scaled (or handled) between train and test?", "opts": ["to match the expected activation magnitude seen during training", "to make gradients larger at inference", "to increase the dataset size", "to remove the need for softmax"], "ans": 0, "why": "Without scaling, test-time activations would shift in expectation."}, {"q": "If dropout probability is p(drop)=0.5 and you naively keep all units at test without scaling, outputs tend to be:", "opts": ["too large compared to training", "exactly identical to training", "too small compared to training", "always zero"], "ans": 0, "why": "Expected activation roughly doubles without compensation."}, {"q": "In PyTorch, what toggles dropout behavior correctly?", "opts": ["model.train() vs model.eval()", "optimizer.step() vs optimizer.zero_grad()", "torch.no_grad() vs torch.enable_grad()", "scheduler.step() vs scaler.update()"], "ans": 0, "why": "train() enables dropout; eval() disables it."}, {"q": "Batch Normalization (BN) helps training largely by:", "opts": ["normalizing intermediate activations and improving optimization stability", "increasing the number of parameters by 100×", "removing the need for learning rates", "forcing activations to be binary"], "ans": 0, "why": "BN stabilizes distributions and gradients."}, {"q": "BN computes per-channel statistics during training using:", "opts": ["the mean and variance over the current mini-batch", "the mean and variance over the entire test set", "only the maximum activation", "a fixed constant mean of 0.5"], "ans": 0, "why": "Training BN uses batch statistics."}, {"q": "After normalization, BN applies learnable parameters (γ, β) to:", "opts": ["scale and shift the normalized activations", "shuffle the batch order", "drop random neurons", "change the loss function"], "ans": 0, "why": "γ and β let the network choose the best scale/offset."}, {"q": "Why are γ and β important in BN, conceptually?", "opts": ["they allow the layer to undo or adjust normalization if needed", "they guarantee zero loss", "they prevent any overfitting", "they replace convolution kernels"], "ans": 0, "why": "Learnable affine transform preserves representational flexibility."}, {"q": "During inference, BN should use:", "opts": ["running (moving) averages of mean/variance collected during training", "statistics from the current test batch", "randomly sampled variances each call", "only the first sample’s mean"], "ans": 0, "why": "Inference uses stored running stats for consistency."}, {"q": "A common bug source mentioned for BN is:", "opts": ["forgetting to switch between train() and eval() modes", "using too many DataLoader workers", "shuffling the training set", "using soft voting in ensembles"], "ans": 0, "why": "BN behaves differently in train vs eval, so mode errors hurt."}, {"q": "Where is BN typically placed in a layer block (per slides)?", "opts": ["after a Linear/Conv and before the nonlinearity", "after the loss function", "before the convolution weights", "only at the very end of the network"], "ans": 0, "why": "Common pattern: FC/Conv → BN → activation."}, {"q": "One benefit of BN listed in the slides is that it can:", "opts": ["act as a regularizer and allow higher learning rates", "eliminate the need for labels", "make ensembling impossible", "force models to be deterministic during training"], "ans": 0, "why": "BN often improves generalization and optimization."}, {"q": "Compared to dropout, BN’s regularization effect is best described as:", "opts": ["a side effect of using batch statistics noise", "a guaranteed reduction of parameters", "the same as data augmentation", "identical to bagging with bootstraps"], "ans": 0, "why": "Batch-to-batch variation adds noise that can regularize."}, {"q": "In the full workflow, the very first model you train is called the:", "opts": ["baseline", "oracle", "teacher ensemble", "deployment model"], "ans": 0, "why": "You start with a baseline to measure progress."}, {"q": "In the workflow, after training a baseline you should primarily use validation results to:", "opts": ["perform error analysis and guide improvements", "train the model weights directly on validation", "delete the training set", "skip metrics and trust training loss only"], "ans": 0, "why": "Validation errors reveal what to fix next."}, {"q": "Which sequence best matches the slides’ practical iteration loop?", "opts": ["baseline → error analysis → targeted augmentation/regularization → tune → (optional) ensemble", "ensemble → baseline → remove validation → deploy", "collect test labels → train on test → report", "freeze everything → never change anything"], "ans": 0, "why": "Iterate based on evidence from errors and metrics."}, {"q": "Why do the slides emphasize 'invest in data' over exhaustive architecture search?", "opts": ["better data and labels often yield larger gains than tiny model tweaks", "architectures do not matter at all", "bigger models always overfit", "optimizers cannot be tuned"], "ans": 0, "why": "Data quality/coverage often dominates performance."}, {"q": "If your model struggles with varying lighting, the most content-aligned augmentation is:", "opts": ["color jitter / brightness shifts", "randomly permuting class labels", "only center cropping", "reducing batch size to 1"], "ans": 0, "why": "Color/brightness transforms target lighting variation."}, {"q": "If errors show objects are often small in the image, a helpful augmentation is to:", "opts": ["use random scaling/resize and crops that preserve small objects", "only apply grayscale conversion", "disable shuffling", "remove convolution layers"], "ans": 0, "why": "Scaling/cropping strategies can teach size robustness."}, {"q": "Which statement about applying augmentation to validation is correct?", "opts": ["it generally makes metrics less comparable to real evaluation", "it always improves fairness", "it is required for dropout", "it replaces cross-validation"], "ans": 0, "why": "Augmenting val changes the evaluation distribution."}, {"q": "TTA is most similar to which concept from the slides?", "opts": ["an ensemble, but over input transforms rather than different models", "bagging with bootstrapped labels", "batch norm fusion", "gradient clipping"], "ans": 0, "why": "TTA averages predictions like an ensemble does."}, {"q": "When replacing a classifier head during fine-tuning, you most often change:", "opts": ["the final layer output dimension to match new classes", "all convolution kernels to random noise", "the DataLoader batch size to 1", "the loss to always be zero"], "ans": 0, "why": "New task needs logits for its class count."}, {"q": "Which is a reasonable reason to freeze early layers in transfer learning?", "opts": ["early features are generic (edges/textures) and may not need retraining", "early layers only work on MNIST", "freezing increases model size", "freezing makes batch norm unnecessary"], "ans": 0, "why": "Early layers often transfer well across vision tasks."}, {"q": "Soft voting can outperform hard voting because it:", "opts": ["uses confidence information from probabilities", "always chooses the longest option", "ignores calibration entirely", "turns regression into classification"], "ans": 0, "why": "Probabilities provide richer information than labels."}, {"q": "In the dropout scaling explanation, the key quantity matched between train and test is the:", "opts": ["expected activation (mean)", "exact gradient for each sample", "number of classes", "DataLoader worker count"], "ans": 0, "why": "Scaling keeps expected activation consistent."}, {"q": "Which PyTorch mode should you set when evaluating validation accuracy to handle both BN and dropout correctly?", "opts": ["model.eval()", "model.train()", "torch.enable_grad()", "optimizer.step()"], "ans": 0, "why": "eval() disables dropout and uses BN running stats."}, {"q": "Why can leaving a model in train() during evaluation hurt results even with no gradient updates?", "opts": ["dropout stays active and BN uses batch stats, changing outputs", "the optimizer secretly updates weights", "the dataset gets corrupted", "the loss function disappears"], "ans": 0, "why": "Stochastic layers and BN stats change predictions."}, {"q": "The BN normalization step (before γ,β) produces activations with approximately:", "opts": ["zero mean and unit variance (per channel)", "mean 1 and variance 0", "only positive values", "uniform distribution on [0,1]"], "ans": 0, "why": "Standardization centers and scales features."}, {"q": "Which best describes BN’s running averages?", "opts": ["exponentially weighted estimates accumulated during training", "exact statistics over the test set", "a histogram of class counts", "the optimizer momentum buffer"], "ans": 0, "why": "Running mean/var are moving averages from training."}, {"q": "In ensembling, model diversity is valuable mainly because:", "opts": ["it reduces correlated errors across models", "it makes each model smaller", "it eliminates the need for data", "it forces identical predictions"], "ans": 0, "why": "Less correlation means averaging helps more."}, {"q": "A practical downside of ensembling not highlighted as a benefit is that it typically:", "opts": ["increases inference cost because multiple models run", "reduces GPU memory to zero", "breaks softmax mathematically", "prevents transfer learning"], "ans": 0, "why": "Multiple forward passes cost more compute."}, {"q": "Which of the following is NOT a data augmentation example shown in the slides?", "opts": ["random translation", "batch normalization", "random rotation", "color casting"], "ans": 1, "why": "Batch normalization is a layer, not an augmentation."}, {"q": "When using DataLoader, batching primarily helps SGD because it:", "opts": ["computes a gradient estimate from multiple samples at once", "removes the need for backprop", "guarantees convexity", "makes labels unnecessary"], "ans": 0, "why": "Mini-batches give stable gradient estimates efficiently."}, {"q": "What is the main conceptual difference between Dataset and DataLoader?", "opts": ["Dataset defines how to get one sample; DataLoader iterates and batches samples", "Dataset updates weights; DataLoader computes loss", "Dataset is only for NLP; DataLoader is only for vision", "Dataset performs ensembling; DataLoader performs boosting"], "ans": 0, "why": "They separate sample retrieval from batching/iteration."}, {"q": "If your training is GPU-idle because data reading is slow, the most slide-consistent fix is to:", "opts": ["increase DataLoader num_workers and optimize I/O/transforms", "reduce the model depth to 1 layer", "disable shuffling forever", "use hard voting at inference"], "ans": 0, "why": "Parallel loading keeps the pipeline fed."}, {"q": "Which workflow step comes closest to 'decide augmentations' in the slides?", "opts": ["after inspecting worst validation errors", "before any baseline is trained", "only after deployment", "while training on the test set"], "ans": 0, "why": "Augmentations are chosen based on observed errors."}, {"q": "In the transfer learning diagram, what is typically 'replaced' for a new task?", "opts": ["the classifier (head)", "the input image", "the entire Dataset object", "the DataLoader shuffling"], "ans": 0, "why": "You swap the head to match new labels/classes."}, {"q": "In the ensemble plots, the improvement from averaging is best interpreted as:", "opts": ["reduced variance in predictions", "increased label noise", "worse calibration", "higher training loss always"], "ans": 0, "why": "Averaging smooths out individual model noise."}, {"q": "Why is it recommended to keep a fixed validation metric throughout iterations?", "opts": ["to compare improvements consistently across changes", "to make the model forget faster", "to avoid training altogether", "to ensure dropout never activates"], "ans": 0, "why": "Consistent metrics allow fair comparisons."}];
+const original = [{"q": "In a custom PyTorch dataset, which pair of methods must be implemented to make it indexable and compatible with a DataLoader?", "options": ["__len__ and __getitem__", "forward and backward", "fit and predict", "state_dict and load_state_dict"], "answer": 0, "why": "Dataset subclasses define size via __len__ and sample retrieval via __getitem__."}, {"q": "What is the primary role of a DataLoader compared with a Dataset object?", "options": ["Define model layers and losses", "Create mini-batches with shuffling and parallel loading", "Store weights and optimizer state", "Compute gradients and update parameters"], "answer": 1, "why": "DataLoader handles batching, shuffling, and multiprocessing over a Dataset."}, {"q": "Why are DataLoaders especially important when training with stochastic gradient descent?", "options": ["They ensure the same sample order every epoch", "They feed the optimizer small randomized batches efficiently", "They eliminate the need for a validation set", "They automatically tune the learning rate"], "answer": 1, "why": "SGD relies on mini-batches; loaders provide batches and randomization efficiently."}, {"q": "Which statement best describes the relationship between on-disk data and a PyTorch Dataset?", "options": ["A Dataset caches all data in GPU memory by default", "A Dataset provides an indexed view that loads samples on demand", "A Dataset only works with tabular CSV files", "A Dataset replaces the need for transforms/augmentations"], "answer": 1, "why": "The Dataset acts like an indexable wrapper around stored data, often loading per item."}, {"q": "Which built-in behavior is commonly configured in a DataLoader to improve training robustness?", "options": ["Gradient clipping", "Shuffling the dataset each epoch", "Weight decay", "Label smoothing"], "answer": 1, "why": "Shuffling reduces ordering bias and improves SGD training behavior."}, {"q": "A key motivation for image data augmentation is to:", "options": ["Guarantee zero training error", "Increase effective data diversity when datasets are limited", "Remove the need for regularization", "Make validation accuracy always higher than training"], "answer": 1, "why": "Augmentation expands variety of training examples, helping generalization with limited data."}, {"q": "Which transformation is an example of geometric augmentation?", "options": ["Random rotation", "Color casting", "Brightness jitter", "Gaussian noise"], "answer": 0, "why": "Rotation changes geometry; the others are photometric/noise changes."}, {"q": "Which transformation is an example of photometric augmentation?", "options": ["Horizontal flip", "Random crop", "Color casting", "Translation"], "answer": 2, "why": "Color casting changes image appearance (color/illumination) rather than geometry."}, {"q": "When choosing augmentations, the most effective strategy presented is to:", "options": ["Apply every available augmentation uniformly", "Select augmentations based on systematic error analysis", "Only use augmentations after reaching perfect validation accuracy", "Avoid augmentations if using a pretrained model"], "answer": 1, "why": "Error analysis reveals failure modes; augmentations should target those weaknesses."}, {"q": "A model frequently misclassifies small objects because they appear tiny in the image. Which targeted augmentation is most aligned with that failure mode?", "options": ["Random scaling/zooming to vary object size", "Only adding Gaussian noise", "Converting all images to grayscale", "Always rotating by 180 degrees"], "answer": 0, "why": "Scaling/zooming helps the model handle size variation and small-object cases."}, {"q": "A dataset includes images under varied lighting conditions, and the model fails on dim scenes. Which augmentation directly addresses this?", "options": ["Random brightness/contrast or color jitter", "Random cropping only", "Elastic geometric distortion only", "Always flipping vertically"], "answer": 0, "why": "Brightness/contrast/color jitter simulates lighting changes."}, {"q": "Why should augmentations generally be applied only to the training split?", "options": ["Because validation data must remain a stable measure of real performance", "Because DataLoader cannot apply transforms to validation sets", "Because augmentations break backpropagation", "Because augmentations reduce training speed too much"], "answer": 0, "why": "Validation/test should reflect the true data distribution for fair evaluation."}, {"q": "Test-time augmentation (TTA) is best described as:", "options": ["Applying random augmentations to labels", "A training technique that replaces backpropagation", "Running inference on multiple augmented versions and averaging predictions", "A method to oversample minority classes"], "answer": 2, "why": "TTA aggregates predictions from several augmented views at inference."}, {"q": "In TTA for classification, combining results is typically done by:", "options": ["Averaging predicted class probabilities across augmented inputs", "Taking the minimum logit across augmented inputs", "Replacing softmax with sigmoid always", "Using dropout only at inference"], "answer": 0, "why": "The standard approach is to average probabilities (or logits) across augmentations."}, {"q": "Which is a practical drawback of using TTA?", "options": ["It requires multiple forward passes per example", "It prevents use of pretrained models", "It makes the model architecture invalid", "It forces you to remove batch normalization"], "answer": 0, "why": "Multiple augmented inferences increase computation and often require custom aggregation."}, {"q": "Fine-tuning in transfer learning means:", "options": ["Training a model from scratch with random initialization", "Adjusting a pretrained model\u2019s weights for a new task", "Freezing all layers permanently and never training", "Only changing the optimizer without changing weights"], "answer": 1, "why": "Fine-tuning adapts pretrained weights to a target dataset/task."}, {"q": "Why does starting from a pretrained model often save time and compute?", "options": ["Pretrained features reduce the amount of training needed to reach good performance", "Pretrained models do not require data loaders", "Pretrained models avoid the need for validation", "Pretrained models automatically perform ensembling"], "answer": 0, "why": "Pretrained networks already encode useful features, reducing required training effort."}, {"q": "You have a small dataset that is similar to the dataset used for pretraining. A recommended approach is to:", "options": ["Freeze most of the feature extractor and train a new classifier head", "Train the entire network from scratch", "Use boosting with decision trees only", "Disable all regularization techniques"], "answer": 0, "why": "With small similar data, reuse learned features and train the final layers/classifier."}, {"q": "You have a large labeled dataset for your target task. The guidance suggests you can often:", "options": ["Fine-tune the entire network", "Only train the first convolutional layer", "Avoid training any layers and just run inference", "Replace the network with k-means clustering"], "answer": 0, "why": "With enough data, full fine-tuning can adapt all layers effectively."}, {"q": "In a typical transfer learning setup for classification, what is commonly replaced?", "options": ["The final classification layer(s) to match the new number of classes", "All convolution layers are removed", "The input images are converted to text", "The optimizer is replaced by a rule-based system"], "answer": 0, "why": "The pretrained backbone is reused and the task-specific head is replaced."}, {"q": "The main reason ensembles can improve performance is that:", "options": ["All models make identical errors", "Different models tend to make different errors, so combining reduces overall error", "Ensembling increases the training set size", "Ensembling removes the need for preprocessing"], "answer": 1, "why": "Diversity in errors lets averaging/voting cancel some mistakes."}, {"q": "Bagging creates diversity primarily by:", "options": ["Training models sequentially so each fixes the previous model\u2019s mistakes", "Training models on different bootstrap samples/subsets of data", "Training a single model with dropout", "Changing the loss function every batch"], "answer": 1, "why": "Bagging trains multiple models on different data subsets to diversify predictions."}, {"q": "Boosting differs from bagging because boosting typically:", "options": ["Trains models in parallel on random subsets", "Trains models sequentially, emphasizing previously misclassified examples", "Uses only neural networks, never trees", "Requires no labels"], "answer": 1, "why": "Boosting focuses successive learners on the errors of earlier learners."}, {"q": "Hard voting in a classifier ensemble means:", "options": ["Averaging predicted probabilities and then choosing the max", "Selecting the class predicted by the majority of models", "Multiplying logits across models", "Always choosing the class from the best single model"], "answer": 1, "why": "Hard voting uses majority class counts from individual model predictions."}, {"q": "Soft voting in a classifier ensemble means:", "options": ["Averaging class probabilities (or logits) across models before deciding", "Taking a random model\u2019s prediction each time", "Voting only among models with dropout", "Using median pixel intensity as the output"], "answer": 0, "why": "Soft voting aggregates confidence scores, then selects the highest."}, {"q": "For an ensemble of regressors, a common aggregation rule is to:", "options": ["Take the maximum prediction", "Average the predictions", "Convert outputs to class labels", "Use hard voting"], "answer": 1, "why": "Regression ensembles typically average numeric outputs."}, {"q": "A key requirement for ensembles to help is that models should be:", "options": ["Identical architectures with identical training runs", "Diverse in their errors or perspectives", "Always trained with the same random seed", "All trained without any regularization"], "answer": 1, "why": "Diversity reduces correlated errors, making combination beneficial."}, {"q": "Dropout is best characterized as:", "options": ["A method that increases the learning rate automatically", "A regularization technique that randomly deactivates neurons during training", "A data augmentation method applied to validation data", "A loss function for multi-class classification"], "answer": 1, "why": "Dropout randomly drops units during training to reduce co-adaptation/overfitting."}, {"q": "During training with dropout, each forward pass effectively samples:", "options": ["A different subnetwork from the full network", "A different dataset split", "A different optimizer", "A different label set"], "answer": 0, "why": "Dropping units yields a different active network each iteration."}, {"q": "Why can dropout be viewed as similar to ensembling?", "options": ["Because it trains one model and never changes it", "Because it implicitly averages many subnetworks across training and inference", "Because it duplicates the dataset into multiple copies", "Because it converts classification to regression"], "answer": 1, "why": "Many subnetworks are trained; inference approximates averaging their effects."}, {"q": "What typically happens to dropout at inference time?", "options": ["It remains active to keep randomness high", "It is disabled, using all neurons", "It doubles the batch size automatically", "It replaces batch normalization"], "answer": 1, "why": "Inference uses the full network; dropout is turned off."}, {"q": "If dropout keep probability is p during training, a common way to keep activation scale consistent is to:", "options": ["Scale activations by p at inference (or equivalently use inverted dropout during training)", "Scale activations by (1/p) at inference always", "Never scale activations at all", "Scale labels instead of activations"], "answer": 0, "why": "Scaling aligns expected activations between train and test behavior."}, {"q": "In PyTorch, which calls correctly switch behavior for dropout layers?", "options": ["model.zero_grad() and optimizer.step()", "model.train() for training, model.eval() for inference", "torch.no_grad() for training, torch.enable_grad() for inference", "model.cuda() for training, model.cpu() for inference"], "answer": 1, "why": "train() enables training-time behavior; eval() disables dropout randomness."}, {"q": "Batch normalization (BN) normalizes activations using:", "options": ["Dataset-wide mean/variance computed once before training", "Batch mean and batch variance (with running estimates for inference)", "Only the maximum value in a batch", "Only the gradient magnitudes"], "answer": 1, "why": "BN uses mini-batch statistics during training and running averages at inference."}, {"q": "BN includes learnable parameters that allow the network to adjust the normalized output. These are:", "options": ["Momentum and weight decay", "Gamma (scale) and beta (shift)", "Drop rate and keep rate", "Precision and recall"], "answer": 1, "why": "BN applies learnable scale (\u03b3) and shift (\u03b2) after normalization."}, {"q": "Why are gamma and beta important in BN?", "options": ["They force outputs to be exactly zero mean and unit variance always", "They allow the layer to keep or undo normalization if beneficial", "They compute gradients without backpropagation", "They replace the need for a loss function"], "answer": 1, "why": "Learned \u03b3/\u03b2 let the model choose the best normalized or re-centered distribution."}, {"q": "During inference, BN typically uses:", "options": ["Current batch mean/variance from the test batch only", "Running (moving) averages of mean and variance accumulated during training", "Random noise injection", "Dropout masks"], "answer": 1, "why": "Inference relies on stored running statistics for stable behavior."}, {"q": "A common placement for BN in a neural network block is:", "options": ["After the activation function only", "Before the linear/conv layer only", "After linear/conv and before the nonlinearity", "Only at the very end of the network"], "answer": 2, "why": "A standard pattern is conv/FC \u2192 BN \u2192 activation."}, {"q": "One advantage of BN highlighted is that it can:", "options": ["Make training more stable and allow higher learning rates", "Eliminate the need for data altogether", "Guarantee perfect generalization", "Prevent any overfitting without other methods"], "answer": 0, "why": "BN stabilizes internal distributions, often enabling faster, more stable training."}, {"q": "A common pitfall with BN is that:", "options": ["It behaves identically in train and eval modes", "Train and inference behavior differ, so forgetting model.eval() can break results", "It cannot be used with convolution layers", "It requires grayscale images only"], "answer": 1, "why": "BN uses batch stats in training but running stats in eval; mode matters."}, {"q": "In PyTorch, what is the correct way to ensure BN uses running statistics at inference?", "options": ["Call model.eval() before inference", "Call optimizer.step() twice", "Call model.train() with torch.no_grad()", "Set batch_size=1 always"], "answer": 0, "why": "eval() switches BN to inference behavior using running averages."}, {"q": "Which statement about BN and deployment is consistent with the material?", "options": ["BN can be fused into adjacent layers at test time in some setups", "BN must be removed before saving a model", "BN requires TTA to work", "BN prevents ensembling"], "answer": 0, "why": "BN can often be fused for inference efficiency once running stats are fixed."}, {"q": "A practical deep learning workflow begins by:", "options": ["Choosing dozens of augmentations immediately", "Building a baseline model and measuring validation performance", "Ensembling before any single model is trained", "Skipping validation and training on all data"], "answer": 1, "why": "Start with a baseline to establish a reference score and identify next steps."}, {"q": "After establishing a baseline, the next improvement loop is driven by:", "options": ["Randomly changing architecture each day", "Error analysis and targeted changes (augmentation/regularization/hyperparameters)", "Only increasing image resolution indefinitely", "Removing the validation set to avoid bias"], "answer": 1, "why": "Iterate based on observed errors and targeted interventions."}, {"q": "Which set of techniques are explicitly treated as regularization or stabilization tools in the content?", "options": ["Dropout and batch normalization", "Hard voting and TTA", "Bagging and boosting", "Random crop and color jitter"], "answer": 0, "why": "Dropout regularizes; BN stabilizes and can regularize."}, {"q": "Which approach is most aligned with the idea \u201cdon\u2019t start from scratch\u201d in practical deep learning?", "options": ["Always design a new architecture for every dataset", "Use pretrained models and adapt them via fine-tuning", "Never reuse code across projects", "Avoid transfer learning to keep things pure"], "answer": 1, "why": "Using pretrained models leverages prior learned representations and speeds progress."}, {"q": "You observe your model fails mainly on rotated instances of objects. Which targeted augmentation best fits?", "options": ["Random rotation", "Only adding blur", "Only converting to grayscale", "Always center-cropping to a fixed box"], "answer": 0, "why": "Rotation augmentation directly addresses orientation variation."}, {"q": "You observe failures on motion-blurred images. Which augmentation is most directly relevant?", "options": ["Add blur/noise augmentation", "Always mirror horizontally", "Only change hue", "Only resize to smaller images"], "answer": 0, "why": "Blur augmentation simulates motion blur conditions."}, {"q": "Which statement best captures the distinction between bagging and boosting?", "options": ["Bagging is sequential; boosting is parallel", "Bagging uses subsets/bootstraps independently; boosting trains learners sequentially to address errors", "Bagging requires no labels; boosting requires labels", "Bagging only applies to regression; boosting only to classification"], "answer": 1, "why": "Bagging trains in parallel on subsets; boosting is sequential focusing on mistakes."}, {"q": "If three classifiers each have a small independent error rate, majority voting can:", "options": ["Increase error compared with a single model always", "Reduce overall error compared with one classifier", "Guarantee zero error", "Make training unnecessary"], "answer": 1, "why": "With independent errors, majority vote reduces the chance all models are wrong."}, {"q": "Which of the following is a correct description of soft voting\u2019s input to the combiner?", "options": ["Discrete class labels only", "Per-class confidence scores (probabilities/logits)", "Only the dataset indices", "Only gradient norms"], "answer": 1, "why": "Soft voting aggregates probabilistic outputs rather than hard labels."}, {"q": "A student claims \u201caugmentations are just for making images look cool.\u201d The better technical interpretation is:", "options": ["Augmentations increase the effective training distribution diversity to improve generalization", "Augmentations are only for visualization and should not affect training", "Augmentations replace the need for labels", "Augmentations guarantee the model learns invariances without data"], "answer": 0, "why": "Augmentations simulate plausible variations so the model generalizes better."}, {"q": "Which practice best prevents you from choosing augmentations that don\u2019t actually help?", "options": ["Pick augmentations randomly each epoch", "Use error analysis on validation failures to guide augmentation selection", "Apply TTA during training only", "Only augment validation data to stress-test"], "answer": 1, "why": "Error analysis links augmentations to real observed failure modes."}, {"q": "Which is the most accurate characterization of TTA\u2019s goal?", "options": ["Reduce label noise by relabeling data", "Reduce prediction variance by aggregating multiple views at inference", "Speed up training by using fewer batches", "Replace ensembling entirely"], "answer": 1, "why": "TTA averages predictions from transformed inputs to improve robustness."}, {"q": "A model is overfitting (training accuracy high, validation low). Which technique directly targets this issue as presented?", "options": ["Dropout", "Turning off shuffling", "Removing the validation set", "Lowering input resolution permanently"], "answer": 0, "why": "Dropout is introduced as a regularization technique to combat overfitting."}, {"q": "If you forget to call model.eval() during inference, which two components are most likely to behave incorrectly?", "options": ["Dropout and batch normalization", "Loss function and labels", "Optimizer and scheduler", "Dataset and file paths"], "answer": 0, "why": "Dropout stays active and BN uses batch stats unless eval() is set."}, {"q": "Which is a correct statement about batch normalization statistics during training?", "options": ["They are computed from the entire dataset each step", "They use the mini-batch mean and variance for normalization", "They are fixed constants with no updates", "They are derived from the optimizer\u2019s momentum"], "answer": 1, "why": "Training BN normalizes using current batch statistics."}, {"q": "In BN, after normalization to x-hat, the output y is computed by:", "options": ["y = x-hat / (gamma + beta)", "y = gamma * x-hat + beta", "y = beta * x-hat - gamma", "y = x-hat + gamma + beta always"], "answer": 1, "why": "BN applies learnable scale \u03b3 and shift \u03b2: y = \u03b3x\u0302 + \u03b2."}, {"q": "Which workflow step most naturally comes immediately before deploying a model for real-world inference?", "options": ["Skip saving the model to avoid file issues", "Save the optimized model after iterative improvements", "Apply augmentations to the test set labels", "Train from scratch one final time without validation"], "answer": 1, "why": "After tuning, you save the final model and then deploy for inference."}, {"q": "Which combination is most consistent with building a strong baseline before heavy optimization?", "options": ["Start with pretrained weights, define metrics, train a simple initial model", "Begin with ensembling and TTA immediately", "Disable validation and tune only on training accuracy", "Apply every augmentation and regularizer from the first epoch"], "answer": 0, "why": "The workflow emphasizes a clean baseline with metrics/validation before iteration."}];
+let questions = JSON.parse(JSON.stringify(original));
 
-function shuffle(arr) {
+function escapeHtml(s) {
+  return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
+}
+
+function shuffleArray(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -267,289 +51,119 @@ function shuffle(arr) {
   return arr;
 }
 
-let state = {
-  order: [],
-  qIndex: 0,
-  questions: [],
-  answers: new Array(RAW.length).fill(null), // chosen option index in displayed order
-  checked: new Array(RAW.length).fill(false),
-  optionMaps: [], // per question: displayedIdx -> originalIdx
-};
-
-const el = (id) => document.getElementById(id);
-
-function setBadge(text) {
-  el("modeBadge").textContent = text;
-}
-
-function buildQuiz() {
-  const shuffleQ = el("shuffleQ").checked;
-  const shuffleO = el("shuffleO").checked;
-
-  state.questions = RAW.map((q, idx) => ({...q, _id: idx}));
-  state.order = state.questions.map((_, i) => i);
-  if (shuffleQ) shuffle(state.order);
-
-  state.optionMaps = state.questions.map(() => {
-    const m = [0,1,2,3];
-    if (shuffleO) shuffle(m);
-    return m;
-  });
-
-  state.qIndex = 0;
-  state.answers = new Array(RAW.length).fill(null);
-  state.checked = new Array(RAW.length).fill(false);
-
-  render();
-}
-
-function current() {
-  const qi = state.order[state.qIndex];
-  const q = state.questions[qi];
-  return {qi, q, map: state.optionMaps[q._id]};
-}
-
 function render() {
-  el("quiz").style.display = "block";
-  el("results").style.display = "none";
+  const root = document.getElementById('quiz');
+  root.innerHTML = '';
+  questions.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    const q = document.createElement('div');
+    q.className = 'qtitle';
+    q.innerHTML = `<span class="pill">Q${idx+1}</span> ${escapeHtml(item.q)}`;
+    card.appendChild(q);
 
-  const {qi, q, map} = current();
+    const opts = document.createElement('div');
+    opts.className = 'opts';
 
-  el("qText").textContent = q.q;
-  el("opts").innerHTML = "";
+    // build option order mapping to ensure correct answer tracked after shuffling options
+    const optionIndices = item.options.map((_, i) => i);
+    // shuffle per render but stable within same render
+    const shuffled = shuffleArray(optionIndices.slice());
+    item._shuffled = shuffled;
 
-  map.forEach((origIdx, dispIdx) => {
-    const optText = q.opts[origIdx];
-    const wrapper = document.createElement("label");
-    wrapper.className = "opt";
-    wrapper.innerHTML = `
-      <input type="radio" name="optgroup" value="${dispIdx}" />
-      <div><div style="font-weight:650; margin-bottom:2px;">${String.fromCharCode(65 + dispIdx)}.</div>
-      <div>${escapeHtml(optText)}</div></div>
-    `;
-    wrapper.querySelector("input").checked = (state.answers[qi] === dispIdx);
-    wrapper.addEventListener("click", () => {
-      state.answers[qi] = dispIdx;
-      updateButtons();
+    shuffled.forEach((optIndex, k) => {
+      const optId = `q${idx}_o${k}`;
+      const label = document.createElement('label');
+      label.setAttribute('for', optId);
+
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = `q${idx}`;
+      radio.id = optId;
+      radio.value = String(optIndex);
+
+      // restore selection if exists
+      if (item._selected !== undefined && item._selected === optIndex) {
+        radio.checked = true;
+      }
+
+      radio.addEventListener('change', () => {
+        item._selected = optIndex;
+        updateProgress();
+      });
+
+      const text = document.createElement('div');
+      text.textContent = item.options[optIndex];
+
+      label.appendChild(radio);
+      label.appendChild(text);
+      opts.appendChild(label);
     });
-    el("opts").appendChild(wrapper);
+
+    card.appendChild(opts);
+
+    const exp = document.createElement('div');
+    exp.className = 'explain';
+    exp.style.display = 'none';
+    exp.textContent = item.why;
+    card.appendChild(exp);
+
+    root.appendChild(card);
   });
-
-  const total = state.order.length;
-  el("counter").textContent = `${state.qIndex + 1} / ${total}`;
-  el("barFill").style.width = `${Math.round(((state.qIndex + 1) / total) * 100)}%`;
-
-  hideFeedback();
-
-  el("prevBtn").disabled = (state.qIndex === 0);
-  updateButtons();
-
-  setBadge("In progress");
-  el("resetBtn").disabled = false;
+  updateProgress();
+  document.getElementById('scoreText').textContent = '';
 }
 
-function updateButtons() {
-  const {qi} = current();
-  const hasChoice = state.answers[qi] !== null;
-  const isChecked = state.checked[qi] === true;
-
-  el("checkBtn").disabled = !hasChoice || isChecked;
-  el("nextBtn").disabled = !isChecked || (state.qIndex >= state.order.length - 1);
+function updateProgress() {
+  const answered = questions.filter(q => q._selected !== undefined).length;
+  document.getElementById('progressText').textContent = `Answered: ${answered} / ${questions.length}`;
 }
 
-function hideFeedback() {
-  el("feedback").style.display = "none";
-  el("feedback").classList.remove("good","bad");
-}
-
-function showFeedback(ok, why, correctLetter, correctText) {
-  el("feedback").style.display = "block";
-  el("feedback").classList.remove("good","bad");
-  el("feedback").classList.add(ok ? "good" : "bad");
-  el("fbTitle").textContent = ok ? "Correct" : `Not quite — correct is ${correctLetter}`;
-  el("fbWhy").textContent = ok ? why : `${why} (Correct: ${correctText})`;
-}
-
-function escapeHtml(s) {
-  return s
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;");
-}
-
-function checkAnswer() {
-  const {qi, q, map} = current();
-  const chosenDisp = state.answers[qi];
-  if (chosenDisp === null) return;
-
-  const chosenOrig = map[chosenDisp];
-  const correctOrig = q.ans;
-
-  state.checked[qi] = true;
-
-  const correctDisp = map.indexOf(correctOrig);
-  const correctLetter = String.fromCharCode(65 + correctDisp);
-  const correctText = q.opts[correctOrig];
-
-  const ok = (chosenOrig === correctOrig);
-  showFeedback(ok, q.why, correctLetter, correctText);
-
-  updateButtons();
-}
-
-function next() {
-  if (state.qIndex < state.order.length - 1) {
-    state.qIndex += 1;
-    render();
-  } else {
-    finish();
-  }
-}
-
-function prev() {
-  if (state.qIndex > 0) {
-    state.qIndex -= 1;
-    render();
-  }
-}
-
-function skip() {
-  if (state.qIndex < state.order.length - 1) {
-    state.qIndex += 1;
-    render();
-  } else {
-    finish();
-  }
-}
-
-function finish() {
-  setBadge("Finished");
-  el("quiz").style.display = "none";
-  el("results").style.display = "block";
-
-  let correct = 0, answered = 0;
-  const misses = [];
-
-  state.order.forEach((idxInQuestions) => {
-    const q = state.questions[idxInQuestions];
-    const chosenDisp = state.answers[idxInQuestions];
-    const map = state.optionMaps[q._id];
-
-    if (chosenDisp !== null) {
-      answered += 1;
-      const chosenOrig = map[chosenDisp];
-      if (chosenOrig === q.ans) correct += 1;
-      else misses.push(idxInQuestions);
-    } else {
-      misses.push(idxInQuestions);
-    }
+function resetAll() {
+  questions.forEach(q => {
+    delete q._selected;
   });
-
-  const total = state.order.length;
-  el("scoreLine").textContent =
-    `Score: ${correct} / ${total}. Answered: ${answered} / ${total}. Missed or incorrect: ${misses.length}.`;
-
-  el("review").innerHTML = "";
-  el("review").style.display = "none";
-
-  el("retryMissBtn").onclick = () => retryMisses();
-  el("showAllBtn").onclick = () => {
-    const isHidden = (el("review").style.display === "none");
-    el("review").style.display = isHidden ? "grid" : "none";
-    if (isHidden) buildReview();
-  };
-}
-
-function buildReview() {
-  const container = el("review");
-  container.innerHTML = "";
-
-  state.order.forEach((idxInQuestions, k) => {
-    const q = state.questions[idxInQuestions];
-    const chosenDisp = state.answers[idxInQuestions];
-    const map = state.optionMaps[q._id];
-
-    const correctOrig = q.ans;
-    const correctDisp = map.indexOf(correctOrig);
-    const correctLetter = String.fromCharCode(65 + correctDisp);
-
-    let status = "Unanswered";
-    let ok = false;
-    if (chosenDisp !== null) {
-      const chosenOrig = map[chosenDisp];
-      ok = (chosenOrig === correctOrig);
-      status = ok ? "Correct" : "Incorrect";
-    }
-
-    const item = document.createElement("div");
-    item.className = "item";
-    item.innerHTML = `
-      <div class="meta">
-        <div><b>Q${k+1}.</b> <span class="status ${ok ? "good" : "bad"}">${status}</span></div>
-        <div class="badge">Answer: ${correctLetter}</div>
-      </div>
-      <div style="margin:6px 0 8px;">${escapeHtml(q.q)}</div>
-      <div class="small">Why: ${escapeHtml(q.why)}</div>
-    `;
-    container.appendChild(item);
-  });
-}
-
-function retryMisses() {
-  const missIdx = [];
-  state.order.forEach((idxInQuestions) => {
-    const q = state.questions[idxInQuestions];
-    const chosenDisp = state.answers[idxInQuestions];
-    const map = state.optionMaps[q._id];
-
-    if (chosenDisp === null) {
-      missIdx.push(idxInQuestions);
-    } else {
-      const chosenOrig = map[chosenDisp];
-      if (chosenOrig !== q.ans) missIdx.push(idxInQuestions);
-    }
-  });
-
-  if (missIdx.length === 0) {
-    alert("No misses to retry — nice work!");
-    return;
-  }
-
-  state.order = missIdx;
-  state.qIndex = 0;
-  state.answers = new Array(RAW.length).fill(null);
-  state.checked = new Array(RAW.length).fill(false);
-
-  el("results").style.display = "none";
-  el("quiz").style.display = "block";
-  setBadge("Retrying missed");
   render();
 }
 
-el("startBtn").addEventListener("click", () => buildQuiz());
-el("resetBtn").addEventListener("click", () => {
-  setBadge("Not started");
-  el("quiz").style.display = "none";
-  el("results").style.display = "none";
-  state = {
-    order: [],
-    qIndex: 0,
-    questions: [],
-    answers: new Array(RAW.length).fill(null),
-    checked: new Array(RAW.length).fill(false),
-    optionMaps: [],
-  };
-  el("resetBtn").disabled = true;
-});
+function shuffleQuestions() {
+  questions = shuffleArray(questions.slice());
+  render();
+}
 
-el("checkBtn").addEventListener("click", checkAnswer);
-el("nextBtn").addEventListener("click", next);
-el("prevBtn").addEventListener("click", prev);
-el("skipBtn").addEventListener("click", skip);
-el("finishBtn").addEventListener("click", finish);
+function checkAnswers() {
+  let correct = 0;
+  const cards = document.querySelectorAll('.card');
+  questions.forEach((item, idx) => {
+    const card = cards[idx];
+    const labels = card.querySelectorAll('label');
+    labels.forEach(l => l.classList.remove('correct','wrong'));
 
-setBadge("Not started");
+    const selected = item._selected;
+    const answer = item.answer;
+
+    if (selected !== undefined && selected === answer) correct++;
+
+    // mark each option
+    labels.forEach(l => {
+      const radio = l.querySelector('input[type="radio"]');
+      const val = Number(radio.value);
+      if (val === answer) l.classList.add('correct');
+      if (selected !== undefined && val === selected && selected !== answer) l.classList.add('wrong');
+    });
+
+    // show explanation
+    const exp = card.querySelector('.explain');
+    exp.style.display = 'block';
+  });
+  document.getElementById('scoreText').textContent = `Score: ${correct} / ${questions.length}`;
+}
+
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+document.getElementById('shuffleBtn').addEventListener('click', shuffleQuestions);
+document.getElementById('checkBtn').addEventListener('click', checkAnswers);
+
+render();
 </script>
 </body>
 </html>
