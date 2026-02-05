@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Day 1 Quiz · Introduction to Computer Vision</title>
+  <link href="/stage2/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/stage2/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/stage2/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/stage2/assets/css/style.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    .question-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .question-card {
+      border: 1px solid rgba(0, 38, 76, 0.15);
+      border-radius: 24px;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.95);
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+    .question-card.correct {
+      border-color: rgba(74, 211, 149, 0.8);
+      box-shadow: 0 12px 30px rgba(74, 211, 149, 0.15);
+    }
+    .question-card.incorrect {
+      border-color: rgba(255, 107, 107, 0.8);
+      box-shadow: 0 12px 30px rgba(255, 107, 107, 0.15);
+    }
+    .question-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+    }
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .option-pill {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      border: 1px solid rgba(0, 38, 76, 0.15);
+      border-radius: 14px;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.95);
+      transition: border 0.2s ease, background 0.2s ease;
+    }
+    .option-pill:hover {
+      border-color: var(--accent-teal);
+      background: rgba(27, 197, 201, 0.08);
+    }
+    .option-pill input {
+      margin-top: 0.25rem;
+    }
+    .question-feedback {
+      margin-top: 1rem;
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+    }
+    .question-feedback.success {
+      background: rgba(74, 211, 149, 0.15);
+      color: #1f7a52;
+      border: 1px solid rgba(74, 211, 149, 0.6);
+    }
+    .question-feedback.error {
+      background: rgba(255, 107, 107, 0.15);
+      color: #a12b2b;
+      border: 1px solid rgba(255, 107, 107, 0.6);
+    }
+    #formNotice {
+      font-weight: 600;
+    }
+    .quiz-controls {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: rgba(0, 38, 76, 0.03);
+      border-radius: 16px;
+    }
+    .quiz-controls label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .quiz-progress {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .progress-bar-container {
+      flex: 1;
+      height: 10px;
+      background: rgba(0, 38, 76, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-teal), var(--accent-navy));
+      transition: width 0.3s ease;
+    }
+    .progress-text {
+      font-weight: 600;
+      color: var(--accent-navy);
+    }
+  </style>
+</head>
+<body>
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <div class="logo">
+        <a href="/stage3/index.html">
+          <img src="/stage2/assets/img/kaust-academy-logo.png" alt="KAUST Academy">
+          <img class="logo-kfupm" src="/stage2/assets/img/KFUPM Seal White.png" alt="KFUPM Seal"/>
+        </a>
+      </div>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="/stage3/index.html">Home</a></li>
+          <li><a class="active" href="/stage3/day1/index.html">Day 1</a></li>
+          <li><a href="/stage3/day2/index.html">Day 2</a></li>
+          <li><a href="/stage3/day3/index.html">Day 3</a></li>
+          <li><a href="/stage3/day4/index.html">Day 4</a></li>
+          <li><a href="/stage3/extra/index.html">Extra</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="breadcrumbs animate-up">
+      <div class="container">
+        <h2>Day 1 · Introduction to Computer Vision Quiz</h2>
+        <p>Interactive MCQ practice covering image basics, convolutions, pooling, and classic CNN architectures.</p>
+        <div class="mt-3">
+          <a href="/stage3/day1/index.html" class="table-btn">Back to Day 1</a>
+        </div>
+      </div>
+    </div>
+    <section class="quiz-page-section">
+      <div class="container">
+        <div class="quiz-card list-card mb-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+            <div>
+              <p class="eyebrow mb-1">About this quiz</p>
+              <h4 class="mb-1">Introduction to Computer Vision · Stage 3</h4>
+              <p class="text-muted mb-1">Answer every question, submit, and review the rationale. You can retake the quiz as many times as you need.</p>
+              <p class="text-muted small mb-0">Quiz authored by <strong>Safwan Nabeel</strong>.</p>
+            </div>
+            <div class="text-md-end">
+              <p class="text-muted small mb-1">Format</p>
+              <p class="mb-0 fw-semibold">Multiple choice · 45 questions</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="quiz-controls">
+          <label><input type="checkbox" id="shuffleQuestions" checked> Shuffle questions</label>
+          <label><input type="checkbox" id="shuffleOptions" checked> Shuffle options</label>
+          <button type="button" class="btn btn-primary" id="startQuiz">Start Quiz</button>
+          <button type="button" class="btn btn-outline-secondary" id="resetQuiz" disabled>Reset</button>
+        </div>
+
+        <div id="quizContainer" style="display: none;">
+          <div class="quiz-progress">
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+            <span class="progress-text" id="progressText">0 / 45</span>
+          </div>
+
+          <div class="practice-panel">
+            <div id="questionArea"></div>
+            <div class="practice-actions mt-4">
+              <button type="button" class="btn btn-outline-secondary" id="prevQuestion">← Previous</button>
+              <button type="button" class="btn btn-primary" id="checkAnswer">Check Answer</button>
+              <button type="button" class="btn btn-primary" id="nextQuestion">Next →</button>
+              <button type="button" class="btn btn-success" id="finishQuiz">Finish</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="practice-panel mt-4 d-none" id="resultPanel">
+          <p class="eyebrow mb-1 text-muted text-uppercase">Score</p>
+          <h4 class="scoreline mb-2" id="scoreSummary"></h4>
+          <p class="text-muted mb-3">Scroll down to review the questions and explanations.</p>
+          <div class="d-flex gap-2 flex-wrap">
+            <button type="button" class="btn btn-primary" id="retryMissed">Retry Missed Questions</button>
+            <button type="button" class="btn btn-outline-secondary" id="restartFull">Restart Full Quiz</button>
+          </div>
+        </div>
+
+        <div id="reviewPanel" class="mt-4" style="display: none;"></div>
+      </div>
+    </section>
+  </main>
+  <footer id="footer">
+    <div class="container d-md-flex py-4">
+      <div class="me-md-auto text-center w-100">
+        <div class="copyright">
+          &copy; Copyright <strong><span>KAUST Academy</span></strong>. All Rights Reserved
+        </div>
+        <div class="license" style="font-size: 13px; margin-top: 8px; color: #555;">
+          Licensed under <a href="https://github.com/KAUST-Academy/KAUST_Academy_2026_Introduction_To_AI?tab=GPL-3.0-1-ov-file#readme" target="_blank" rel="noopener">GPL-3.0</a>.
+          Recording and uploading lectures online is not permitted.
+        </div>
+        <div class="credits" style="font-size: 14px; margin-top: 5px; color: #555;">
+          Website created and managed by <strong>Almaan Khan</strong> and the other <strong>KFUPM TAs</strong>.
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="/stage2/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/stage2/assets/vendor/aos/aos.js"></script>
+  <script>
+    AOS.init();
+    const on = (type, el, listener) => {
+      const selectEl = document.querySelector(el);
+      if (selectEl) selectEl.addEventListener(type, listener);
+    };
+    on('click', '.mobile-nav-toggle', function () {
+      document.querySelector('#navbar').classList.toggle('navbar-mobile');
+      this.classList.toggle('bi-list');
+      this.classList.toggle('bi-x');
+    });
+  </script>
+  <script>
+    const RAW_QUESTIONS = [{"q": "A grayscale image is best represented as:", "choices": ["H×W matrix of intensities", "H×W×3 tensor always", "Fully connected layers", "A graph of edges"], "a": 0, "why": "Grayscale has a single intensity value per pixel."}, {"q": "Typical 8-bit pixel intensity values lie in:", "choices": ["0–255", "0–1", "-1–1", "1–1000"], "a": 0, "why": "8-bit images store values from 0 to 255."}, {"q": "An RGB image stores color using:", "choices": ["3 channels (R,G,B)", "Fully connected layers", "2 channels only", "5 channels only"], "a": 0, "why": "RGB uses three channels per pixel."}, {"q": "Flattening an image for a fully connected net mainly loses:", "choices": ["Spatial neighborhood structure", "All information", "Color information only", "Fully connected layers"], "a": 0, "why": "Flattening discards adjacency/topology information."}, {"q": "Why are fully connected nets inefficient on raw images?", "choices": ["Too many parameters as size grows", "They have too few parameters", "They require optical flow", "Fully connected layers"], "a": 0, "why": "FC weights scale with input dimensionality, exploding with image size."}, {"q": "Shifted/scaled versions of the same pattern can break fully connected models because they cannot handle:", "choices": ["Padding ('same')", "Invariance to shifting/scaling/distortions", "Pooling", "Dilation"], "a": 1, "why": "The slides note that fully connected models struggle with invariance (pattern shifts, scaling, distortions)."}, {"q": "CNNs reduce parameter count mainly through:", "choices": ["Weight sharing (same filter across locations)", "Flattening the image", "Using RGB instead of grayscale", "Adding more fully connected layers"], "a": 0, "why": "Convolutions reuse the same filter weights across the image, reducing parameters."}, {"q": "A conv neuron’s receptive field is:", "choices": ["Input region that influences it", "Fully connected layers", "Only the output layer", "The learning rate"], "a": 0, "why": "It’s the local patch of the input affecting that activation."}, {"q": "A feature map is:", "choices": ["Output grid from one filter", "List of class names", "Training set subset", "Fully connected layers"], "a": 0, "why": "One convolution filter produces one activation map."}, {"q": "Convolution at a location is essentially a:", "choices": ["Dot product of kernel and patch", "Sorting operation", "Fully connected layers", "Histogram equalization"], "a": 0, "why": "Convolution multiplies and sums kernel weights with a local patch."}, {"q": "Using multiple filters in one conv layer yields:", "choices": ["Multiple output channels", "One output channel", "One scalar output", "Fully connected layers"], "a": 0, "why": "Each filter generates its own feature map (channel)."}, {"q": "Without padding, a k×k conv (stride 1) typically makes the output:", "choices": ["Smaller spatially", "Larger spatially", "Fully connected layers", "Unrelated size"], "a": 0, "why": "Edges can’t be covered fully, so dimensions shrink."}, {"q": "“Same” padding is used mainly to:", "choices": ["Preserve spatial size (stride 1)", "Double channels", "Fully connected layers", "Increase kernel size"], "a": 0, "why": "Zero-padding keeps output height/width equal to input for stride 1."}, {"q": "Stride controls the:", "choices": ["Step size of the sliding kernel", "Number of channels", "Fully connected layers", "Activation type"], "a": 0, "why": "Stride is how far the filter moves each step."}, {"q": "Increasing stride generally:", "choices": ["Reduces output resolution", "Increases output resolution", "Keeps output identical", "Increases kernel size"], "a": 0, "why": "Larger step → fewer positions → smaller output."}, {"q": "Pooling is mainly used to:", "choices": ["Increase the number of parameters", "Reduce resolution and extract more general features", "Convert RGB to grayscale", "Make output size larger"], "a": 1, "why": "The slides describe pooling as reducing resolution and extracting more general features."}, {"q": "Max pooling outputs the:", "choices": ["Maximum in the window", "Average in the window", "Minimum in the window", "Fully connected layers"], "a": 0, "why": "Max pooling selects the strongest activation."}, {"q": "Dilated convolution helps by:", "choices": ["Reducing the number of channels to 1", "Increasing receptive field without increasing parameters", "Removing the need for ReLU", "Replacing pooling completely"], "a": 1, "why": "The slides present dilated convolution as a way to expand receptive field without adding parameters."}, {"q": "Output size per dimension is:", "choices": ["n_out = (n_in + 2p − k)/s + 1", "n_out = (n_in − 2p + k)/s − 1", "n_out = n_in + k − 2p", "n_out = n_in × k × s"], "a": 0, "why": "The slide gives n_out = floor((n_in + 2p − k)/s) + 1."}, {"q": "If n_in=32, k=3, p=1, s=1, then n_out=", "choices": ["32", "Fully connected layers", "31", "34"], "a": 0, "why": "(32+2-3)/1+1 = 32."}, {"q": "If n_in=32, k=3, p=0, s=2, then n_out=", "choices": ["15", "Fully connected layers", "14", "17"], "a": 0, "why": "floor((32-3)/2)+1 = floor(14.5)+1 = 15."}, {"q": "ReLU is defined as:", "choices": ["max(0, x)", "1/(1+e^{-x})", "tanh(x)", "|x|"], "a": 0, "why": "ReLU clamps negatives to zero."}, {"q": "CNNs preserve locality early because they use:", "choices": ["Small local kernels", "Fully connected layers", "Global pooling first", "No channels"], "a": 0, "why": "Convs operate on local neighborhoods."}, {"q": "In the slide’s CNN pipeline, the two major parts are:", "choices": ["Feature extractor + classifier", "Optimizer + dataset", "Padding + stride", "Fully connected layers"], "a": 0, "why": "Convs/pooling extract features; the classifier predicts labels."}, {"q": "Flattening is typically applied:", "choices": ["After feature extraction, before FC classifier", "Before any convolution", "Only inside pooling", "Fully connected layers"], "a": 0, "why": "You flatten feature maps into a vector for dense classification."}, {"q": "AlexNet is best known for:", "choices": ["Popularizing deep CNNs on ImageNet (ReLU/Dropout/GPU)", "Introducing residual connections", "Using transformers first", "Compound scaling without using any convolution filters"], "a": 0, "why": "AlexNet was a landmark ImageNet CNN with modern training tricks."}, {"q": "A key VGG design choice is:", "choices": ["Many stacked 3×3 conv layers", "Only 11×11 conv layers", "No nonlinearities", "Fully connected layers"], "a": 0, "why": "VGG goes deeper by stacking small 3×3 filters."}, {"q": "Inception modules capture multi-scale features by:", "choices": ["Parallel branches with different kernel sizes", "Only 1×1 convs", "Only pooling when using a fully connected network", "Only FC layers"], "a": 0, "why": "Inception runs multiple filter sizes in parallel and concatenates outputs."}, {"q": "Inception’s 1×1 conv is often used to:", "choices": ["Reduce channels (bottleneck) cheaply", "Increase spatial resolution", "Fully connected layers", "Convert to grayscale"], "a": 0, "why": "1×1 conv mixes channels and can reduce dimensionality before expensive convs."}, {"q": "Compared to VGG, GoogLeNet/Inception is emphasized as:", "choices": ["Parameter-efficient for its depth", "Having far more parameters", "Fully connected layers", "Not using conv layers"], "a": 0, "why": "Inception was designed to be deep yet relatively parameter-efficient."}, {"q": "ResNet’s core innovation is:", "choices": ["Skip (residual) connections", "Replacing conv with pooling", "Removing nonlinearities", "Fully connected layers"], "a": 0, "why": "Shortcuts allow easier optimization of very deep nets."}, {"q": "The “degradation problem” shows deeper plain nets can have:", "choices": ["Higher training error than shallower nets", "Always lower training error", "No gradients at all", "Fully connected layers"], "a": 0, "why": "Optimization can worsen with depth even on the training set."}, {"q": "Skip connections help training mainly by:", "choices": ["Removing convolution entirely", "Allowing information to flow more easily (helping very deep networks)", "Increasing the number of fully connected layers", "Fully connected layers"], "a": 1, "why": "The slides state skip connections (residuals) allow information to flow more easily and help train very deep networks."}, {"q": "In the slides, ImageNet classification commonly refers to:", "choices": ["A dataset with 1,000 classes", "A dataset with only grayscale images", "A dataset of 10 classes", "A dataset without labels"], "a": 0, "why": "The slides list ImageNet as having 1,000 classes."}, {"q": "EfficientNet’s main idea is:", "choices": ["Compound scaling of depth/width/resolution", "Fully connected layers", "Only scaling width", "Removing conv layers"], "a": 0, "why": "EfficientNet balances scaling across model dimensions."}, {"q": "In EfficientNet compound scaling, increasing input resolution tends to increase compute roughly:", "choices": ["Linearly with γ", "Quadratically with γ²", "Independent of resolution", "Only with α (depth)"], "a": 1, "why": "The slides note FLOPs scale with γ² when scaling resolution."}, {"q": "Compound scaling constraints aim to:", "choices": ["Scale depth/width/resolution in a balanced way", "Only scale depth", "Only scale width", "Only scale resolution"], "a": 0, "why": "The slides describe compound scaling as jointly scaling depth, width, and resolution with a single coefficient."}, {"q": "EfficientNet-B0 to B7 differ primarily by:", "choices": ["A compound scaling coefficient (ϕ) that scales depth/width/resolution", "Different activation functions only", "Different color spaces", "Using fully connected layers only"], "a": 0, "why": "The slides show B0→B7 as scaled versions via the compound scaling coefficient ϕ."}, {"q": "MobileNet is designed mainly for:", "choices": ["Large server-only models", "Mobile/embedded efficient vision models", "Text-only classification", "Medical imaging exclusively"], "a": 1, "why": "The slides motivate MobileNet for mobile/embedded settings with efficient convolutions."}, {"q": "Depthwise separable convolution splits standard convolution into:", "choices": ["Pooling then ReLU", "Depthwise convolution then pointwise (1×1) convolution", "Padding then stride", "Flatten then fully connected"], "a": 1, "why": "The slides define depthwise-separable conv as depthwise + pointwise (1×1)."}, {"q": "Depthwise convolution operates:", "choices": ["Across all channels at once", "On each channel separately (one filter per channel)", "Only on the red channel", "Only after flattening"], "a": 1, "why": "The slides state depthwise conv uses one filter per channel."}, {"q": "Pointwise (1×1) convolution mainly performs:", "choices": ["Spatial downsampling", "Channel mixing (combining information across channels)", "Edge detection only", "Removing padding artifacts"], "a": 1, "why": "The slides show pointwise 1×1 conv combines channels after depthwise conv."}, {"q": "MobileNetV2 is associated with:", "choices": ["Residuals with expansion then projection", "Only max pooling layers", "No convolutions", "Only fully connected layers"], "a": 0, "why": "The slides mention MobileNetV2 uses residual connections with expansion and projection."}, {"q": "Which component most directly introduces nonlinearity in a CNN block?", "choices": ["Activation (e.g., ReLU)", "Padding", "Fully connected layers", "Kernel size"], "a": 0, "why": "Nonlinear activations let the network model complex functions."}, {"q": "Why can stacking two 3×3 convs be preferable to one 5×5 conv (as discussed with VGG-style design)?", "choices": ["It always increases parameters", "It can achieve a similar receptive field with fewer parameters and more non-linearities", "It removes the need for pooling", "It makes the network shallow"], "a": 1, "why": "The VGG slides emphasize small (3×3) filters stacked to approximate larger receptive fields while keeping parameters manageable."}];
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+    }
+
+    let state = {
+      questions: [],
+      currentIndex: 0,
+      answers: [],
+      checked: [],
+      optionMaps: [],
+      score: 0,
+      started: false
+    };
+
+    const getEl = id => document.getElementById(id);
+
+    function prepareQuestions() {
+      const shuffleQ = getEl('shuffleQuestions').checked;
+      const shuffleO = getEl('shuffleOptions').checked;
+
+      state.questions = RAW_QUESTIONS.map((q, idx) => ({ ...q, _id: idx }));
+      if (shuffleQ) shuffle(state.questions);
+
+      state.optionMaps = state.questions.map(q => {
+        const map = q.choices.map((_, i) => i);
+        if (shuffleO) shuffle(map);
+        return map;
+      });
+
+      state.currentIndex = 0;
+      state.answers = new Array(state.questions.length).fill(null);
+      state.checked = new Array(state.questions.length).fill(false);
+      state.score = 0;
+      state.started = true;
+    }
+
+    function renderQuestion() {
+      const q = state.questions[state.currentIndex];
+      const map = state.optionMaps[state.currentIndex];
+      const isChecked = state.checked[state.currentIndex];
+      const selectedOpt = state.answers[state.currentIndex];
+
+      const total = state.questions.length;
+      getEl('progressBar').style.width = `${((state.currentIndex + 1) / total) * 100}%`;
+      getEl('progressText').textContent = `${state.currentIndex + 1} / ${total}`;
+
+      let html = `
+        <article class="question-card" id="currentQuestion">
+          <p class="question-eyebrow">Question ${state.currentIndex + 1}</p>
+          <h5>${escapeHtml(q.q)}</h5>
+          <div class="option-grid">
+      `;
+
+      map.forEach((origIdx, dispIdx) => {
+        const optText = q.choices[origIdx];
+        const isSelected = selectedOpt === dispIdx;
+        const isCorrect = origIdx === q.a;
+        
+        let extraClass = '';
+        if (isChecked) {
+          if (isCorrect) extraClass = 'style="border-color: rgba(74, 211, 149, 0.8); background: rgba(74, 211, 149, 0.1);"';
+          else if (isSelected) extraClass = 'style="border-color: rgba(255, 107, 107, 0.8); background: rgba(255, 107, 107, 0.1);"';
+        }
+
+        html += `
+          <label class="option-pill" ${extraClass}>
+            <input type="radio" name="question-opt" value="${dispIdx}" ${isSelected ? 'checked' : ''} ${isChecked ? 'disabled' : ''}>
+            <span>${escapeHtml(optText)}</span>
+          </label>
+        `;
+      });
+
+      html += '</div>';
+
+      if (isChecked) {
+        const wasCorrect = map[selectedOpt] === q.a;
+        const correctOptIdx = map.findIndex(m => m === q.a);
+        const correctText = q.choices[q.a];
+        
+        if (wasCorrect) {
+          html += `<div class="question-feedback success"><strong>Correct!</strong> ${escapeHtml(q.why)}</div>`;
+        } else {
+          html += `<div class="question-feedback error"><strong>Incorrect.</strong> The correct answer is: <em>${escapeHtml(correctText)}</em>. ${escapeHtml(q.why)}</div>`;
+        }
+      }
+
+      html += '</article>';
+      getEl('questionArea').innerHTML = html;
+
+      // Add event listeners for options
+      document.querySelectorAll('input[name="question-opt"]').forEach(input => {
+        input.addEventListener('change', () => {
+          state.answers[state.currentIndex] = parseInt(input.value);
+        });
+      });
+
+      // Update buttons
+      getEl('prevQuestion').disabled = state.currentIndex === 0;
+      getEl('checkAnswer').disabled = isChecked || state.answers[state.currentIndex] === null;
+      getEl('nextQuestion').disabled = state.currentIndex >= state.questions.length - 1;
+    }
+
+    function checkAnswer() {
+      const idx = state.currentIndex;
+      if (state.answers[idx] === null) return;
+
+      state.checked[idx] = true;
+      const q = state.questions[idx];
+      const map = state.optionMaps[idx];
+      const selectedOrig = map[state.answers[idx]];
+
+      if (selectedOrig === q.a) {
+        state.score++;
+      }
+
+      renderQuestion();
+    }
+
+    function showResults() {
+      getEl('quizContainer').style.display = 'none';
+      getEl('resultPanel').classList.remove('d-none');
+
+      const total = state.questions.length;
+      const pct = Math.round((state.score / total) * 100);
+      getEl('scoreSummary').textContent = `${state.score} / ${total} (${pct}%)`;
+
+      // Build review
+      let reviewHtml = '<div class="question-stack">';
+      state.questions.forEach((q, i) => {
+        const map = state.optionMaps[i];
+        const selectedDisp = state.answers[i];
+        const selectedOrig = selectedDisp !== null ? map[selectedDisp] : null;
+        const wasCorrect = selectedOrig === q.a;
+        const correctText = q.choices[q.a];
+
+        reviewHtml += `
+          <article class="question-card ${wasCorrect ? 'correct' : 'incorrect'}">
+            <p class="question-eyebrow">Question ${i + 1} · ${wasCorrect ? '✓ Correct' : '✗ Incorrect'}</p>
+            <h5>${escapeHtml(q.q)}</h5>
+            <p class="text-muted small"><strong>Correct answer:</strong> ${escapeHtml(correctText)}</p>
+            <p class="text-muted small"><strong>Explanation:</strong> ${escapeHtml(q.why)}</p>
+          </article>
+        `;
+      });
+      reviewHtml += '</div>';
+      getEl('reviewPanel').innerHTML = reviewHtml;
+      getEl('reviewPanel').style.display = 'block';
+    }
+
+    function retryMissed() {
+      const missed = [];
+      state.questions.forEach((q, i) => {
+        const map = state.optionMaps[i];
+        const selectedDisp = state.answers[i];
+        if (selectedDisp === null || map[selectedDisp] !== q.a) {
+          missed.push({ q, map: state.optionMaps[i], origIdx: i });
+        }
+      });
+
+      if (missed.length === 0) {
+        alert('No missed questions — great job!');
+        return;
+      }
+
+      // Reset with only missed questions
+      state.questions = missed.map(m => m.q);
+      state.optionMaps = missed.map(m => m.map);
+      state.currentIndex = 0;
+      state.answers = new Array(state.questions.length).fill(null);
+      state.checked = new Array(state.questions.length).fill(false);
+      state.score = 0;
+
+      getEl('resultPanel').classList.add('d-none');
+      getEl('reviewPanel').style.display = 'none';
+      getEl('quizContainer').style.display = 'block';
+      renderQuestion();
+    }
+
+    function restartFull() {
+      prepareQuestions();
+      getEl('resultPanel').classList.add('d-none');
+      getEl('reviewPanel').style.display = 'none';
+      getEl('quizContainer').style.display = 'block';
+      renderQuestion();
+    }
+
+    // Event listeners
+    getEl('startQuiz').addEventListener('click', () => {
+      prepareQuestions();
+      getEl('quizContainer').style.display = 'block';
+      getEl('startQuiz').disabled = true;
+      getEl('resetQuiz').disabled = false;
+      renderQuestion();
+    });
+
+    getEl('resetQuiz').addEventListener('click', () => {
+      state.started = false;
+      getEl('quizContainer').style.display = 'none';
+      getEl('resultPanel').classList.add('d-none');
+      getEl('reviewPanel').style.display = 'none';
+      getEl('startQuiz').disabled = false;
+      getEl('resetQuiz').disabled = true;
+    });
+
+    getEl('prevQuestion').addEventListener('click', () => {
+      if (state.currentIndex > 0) {
+        state.currentIndex--;
+        renderQuestion();
+      }
+    });
+
+    getEl('nextQuestion').addEventListener('click', () => {
+      if (state.currentIndex < state.questions.length - 1) {
+        state.currentIndex++;
+        renderQuestion();
+      }
+    });
+
+    getEl('checkAnswer').addEventListener('click', checkAnswer);
+    getEl('finishQuiz').addEventListener('click', showResults);
+    getEl('retryMissed').addEventListener('click', retryMissed);
+    getEl('restartFull').addEventListener('click', restartFull);
+
+    // Update check button when answer changes
+    document.addEventListener('change', e => {
+      if (e.target.name === 'question-opt') {
+        getEl('checkAnswer').disabled = state.checked[state.currentIndex];
+      }
+    });
+  </script>
+</body>
+</html>
