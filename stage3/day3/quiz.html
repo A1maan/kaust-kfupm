@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Day 3 Quiz · Segmentation, Detection, YOLO, Panoptic</title>
+  <link href="/stage2/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/stage2/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/stage2/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/stage2/assets/css/style.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    .question-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .question-card {
+      border: 1px solid rgba(0, 38, 76, 0.15);
+      border-radius: 24px;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.95);
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+    .question-card.correct {
+      border-color: rgba(74, 211, 149, 0.8);
+      box-shadow: 0 12px 30px rgba(74, 211, 149, 0.15);
+    }
+    .question-card.incorrect {
+      border-color: rgba(255, 107, 107, 0.8);
+      box-shadow: 0 12px 30px rgba(255, 107, 107, 0.15);
+    }
+    .question-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+    }
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .option-pill {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      border: 1px solid rgba(0, 38, 76, 0.15);
+      border-radius: 14px;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.95);
+      transition: border 0.2s ease, background 0.2s ease;
+    }
+    .option-pill:hover {
+      border-color: var(--accent-teal);
+      background: rgba(27, 197, 201, 0.08);
+    }
+    .option-pill input {
+      margin-top: 0.25rem;
+    }
+    .question-feedback {
+      margin-top: 1rem;
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+    }
+    .question-feedback.success {
+      background: rgba(74, 211, 149, 0.15);
+      color: #1f7a52;
+      border: 1px solid rgba(74, 211, 149, 0.6);
+    }
+    .question-feedback.error {
+      background: rgba(255, 107, 107, 0.15);
+      color: #a12b2b;
+      border: 1px solid rgba(255, 107, 107, 0.6);
+    }
+    #formNotice {
+      font-weight: 600;
+    }
+    .quiz-controls {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: rgba(0, 38, 76, 0.03);
+      border-radius: 16px;
+    }
+    .quiz-controls label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .quiz-progress {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .progress-bar-container {
+      flex: 1;
+      height: 10px;
+      background: rgba(0, 38, 76, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-teal), var(--accent-navy));
+      transition: width 0.3s ease;
+    }
+    .progress-text {
+      font-weight: 600;
+      color: var(--accent-navy);
+    }
+  </style>
+</head>
+<body>
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <div class="logo">
+        <a href="/stage3/index.html">
+          <img src="/stage2/assets/img/kaust-academy-logo.png" alt="KAUST Academy">
+          <img class="logo-kfupm" src="/stage2/assets/img/KFUPM Seal White.png" alt="KFUPM Seal"/>
+        </a>
+      </div>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="/stage3/index.html">Home</a></li>
+          <li><a href="/stage3/day1/index.html">Day 1</a></li>
+          <li><a href="/stage3/day2/index.html">Day 2</a></li>
+          <li><a class="active" href="/stage3/day3/index.html">Day 3</a></li>
+          <li><a href="/stage3/day4/index.html">Day 4</a></li>
+          <li><a href="/stage3/extra/index.html">Extra</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="breadcrumbs animate-up">
+      <div class="container">
+        <h2>Day 3 · Segmentation, Detection, YOLO, Panoptic Quiz</h2>
+        <p>Interactive MCQ practice covering segmentation, detection, YOLO, Mask R-CNN, and panoptic concepts.</p>
+        <div class="mt-3">
+          <a href="/stage3/day3/index.html" class="table-btn">Back to Day 3</a>
+        </div>
+      </div>
+    </div>
+    <section class="quiz-page-section">
+      <div class="container">
+        <div class="quiz-card list-card mb-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+            <div>
+              <p class="eyebrow mb-1">About this quiz</p>
+              <h4 class="mb-1">Segmentation, Detection, YOLO, Panoptic · Stage 3</h4>
+              <p class="text-muted mb-1">Answer every question, submit, and review the rationale. You can retake the quiz as many times as you need.</p>
+              <p class="text-muted small mb-0">Quiz authored by <strong>Safwan Nabeel</strong>.</p>
+            </div>
+            <div class="text-md-end">
+              <p class="text-muted small mb-1">Format</p>
+              <p class="mb-0 fw-semibold">Multiple choice · 63 questions</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="quiz-controls">
+          <label><input type="checkbox" id="shuffleQuestions" checked> Shuffle questions</label>
+          <label><input type="checkbox" id="shuffleOptions" checked> Shuffle options</label>
+          <button type="button" class="btn btn-primary" id="startQuiz">Start Quiz</button>
+          <button type="button" class="btn btn-outline-secondary" id="resetQuiz" disabled>Reset</button>
+        </div>
+
+        <div id="quizContainer" style="display: none;">
+          <div class="quiz-progress">
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+            <span class="progress-text" id="progressText">0 / 63</span>
+          </div>
+
+          <div class="practice-panel">
+            <div id="questionArea"></div>
+            <div class="practice-actions mt-4">
+              <button type="button" class="btn btn-outline-secondary" id="prevQuestion">← Previous</button>
+              <button type="button" class="btn btn-primary" id="checkAnswer">Check Answer</button>
+              <button type="button" class="btn btn-primary" id="nextQuestion">Next →</button>
+              <button type="button" class="btn btn-success" id="finishQuiz">Finish</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="practice-panel mt-4 d-none" id="resultPanel">
+          <p class="eyebrow mb-1 text-muted text-uppercase">Score</p>
+          <h4 class="scoreline mb-2" id="scoreSummary"></h4>
+          <p class="text-muted mb-3">Scroll down to review the questions and explanations.</p>
+          <div class="d-flex gap-2 flex-wrap">
+            <button type="button" class="btn btn-primary" id="retryMissed">Retry Missed Questions</button>
+            <button type="button" class="btn btn-outline-secondary" id="restartFull">Restart Full Quiz</button>
+          </div>
+        </div>
+
+        <div id="reviewPanel" class="mt-4" style="display: none;"></div>
+      </div>
+    </section>
+  </main>
+  <footer id="footer">
+    <div class="container d-md-flex py-4">
+      <div class="me-md-auto text-center w-100">
+        <div class="copyright">
+          &copy; Copyright <strong><span>KAUST Academy</span></strong>. All Rights Reserved
+        </div>
+        <div class="license" style="font-size: 13px; margin-top: 8px; color: #555;">
+          Licensed under <a href="https://github.com/KAUST-Academy/KAUST_Academy_2026_Introduction_To_AI?tab=GPL-3.0-1-ov-file#readme" target="_blank" rel="noopener">GPL-3.0</a>.
+          Recording and uploading lectures online is not permitted.
+        </div>
+        <div class="credits" style="font-size: 14px; margin-top: 5px; color: #555;">
+          Website created and managed by <strong>Almaan Khan</strong> and the other <strong>KFUPM TAs</strong>.
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="/stage2/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/stage2/assets/vendor/aos/aos.js"></script>
+  <script>
+    AOS.init();
+    const on = (type, el, listener) => {
+      const selectEl = document.querySelector(el);
+      if (selectEl) selectEl.addEventListener(type, listener);
+    };
+    on('click', '.mobile-nav-toggle', function () {
+      document.querySelector('#navbar').classList.toggle('navbar-mobile');
+      this.classList.toggle('bi-list');
+      this.classList.toggle('bi-x');
+    });
+  </script>
+  <script>
+    const RAW_QUESTIONS = [{"q": "In semantic segmentation, what is the required form of supervision during training?", "choices": ["An image-level label for the dominant class", "A set of per-pixel class labels for the whole image", "Only bounding boxes for each object", "A caption describing the scene (including detailed implementation constraints and edge cases)"], "a": 1, "why": "Semantic segmentation assigns a class to every pixel."}, {"q": "Why is it generally impossible to label a single pixel correctly using only its raw value (or a tiny neighborhood)?", "choices": ["Pixel values are always quantized (including detailed implementation constraints and edge cases)", "Most classes differ only by camera model", "Many pixels look similar across classes without larger context", "Pixels cannot be normalized in CNNs"], "a": 2, "why": "Local appearance is ambiguous; context resolves class."}, {"q": "Which approach is conceptually similar to dense classification but becomes inefficient due to repeated computation on overlapping regions?", "choices": ["Sliding-window pixel classification with patches", "Non-maximum suppression (including detailed implementation constraints and edge cases)", "Feature pyramid networks", "Region proposal networks"], "a": 0, "why": "Sliding windows recompute features for overlapping patches."}, {"q": "A Fully Convolutional Network (FCN) for segmentation is characterized primarily by:", "choices": ["Using only fully-connected layers at the end", "Using only convolutional layers to produce spatial score maps", "Replacing convolutions with transformers", "Training without backpropagation (including detailed implementation constraints and edge cases)"], "a": 1, "why": "FCNs keep spatial structure and output dense maps."}, {"q": "Why is running all computations at full input resolution typically avoided in dense prediction networks?", "choices": ["It prevents the use of softmax", "It is computationally expensive", "It forces grayscale input", "It makes the receptive field too large"], "a": 1, "why": "Full-resolution feature maps are costly in memory/compute."}, {"q": "In an encoder–decoder segmentation model, downsampling primarily helps to:", "choices": ["Reduce computation and increase receptive field", "Eliminate the need for labels", "Guarantee perfect boundaries (including detailed implementation constraints and edge cases)", "Remove the need for normalization"], "a": 0, "why": "Downsampling builds context while saving compute."}, {"q": "Which upsampling method explicitly uses the argmax locations stored from max pooling?", "choices": ["Bilinear interpolation", "Max unpooling", "Dilated convolution", "ROI pooling"], "a": 1, "why": "Max unpooling places values back at pooled max indices."}, {"q": "Transposed convolution is best described as:", "choices": ["A fixed interpolation that cannot learn parameters", "A learnable upsampling operation implemented with convolution-like kernels", "A loss function for segmentation", "A method for computing IoU (including detailed implementation constraints and edge cases)"], "a": 1, "why": "It learns weights to map low-res features to higher-res outputs."}, {"q": "In the transposed-convolution output-size formula, which parameter accounts for spacing between kernel elements?", "choices": ["Stride", "Dilation", "Padding", "Kernel size"], "a": 1, "why": "Dilation controls spacing between kernel elements."}, {"q": "What is the main motivation for adding skip/residual connections in segmentation decoders?", "choices": ["To reduce the number of classes (including detailed implementation constraints and edge cases)", "To recover fine spatial details lost during downsampling", "To avoid using convolution layers", "To enforce one instance per image"], "a": 1, "why": "Skip connections reintroduce high-resolution details."}, {"q": "A common reason concatenation skip connections may outperform additive skips is that concatenation:", "choices": ["Forces equal channel counts automatically", "Preserves both feature sets without mixing them immediately", "Eliminates the need for alignment", "Always reduces memory usage (including detailed implementation constraints and edge cases)"], "a": 1, "why": "Concatenation keeps both representations; addition mixes them."}, {"q": "U-Net is most accurately summarized as:", "choices": ["A pure classifier with global average pooling", "An encoder–decoder network with skip connections between matching resolutions", "A single-stage object detector (including detailed implementation constraints and edge cases)", "A tracking-by-detection method"], "a": 1, "why": "U-Net couples encoder and decoder via skips."}, {"q": "Which statement best distinguishes semantic segmentation from instance segmentation?", "choices": ["Semantic segmentation predicts bounding boxes, instance predicts pixels", "Semantic segmentation labels pixels by class, instance segmentation separates object instances", "Instance segmentation includes “stuff” classes, semantic does not", "Semantic segmentation requires NMS, instance does not (including detailed implementation constraints and edge cases)"], "a": 1, "why": "Instance segmentation separates instances of the same class."}, {"q": "Panoptic segmentation requires producing:", "choices": ["Only bounding boxes for objects", "Per-pixel labels for both “stuff” and “things”, with instance IDs for things", "Only keypoints for humans", "Only region captions (including detailed implementation constraints and edge cases)"], "a": 1, "why": "Panoptic merges semantic + instance requirements."}, {"q": "In object detection, a single object prediction typically includes:", "choices": ["Only a class name", "Class label and a bounding box (x, y, w, h)", "A segmentation mask only", "A depth map only (including detailed implementation constraints and edge cases)"], "a": 1, "why": "Detection outputs class + box parameters."}, {"q": "Which metric measures overlap between a predicted box and ground-truth box?", "choices": ["Cross-entropy", "Intersection over Union (IoU)", "Mean squared error", "BLEU score (including detailed implementation constraints and edge cases)"], "a": 1, "why": "IoU is intersection area divided by union area."}, {"q": "In a localization + classification multitask setup for one object, the combined loss is typically:", "choices": ["A weighted sum of classification loss and bounding-box regression loss", "Only a regression loss (including detailed implementation constraints and edge cases)", "Only a classification loss", "A margin loss over IoU only"], "a": 0, "why": "Training optimizes both what and where together."}, {"q": "Why does naive sliding-window detection become infeasible on realistic images?", "choices": ["It requires no training data", "The number of possible boxes is extremely large", "It cannot be parallelized (including detailed implementation constraints and edge cases)", "It only works for grayscale images"], "a": 1, "why": "Combinatorially many boxes make exhaustive evaluation too slow."}, {"q": "Region proposal methods (e.g., selective search) are used mainly to:", "choices": ["Generate a small set of candidate regions likely to contain objects", "Replace IoU with accuracy", "Compute feature pyramids (including detailed implementation constraints and edge cases)", "Perform unpooling in decoders"], "a": 0, "why": "They reduce the search space to manageable candidates."}, {"q": "A key reason the original R-CNN is slow is that it:", "choices": ["Runs a CNN forward pass for each region proposal", "Uses too small a learning rate", "Does not use any convolution (including detailed implementation constraints and edge cases)", "Requires manual annotation at test time"], "a": 0, "why": "Thousands of proposals imply thousands of CNN passes."}, {"q": "Faster R-CNN improves efficiency primarily by:", "choices": ["Removing all region proposals (including detailed implementation constraints and edge cases)", "Using a Region Proposal Network (RPN) shared with the detector backbone", "Replacing IoU with L2 distance", "Predicting only one box per image"], "a": 1, "why": "RPN generates proposals inside the network with shared features."}, {"q": "A typical Faster R-CNN training setup uses multiple losses because it must learn:", "choices": ["Only segmentation masks", "Both classification and bounding-box regression for proposals and final detections", "Only image captions (including detailed implementation constraints and edge cases) and extended commentary", "Only keypoints and depth"], "a": 1, "why": "It trains proposal objectness/box and final class/box heads."}, {"q": "Objects appear at many scales; an image pyramid addresses this by:", "choices": ["Running the detector on multiple resized versions of the input", "Applying NMS multiple times (including detailed implementation constraints and edge cases)", "Using only 1×1 convolutions", "Replacing anchors with keypoints"], "a": 0, "why": "Rescaling input lets objects match the detector’s receptive field."}, {"q": "A Feature Pyramid Network (FPN) is designed to:", "choices": ["Compute IoU faster (including detailed implementation constraints and edge cases)", "Provide multi-scale feature maps within one network", "Convert masks to boxes", "Replace convolution with pooling"], "a": 1, "why": "FPN builds a pyramid of features from different depths."}, {"q": "Non-Maximum Suppression (NMS) is used to:", "choices": ["Increase the number of detections", "Remove duplicate overlapping detections by keeping high-score boxes", "Compute class probabilities per pixel", "Upsample feature maps (including detailed implementation constraints and edge cases)"], "a": 1, "why": "NMS suppresses lower-score boxes with high overlap."}, {"q": "A known caveat of standard NMS is that it can:", "choices": ["Fail to compute IoU correctly", "Discard valid boxes when objects overlap heavily", "Prevent training from converging", "Only work for one class (including detailed implementation constraints and edge cases)"], "a": 1, "why": "High overlap among nearby objects can trigger suppression."}, {"q": "YOLO is often called a one-stage detector because it:", "choices": ["Runs region proposal then classification in two separate models", "Predicts boxes and classes directly in one pass over the image", "Requires selective search at test time", "Uses only SVMs for classification"], "a": 1, "why": "It predicts detections directly without a separate proposal stage."}, {"q": "In the described YOLO setup, each grid cell predicts:", "choices": ["B=2 boxes with (x,y,w,h)+confidence and C=20 class probabilities", "Only one box and no class scores (including detailed implementation constraints and edge cases)", "C=2 class probabilities and B=20 boxes", "A segmentation mask for each class"], "a": 0, "why": "The model outputs 2 boxes per cell plus class probabilities."}, {"q": "After YOLO produces many candidate boxes, a standard post-processing step is to:", "choices": ["Apply max unpooling (including detailed implementation constraints and edge cases)", "Apply Non-Maximum Suppression", "Compute dilation factors", "Run selective search"], "a": 1, "why": "NMS removes redundant overlapping predictions."}, {"q": "Which limitation is explicitly associated with the grid-cell design in YOLO?", "choices": ["A grid cell can predict only one class", "It cannot predict confidence scores", "It cannot output boxes at all (including detailed implementation constraints and edge cases)", "It always requires an image pyramid"], "a": 0, "why": "Per-cell class constraint limits crowded scenes."}, {"q": "One listed solution direction for YOLO limitations is to:", "choices": ["Add more fully connected layers", "Remove fully connected layers and predict class per bounding box", "Replace NMS with pooling (including detailed implementation constraints and edge cases)", "Use only grayscale images"], "a": 1, "why": "The noted fixes include removing FC layers and per-box classes."}, {"q": "YOLOv2 is described as improving the original formulation by:", "choices": ["Adding fully connected layers back (including detailed implementation constraints and edge cases)", "Removing fully connected layers and predicting class probabilities for each box", "Replacing bounding boxes with masks only", "Using selective search for proposals"], "a": 1, "why": "YOLOv2 removes FC layers and predicts classes per box."}, {"q": "The “things” vs “stuff” distinction is best captured by:", "choices": ["Things are countable objects; stuff is amorphous background regions", "Stuff are only humans; things are only vehicles", "Things are per-pixel; stuff are per-box", "Stuff requires NMS; things do not (including detailed implementation constraints and edge cases)"], "a": 0, "why": "Things are instances; stuff is uncountable regions like sky/road."}, {"q": "Why can semantic segmentation be insufficient for counting objects?", "choices": ["It produces no pixel labels", "It can merge multiple instances of the same class into one region", "It requires bounding boxes (including detailed implementation constraints and edge cases)", "It predicts only one class per image"], "a": 1, "why": "Semantic labels don’t separate same-class instances."}, {"q": "Instance segmentation can be summarized as:", "choices": ["Classifying images into one label (including detailed implementation constraints and edge cases)", "Detecting each object and predicting a pixel mask for each detected instance", "Upsampling features without labels", "Tracking objects across time without detection"], "a": 1, "why": "It outputs per-instance masks along with detection."}, {"q": "Mask R-CNN is most directly related to which base detector family?", "choices": ["Faster R-CNN", "YOLO", "SSD only", "Sliding-window SVM"], "a": 0, "why": "Mask R-CNN extends Faster R-CNN with a mask branch."}, {"q": "Panoptic segmentation requires combining what two capabilities?", "choices": ["Image classification and captioning", "Semantic segmentation for all pixels and instance separation for things", "Keypoint estimation and tracking", "Unpooling and dilation (including detailed implementation constraints and edge cases)"], "a": 1, "why": "Panoptic = per-pixel labels + instance IDs for things."}, {"q": "Human pose keypoints are represented as:", "choices": ["A single bounding box per person", "A set of predefined landmark points per person", "A semantic map of clothing only", "A caption describing posture (including detailed implementation constraints and edge cases)"], "a": 1, "why": "Pose estimation predicts multiple body landmark points."}, {"q": "An example of extending region-based models beyond boxes is:", "choices": ["Dense captioning of regions", "Max pooling indices (including detailed implementation constraints and edge cases)", "Output padding equations", "Dilation-only networks"], "a": 0, "why": "Dense captioning generates descriptions for detected regions."}, {"q": "Mesh R-CNN relates to detection pipelines by targeting:", "choices": ["2D bounding boxes only (including detailed implementation constraints and edge cases)", "3D shape prediction (meshes) from images", "Only class probabilities", "Only optical flow fields"], "a": 1, "why": "It predicts 3D mesh representations."}, {"q": "Object tracking (as described) typically involves:", "choices": ["Detecting objects and assigning IDs across frames using stored features", "Only semantic segmentation per frame with no association", "Only computing IoU once per video (including detailed implementation constraints and edge cases)", "Only keypoint estimation without IDs"], "a": 0, "why": "Tracking assigns consistent identities over time."}, {"q": "In segmentation, the encoder stage is primarily responsible for:", "choices": ["Increasing spatial resolution", "Reducing spatial resolution while extracting semantic features", "Applying NMS (including detailed implementation constraints and edge cases)", "Predicting region captions"], "a": 1, "why": "Encoders downsample and build high-level representations."}, {"q": "Which component directly counters the loss of boundary detail caused by repeated pooling/striding?", "choices": ["Skip connections from early layers to decoder layers", "Only increasing batch size (including detailed implementation constraints and edge cases)", "Only using 1×1 convolutions", "Replacing softmax with sigmoid"], "a": 0, "why": "Skips bring back fine-grained spatial cues."}, {"q": "Which of the following is an upsampling operation with learnable parameters?", "choices": ["Nearest-neighbor resize", "Transposed convolution", "Cropping", "ROI pooling"], "a": 1, "why": "Transposed convolution learns kernel weights."}, {"q": "In the transposed convolution size equations, increasing stride generally causes the output to:", "choices": ["Shrink", "Expand", "Stay identical", "Become undefined"], "a": 1, "why": "Output size scales with (Hin−1)×stride plus other terms."}, {"q": "In detection, why is the number of model outputs variable across images?", "choices": ["The image size is fixed (including detailed implementation constraints and edge cases)", "Different images contain different numbers of objects", "Softmax requires variable output", "NMS changes the input size"], "a": 1, "why": "Each image can have a different count of objects."}, {"q": "A practical motivation for region proposals is that evaluating all possible boxes is:", "choices": ["Impossible due to memory leaks", "Combinatorially large", "Not differentiable", "Always inaccurate"], "a": 1, "why": "The search space of boxes is enormous."}, {"q": "FPN helps with scale variation primarily by:", "choices": ["Changing the dataset labels (including detailed implementation constraints and edge cases)", "Using features at multiple resolutions in the same forward pass", "Running selective search on each scale", "Replacing convolution with interpolation"], "a": 1, "why": "It provides multi-level features for small/large objects."}, {"q": "What is the typical role of confidence/objectness in YOLO-style predictions?", "choices": ["It measures kernel dilation", "It represents how likely a predicted box contains an object", "It is the learning rate", "It is the padding size (including detailed implementation constraints and edge cases)"], "a": 1, "why": "Confidence scores indicate object presence for a box."}, {"q": "Which statement best matches the described YOLO benefits?", "choices": ["It is optimized for real-time speed and trained end-to-end", "It always has the highest accuracy on small objects", "It requires two-stage training with SVMs", "It cannot run on GPUs (including detailed implementation constraints and edge cases)"], "a": 0, "why": "YOLO is emphasized as fast and end-to-end."}, {"q": "Which item is listed as a YOLO limitation related to input handling?", "choices": ["Fixed input size", "Variable stride per layer", "Mandatory image pyramid", "No use of NMS"], "a": 0, "why": "Fixed input size is explicitly noted."}, {"q": "Which statement correctly contrasts detection and semantic segmentation?", "choices": ["Detection focuses on things with boxes; semantic segmentation labels all pixels but may not separate instances", "Detection always labels stuff classes; segmentation never does", "Segmentation outputs boxes; detection outputs per-pixel masks", "They are identical tasks (including detailed implementation constraints and edge cases) with additional theoretical discussion and caveats"], "a": 0, "why": "Detection is box-based; semantic segmentation is per-pixel class labeling."}, {"q": "Which task explicitly requires separating multiple instances of the same class at the pixel level?", "choices": ["Image classification", "Semantic segmentation", "Instance segmentation", "Feature extraction (including detailed implementation constraints and edge cases)"], "a": 2, "why": "Instance segmentation assigns separate masks per object instance."}, {"q": "A typical post-processing step shared by many detectors (including YOLO) is:", "choices": ["Max unpooling (including detailed implementation constraints and edge cases)", "Non-Maximum Suppression", "Transposed convolution", "Concatenation skip"], "a": 1, "why": "NMS is widely used to prune overlapping detections."}, {"q": "Which of the following is a concept used to generate candidate regions inside the network for two-stage detection?", "choices": ["Region Proposal Network (RPN)", "Bilinear upsampling", "Dense captioning", "CycleGAN (including detailed implementation constraints and edge cases)"], "a": 0, "why": "RPN proposes regions using shared CNN features."}, {"q": "In the listed application example for defect detection, one augmentation approach mentioned is:", "choices": ["Cycle-GAN based augmentation with YOLOv5", "Replacing NMS with pooling (including detailed implementation constraints and edge cases)", "Using only semantic segmentation", "Using max unpooling indices"], "a": 0, "why": "Cycle-GAN + YOLOv5 is mentioned for augmentation + detection."}, {"q": "In the same defect-detection context, an architectural enhancement mentioned includes:", "choices": ["CBAM attention and dilated convolution in an improved YOLOv5", "Removing convolution layers entirely", "Replacing boxes with captions only", "Using only selective search (including detailed implementation constraints and edge cases)"], "a": 0, "why": "Improved YOLOv5 includes CBAM attention and dilated conv."}, {"q": "Which statement best captures why skip connections require care when using concatenation?", "choices": ["Concatenation always halves spatial size", "Input and output shapes must be aligned before concatenation", "Concatenation removes channels automatically", "It disables backpropagation (including detailed implementation constraints and edge cases)"], "a": 1, "why": "Concatenation needs matching spatial dimensions."}, {"q": "Which of the following tasks is explicitly described as labeling all pixels while also distinguishing object instances?", "choices": ["Panoptic segmentation", "Object detection", "Image classification", "Max unpooling (including detailed implementation constraints and edge cases)"], "a": 0, "why": "Panoptic provides per-pixel labels plus instance IDs for things."}, {"q": "Which approach was cited as generating around ~2000 candidate regions per image (typical region proposal count)?", "choices": ["Selective search region proposals", "Non-maximum suppression", "Transposed convolution (including detailed implementation constraints and edge cases)", "Feature pyramid networks"], "a": 0, "why": "Selective search is cited as producing ~2000 proposals."}, {"q": "In R-CNN-style pipelines, bounding-box regression is used to:", "choices": ["Generate class probabilities", "Refine candidate boxes toward ground truth", "Compute IoU (including detailed implementation constraints and edge cases)", "Upsample feature maps"], "a": 1, "why": "Regression adjusts box coordinates for better localization."}, {"q": "Which is an example of a “one-stage” detection family named in the content?", "choices": ["YOLO", "R-CNN", "Fast R-CNN", "Faster R-CNN"], "a": 0, "why": "YOLO is presented as one-stage detection."}, {"q": "Which output type is associated with dense captioning?", "choices": ["A caption for each detected region", "A per-pixel class map only", "A single label per image", "A set of dilation rates (including detailed implementation constraints and edge cases)"], "a": 0, "why": "Dense captioning produces region-level descriptions."}];
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+    }
+
+    let state = {
+      questions: [],
+      currentIndex: 0,
+      answers: [],
+      checked: [],
+      optionMaps: [],
+      score: 0,
+      started: false
+    };
+
+    const getEl = id => document.getElementById(id);
+
+    function prepareQuestions() {
+      const shuffleQ = getEl('shuffleQuestions').checked;
+      const shuffleO = getEl('shuffleOptions').checked;
+
+      state.questions = RAW_QUESTIONS.map((q, idx) => ({ ...q, _id: idx }));
+      if (shuffleQ) shuffle(state.questions);
+
+      state.optionMaps = state.questions.map(q => {
+        const map = q.choices.map((_, i) => i);
+        if (shuffleO) shuffle(map);
+        return map;
+      });
+
+      state.currentIndex = 0;
+      state.answers = new Array(state.questions.length).fill(null);
+      state.checked = new Array(state.questions.length).fill(false);
+      state.score = 0;
+      state.started = true;
+    }
+
+    function renderQuestion() {
+      const q = state.questions[state.currentIndex];
+      const map = state.optionMaps[state.currentIndex];
+      const isChecked = state.checked[state.currentIndex];
+      const selectedOpt = state.answers[state.currentIndex];
+
+      const total = state.questions.length;
+      getEl('progressBar').style.width = `${((state.currentIndex + 1) / total) * 100}%`;
+      getEl('progressText').textContent = `${state.currentIndex + 1} / ${total}`;
+
+      let html = `
+        <article class="question-card" id="currentQuestion">
+          <p class="question-eyebrow">Question ${state.currentIndex + 1}</p>
+          <h5>${escapeHtml(q.q)}</h5>
+          <div class="option-grid">
+      `;
+
+      map.forEach((origIdx, dispIdx) => {
+        const optText = q.choices[origIdx];
+        const isSelected = selectedOpt === dispIdx;
+        const isCorrect = origIdx === q.a;
+        
+        let extraClass = '';
+        if (isChecked) {
+          if (isCorrect) extraClass = 'style="border-color: rgba(74, 211, 149, 0.8); background: rgba(74, 211, 149, 0.1);"';
+          else if (isSelected) extraClass = 'style="border-color: rgba(255, 107, 107, 0.8); background: rgba(255, 107, 107, 0.1);"';
+        }
+
+        html += `
+          <label class="option-pill" ${extraClass}>
+            <input type="radio" name="question-opt" value="${dispIdx}" ${isSelected ? 'checked' : ''} ${isChecked ? 'disabled' : ''}>
+            <span>${escapeHtml(optText)}</span>
+          </label>
+        `;
+      });
+
+      html += '</div>';
+
+      if (isChecked) {
+        const wasCorrect = map[selectedOpt] === q.a;
+        const correctOptIdx = map.findIndex(m => m === q.a);
+        const correctText = q.choices[q.a];
+        
+        if (wasCorrect) {
+          html += `<div class="question-feedback success"><strong>Correct!</strong> ${escapeHtml(q.why)}</div>`;
+        } else {
+          html += `<div class="question-feedback error"><strong>Incorrect.</strong> The correct answer is: <em>${escapeHtml(correctText)}</em>. ${escapeHtml(q.why)}</div>`;
+        }
+      }
+
+      html += '</article>';
+      getEl('questionArea').innerHTML = html;
+
+      // Add event listeners for options
+      document.querySelectorAll('input[name="question-opt"]').forEach(input => {
+        input.addEventListener('change', () => {
+          state.answers[state.currentIndex] = parseInt(input.value);
+        });
+      });
+
+      // Update buttons
+      getEl('prevQuestion').disabled = state.currentIndex === 0;
+      getEl('checkAnswer').disabled = isChecked || state.answers[state.currentIndex] === null;
+      getEl('nextQuestion').disabled = state.currentIndex >= state.questions.length - 1;
+    }
+
+    function checkAnswer() {
+      const idx = state.currentIndex;
+      if (state.answers[idx] === null) return;
+
+      state.checked[idx] = true;
+      const q = state.questions[idx];
+      const map = state.optionMaps[idx];
+      const selectedOrig = map[state.answers[idx]];
+
+      if (selectedOrig === q.a) {
+        state.score++;
+      }
+
+      renderQuestion();
+    }
+
+    function showResults() {
+      getEl('quizContainer').style.display = 'none';
+      getEl('resultPanel').classList.remove('d-none');
+
+      const total = state.questions.length;
+      const pct = Math.round((state.score / total) * 100);
+      getEl('scoreSummary').textContent = `${state.score} / ${total} (${pct}%)`;
+
+      // Build review
+      let reviewHtml = '<div class="question-stack">';
+      state.questions.forEach((q, i) => {
+        const map = state.optionMaps[i];
+        const selectedDisp = state.answers[i];
+        const selectedOrig = selectedDisp !== null ? map[selectedDisp] : null;
+        const wasCorrect = selectedOrig === q.a;
+        const correctText = q.choices[q.a];
+
+        reviewHtml += `
+          <article class="question-card ${wasCorrect ? 'correct' : 'incorrect'}">
+            <p class="question-eyebrow">Question ${i + 1} · ${wasCorrect ? '✓ Correct' : '✗ Incorrect'}</p>
+            <h5>${escapeHtml(q.q)}</h5>
+            <p class="text-muted small"><strong>Correct answer:</strong> ${escapeHtml(correctText)}</p>
+            <p class="text-muted small"><strong>Explanation:</strong> ${escapeHtml(q.why)}</p>
+          </article>
+        `;
+      });
+      reviewHtml += '</div>';
+      getEl('reviewPanel').innerHTML = reviewHtml;
+      getEl('reviewPanel').style.display = 'block';
+    }
+
+    function retryMissed() {
+      const missed = [];
+      state.questions.forEach((q, i) => {
+        const map = state.optionMaps[i];
+        const selectedDisp = state.answers[i];
+        if (selectedDisp === null || map[selectedDisp] !== q.a) {
+          missed.push({ q, map: state.optionMaps[i], origIdx: i });
+        }
+      });
+
+      if (missed.length === 0) {
+        alert('No missed questions — great job!');
+        return;
+      }
+
+      // Reset with only missed questions
+      state.questions = missed.map(m => m.q);
+      state.optionMaps = missed.map(m => m.map);
+      state.currentIndex = 0;
+      state.answers = new Array(state.questions.length).fill(null);
+      state.checked = new Array(state.questions.length).fill(false);
+      state.score = 0;
+
+      getEl('resultPanel').classList.add('d-none');
+      getEl('reviewPanel').style.display = 'none';
+      getEl('quizContainer').style.display = 'block';
+      renderQuestion();
+    }
+
+    function restartFull() {
+      prepareQuestions();
+      getEl('resultPanel').classList.add('d-none');
+      getEl('reviewPanel').style.display = 'none';
+      getEl('quizContainer').style.display = 'block';
+      renderQuestion();
+    }
+
+    // Event listeners
+    getEl('startQuiz').addEventListener('click', () => {
+      prepareQuestions();
+      getEl('quizContainer').style.display = 'block';
+      getEl('startQuiz').disabled = true;
+      getEl('resetQuiz').disabled = false;
+      renderQuestion();
+    });
+
+    getEl('resetQuiz').addEventListener('click', () => {
+      state.started = false;
+      getEl('quizContainer').style.display = 'none';
+      getEl('resultPanel').classList.add('d-none');
+      getEl('reviewPanel').style.display = 'none';
+      getEl('startQuiz').disabled = false;
+      getEl('resetQuiz').disabled = true;
+    });
+
+    getEl('prevQuestion').addEventListener('click', () => {
+      if (state.currentIndex > 0) {
+        state.currentIndex--;
+        renderQuestion();
+      }
+    });
+
+    getEl('nextQuestion').addEventListener('click', () => {
+      if (state.currentIndex < state.questions.length - 1) {
+        state.currentIndex++;
+        renderQuestion();
+      }
+    });
+
+    getEl('checkAnswer').addEventListener('click', checkAnswer);
+    getEl('finishQuiz').addEventListener('click', showResults);
+    getEl('retryMissed').addEventListener('click', retryMissed);
+    getEl('restartFull').addEventListener('click', restartFull);
+
+    // Update check button when answer changes
+    document.addEventListener('change', e => {
+      if (e.target.name === 'question-opt') {
+        getEl('checkAnswer').disabled = state.checked[state.currentIndex];
+      }
+    });
+  </script>
+</body>
+</html>

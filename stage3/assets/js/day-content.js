@@ -44,7 +44,18 @@ window.KfupmDayContent = {
   },
   day3: {
     resources: [],
-    quizzes: []
+    quizzes: [
+      {
+        id: 'day3-segmentation-quiz',
+        title: 'Segmentation, Detection, YOLO, Panoptic Quiz',
+        description: 'Practice quiz on segmentation, detection, YOLO, Mask R-CNN, and panoptic segmentation. Authored by Safwan Nabeel.',
+        level: 'Core',
+        focus: 'Detection + segmentation',
+        duration: 'Self-paced',
+        questionCount: 63,
+        link: 'quiz.html'
+      }
+    ]
   },
   day4: {
     resources: [
