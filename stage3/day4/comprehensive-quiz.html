@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Day 4 Quiz · Comprehensive Material Practice</title>
+  <link href="/stage2/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/stage2/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/stage2/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/stage2/assets/css/style.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    .question-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .question-card {
+      border: 1px solid rgba(0, 38, 76, 0.15);
+      border-radius: 24px;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.95);
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+    .question-card.correct {
+      border-color: rgba(74, 211, 149, 0.8);
+      box-shadow: 0 12px 30px rgba(74, 211, 149, 0.15);
+    }
+    .question-card.incorrect {
+      border-color: rgba(255, 107, 107, 0.8);
+      box-shadow: 0 12px 30px rgba(255, 107, 107, 0.15);
+    }
+    .question-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+    }
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .option-pill {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      border: 1px solid rgba(0, 38, 76, 0.15);
+      border-radius: 14px;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.95);
+      transition: border 0.2s ease, background 0.2s ease;
+    }
+    .option-pill:hover {
+      border-color: var(--accent-teal);
+      background: rgba(27, 197, 201, 0.08);
+    }
+    .option-pill input {
+      margin-top: 0.25rem;
+    }
+    .question-feedback {
+      margin-top: 1rem;
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+    }
+    .question-feedback.success {
+      background: rgba(74, 211, 149, 0.15);
+      color: #1f7a52;
+      border: 1px solid rgba(74, 211, 149, 0.6);
+    }
+    .question-feedback.error {
+      background: rgba(255, 107, 107, 0.15);
+      color: #a12b2b;
+      border: 1px solid rgba(255, 107, 107, 0.6);
+    }
+    #formNotice {
+      font-weight: 600;
+    }
+    .quiz-controls {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: rgba(0, 38, 76, 0.03);
+      border-radius: 16px;
+    }
+    .quiz-controls label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .quiz-progress {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .progress-bar-container {
+      flex: 1;
+      height: 10px;
+      background: rgba(0, 38, 76, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-teal), var(--accent-navy));
+      transition: width 0.3s ease;
+    }
+    .progress-text {
+      font-weight: 600;
+      color: var(--accent-navy);
+    }
+  </style>
+</head>
+<body>
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <div class="logo">
+        <a href="/stage3/index.html">
+          <img src="/stage2/assets/img/kaust-academy-logo.png" alt="KAUST Academy">
+          <img class="logo-kfupm" src="/stage2/assets/img/KFUPM Seal White.png" alt="KFUPM Seal"/>
+        </a>
+      </div>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="/stage3/index.html">Home</a></li>
+          <li><a href="/stage3/day1/index.html">Day 1</a></li>
+          <li><a href="/stage3/day2/index.html">Day 2</a></li>
+          <li><a href="/stage3/day3/index.html">Day 3</a></li>
+          <li><a class="active" href="/stage3/day4/index.html">Day 4</a></li>
+          <li><a href="/stage3/extra/index.html">Extra</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="breadcrumbs animate-up">
+      <div class="container">
+        <h2>Day 4 · Comprehensive Material Practice Quiz</h2>
+        <p>Interactive MCQ practice covering the full Stage 3 material from your provided comprehensive quiz file.</p>
+        <div class="mt-3">
+          <a href="/stage3/day4/index.html" class="table-btn">Back to Day 4</a>
+        </div>
+      </div>
+    </div>
+    <section class="quiz-page-section">
+      <div class="container">
+        <div class="quiz-card list-card mb-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+            <div>
+              <p class="eyebrow mb-1">About this quiz</p>
+              <h4 class="mb-1">Comprehensive Material Practice · Stage 3</h4>
+              <p class="text-muted mb-1">Answer every question, submit, and review the rationale. You can retake the quiz as many times as you need.</p>
+              <p class="text-muted small mb-0">Quiz authored by <strong>Mohammad Alshiekh</strong>.</p>
+            </div>
+            <div class="text-md-end">
+              <p class="text-muted small mb-1">Format</p>
+              <p class="mb-0 fw-semibold">Multiple choice · 86 questions</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="quiz-controls">
+          <label><input type="checkbox" id="shuffleQuestions" checked> Shuffle questions</label>
+          <label><input type="checkbox" id="shuffleOptions" checked> Shuffle options</label>
+          <button type="button" class="btn btn-primary" id="startQuiz">Start Quiz</button>
+          <button type="button" class="btn btn-outline-secondary" id="resetQuiz" disabled>Reset</button>
+        </div>
+
+        <div id="quizContainer" style="display: none;">
+          <div class="quiz-progress">
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+            <span class="progress-text" id="progressText">0 / 86</span>
+          </div>
+
+          <div class="practice-panel">
+            <div id="questionArea"></div>
+            <div class="practice-actions mt-4">
+              <button type="button" class="btn btn-outline-secondary" id="prevQuestion">← Previous</button>
+              <button type="button" class="btn btn-primary" id="checkAnswer">Check Answer</button>
+              <button type="button" class="btn btn-primary" id="nextQuestion">Next →</button>
+              <button type="button" class="btn btn-success" id="finishQuiz">Finish</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="practice-panel mt-4 d-none" id="resultPanel">
+          <p class="eyebrow mb-1 text-muted text-uppercase">Score</p>
+          <h4 class="scoreline mb-2" id="scoreSummary"></h4>
+          <p class="text-muted mb-3">Scroll down to review the questions and explanations.</p>
+          <div class="d-flex gap-2 flex-wrap">
+            <button type="button" class="btn btn-primary" id="retryMissed">Retry Missed Questions</button>
+            <button type="button" class="btn btn-outline-secondary" id="restartFull">Restart Full Quiz</button>
+          </div>
+        </div>
+
+        <div id="reviewPanel" class="mt-4" style="display: none;"></div>
+      </div>
+    </section>
+  </main>
+  <footer id="footer">
+    <div class="container d-md-flex py-4">
+      <div class="me-md-auto text-center w-100">
+        <div class="copyright">
+          &copy; Copyright <strong><span>KAUST Academy</span></strong>. All Rights Reserved
+        </div>
+        <div class="license" style="font-size: 13px; margin-top: 8px; color: #555;">
+          Licensed under <a href="https://github.com/KAUST-Academy/KAUST_Academy_2026_Introduction_To_AI?tab=GPL-3.0-1-ov-file#readme" target="_blank" rel="noopener">GPL-3.0</a>.
+          Recording and uploading lectures online is not permitted.
+        </div>
+        <div class="credits" style="font-size: 14px; margin-top: 5px; color: #555;">
+          Website created and managed by <strong>Almaan Khan</strong> and the other <strong>KFUPM TAs</strong>.
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="/stage2/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/stage2/assets/vendor/aos/aos.js"></script>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script>
+    AOS.init();
+    const on = (type, el, listener) => {
+      const selectEl = document.querySelector(el);
+      if (selectEl) selectEl.addEventListener(type, listener);
+    };
+    on('click', '.mobile-nav-toggle', function () {
+      document.querySelector('#navbar').classList.toggle('navbar-mobile');
+      this.classList.toggle('bi-list');
+      this.classList.toggle('bi-x');
+    });
+  </script>
+  <script>
+    const RAW_QUESTIONS = [{"q": "Drawbacks of fully connected layers for image tasks", "choices": ["Variant to shifting, scaling and distortion", "Topology of input data is ignored", "Huge number of trainable parameter", "All of the above"], "a": 3, "why": ""}, {"q": "In CNN, the feature extractor:", "choices": ["Learns patterns such as textures and shapes", "Looks at every pixel independently", "Perform classification/regression", "All of the above"], "a": 0, "why": ""}, {"q": "Which of the following is NOT an essential component to the feature extractor?", "choices": ["Convolution layers", "Pooling layers", "Activation functions", "Fully connected layers"], "a": 3, "why": ""}, {"q": "The filter slides across the image, creating a __________ as an output", "choices": ["Shared weight", "Kernel", "Receptive field", "Feature map"], "a": 3, "why": ""}, {"q": "True or false: The weights in the kernel are shared across the image", "choices": ["True", "False"], "a": 0, "why": ""}, {"q": "True or false: activation functions are optional for training CNN", "choices": ["True", "False"], "a": 1, "why": ""}, {"q": "Convolution shrinks the output size around the borders unless _____ is applied", "choices": ["Pooling", "Strides", "Appropriate kernel size", "Padding"], "a": 3, "why": ""}, {"q": "Which of the following controls how the kernel slides?", "choices": ["Kernel size", "Strides", "Padding", "Pooling"], "a": 1, "why": ""}, {"q": "Which could be used to reduce the resolution and help extract more general features?", "choices": ["Receptive field", "Padding", "Fully connected layers", "Pooling"], "a": 3, "why": ""}, {"q": "Which component introduces spatial invariance in CNN?", "choices": ["All of the above", "Pooling (SUS not sure)", "Activation functions", "Kernels"], "a": 1, "why": ""}, {"q": "Which of the following has learnable parameters?", "choices": ["Filters", "Pooling", "Activation functions", "Strides"], "a": 0, "why": ""}, {"q": "Which of the following increases the receptive field without increasing the number of parameters?", "choices": ["Dilated convolution", "Pooling", "Bigger kernels", "Smaller, consecutive kernels"], "a": 0, "why": ""}, {"q": "What is the CNN output size equation?", "choices": ["Floor((n + p - k) / s) + 1", "Floor((n + 2p + k) / s)", "Floor((k + 2p - s) / n) + 1", "Floor((n + 2p - k) / s) + 1"], "a": 3, "why": "The standard convolution output formula is floor((n + 2p - k)/s) + 1."}, {"q": "Given a 7x7 input size and a 3x3 filter size with stride 2, what is the output size?", "choices": ["4x4", "7x7", "5x5", "3x3"], "a": 3, "why": ""}, {"q": "Given a 7x7 input size and a 3x3 filter size, what is the output size?", "choices": ["5x5", "7x7", "3x3", "4x4"], "a": 0, "why": ""}, {"q": "Given a 7x7 input size, a 3x3 filter size with stride 1 and pad 1, what is the output size?", "choices": ["5x5", "4x4", "3x3", "7x7"], "a": 3, "why": ""}, {"q": "What is the output size, given that 10 kernels of size 5x5 were used, input size is 32x32, stride of 1 was used?", "choices": ["32x32x10", "28x28x10", "31x31x10", "28x28"], "a": 1, "why": ""}, {"q": "What is the output size, given that 10 kernels 5x5 were used, input size 32x32, stride of 1 and a padding of 2 were use", "choices": ["32x32x10", "31x31x10", "28x28x10", "28x28"], "a": 0, "why": ""}, {"q": "The input size is 32x32x3, with 10 filters of size 5x5, stride 1 and pad 2. How many trainable parameters are there?", "choices": ["750", "760", "31,457,280", "250"], "a": 1, "why": ""}, {"q": "If the input size is N and the filter size is F, we want to preserve the size spatially, we add zero padding equal to:", "choices": ["(N-F)/2", "N / F", "N - F", "(F-1)/2"], "a": 3, "why": ""}, {"q": "The first CNN-based model to achieve breakthrough results in image classification", "choices": ["ResNet", "AlexNet", "VGGNet", "GoogleNet"], "a": 1, "why": ""}, {"q": "The architecture that introduced skip connections to train very deep networks", "choices": ["VGGNet", "AlexNet", "ResNet", "GoogleNet"], "a": 2, "why": ""}, {"q": "The architecture that used a deeper network + small filters instead of a shallow network + larger filters", "choices": ["EfficientNet", "VGGNet", "AlexNet", "ResNet"], "a": 1, "why": ""}, {"q": "The architecture that used multiple filter sizes per layer", "choices": ["ResNet", "VGGNet", "AlexNet", "GoogleNet"], "a": 3, "why": ""}, {"q": "The architecture that found a scaling method that simultaneously scales a CNN’s depth, width, and resolution optimally", "choices": ["InceptionNet", "EfficientNet", "ResNet", "MobileNet"], "a": 1, "why": ""}, {"q": "The architecture that popularized the use of pooling, dropout, ReLU and training on GPUs", "choices": ["VGGNet", "EfficientNet", "AlexNet", "ResNet"], "a": 2, "why": ""}, {"q": "Has significantly less parameters than VGG and AlexNet", "choices": ["Fully connected layers", "Transformers", "ResNet", "InceptionNet"], "a": 3, "why": ""}, {"q": "Popularized the use of 1x1 convolution to reduce channel size", "choices": ["VGGNet", "InceptionNet", "AlexNet", "ResNet"], "a": 1, "why": ""}, {"q": "Vanishing gradient is a", "choices": ["Model problem", "High variance problem", "Optimization problem", "Not a problem"], "a": 2, "why": ""}, {"q": "Which is a shortcut connection that helps the network pass information through layers more easily", "choices": ["Residual", "Depthwise-separable convolutions", "Inception block", "1x1 convolutions"], "a": 0, "why": ""}, {"q": "SOTA performance with significantly less parameters and FLOPS", "choices": ["ResNet", "InceptionNet", "DenseNet", "EfficientNet"], "a": 3, "why": ""}, {"q": "This architecture reduces computational cost and memory usage while maintaining good accuracy.", "choices": ["MobileNet", "All the above", "AlexNet", "VGGNet"], "a": 0, "why": ""}, {"q": "To reduce computation compared to standard convolutions, MobileNet uses", "choices": ["Skip connections", "Depthwise-separable convolutions", "Compound scaling", "Larger filters"], "a": 1, "why": ""}, {"q": "MobileNet approximate standard convolution of an image of size 32x32x3 with 10 filters of size 5x5 using", "choices": ["3 5x5 filters, then 10 1x1 filters", "1 5x5 filter, then 10 3x3 filters", "10 5x5 filters, then 3 1x1 filters", "5 3x3 filters, then 10 1x1 filters"], "a": 0, "why": ""}, {"q": "Skip connections split computations into 2 steps: depthwise and pointwise", "choices": ["True", "False"], "a": 1, "why": ""}, {"q": "Fine-tuning is a task of", "choices": ["Augmentation", "Batch normalization", "Data handling", "Transfer learning"], "a": 3, "why": ""}, {"q": "Transfer learning is", "choices": ["Using the weights of an already-trained model instead of from scratch", "Training multiple models on different subsets of data", "Combining predictions of diverse models to reduce errors", "Augmenting test data and passing it through the model independently"], "a": 0, "why": ""}, {"q": "Combining predictions of diverse models to reduce errors is", "choices": ["Data augmentation", "Transfer learning", "Fine tuning", "Ensembling"], "a": 3, "why": ""}, {"q": "Training models sequentially, where each model focuses on the errors of the previous one", "choices": ["Transfer learning", "Augmentation", "Bagging", "Boosting"], "a": 3, "why": ""}, {"q": "Training multiple models on different subsets of data", "choices": ["Bagging", "Boosting", "Transfer learning", "Augmentation"], "a": 0, "why": ""}, {"q": "True or false: Soft voting is when each model votes for a class, and the class with the majority of votes is selected", "choices": ["True", "False"], "a": 1, "why": ""}, {"q": "True or false: Soft voting is selecting the class with the highest average probabilities from each model", "choices": ["True", "False"], "a": 0, "why": ""}, {"q": "By dropping a subset of neurons during each forward pass, the network learns to", "choices": ["Act as an efficient ensemble", "Set some neurons to the max value", "Rely heavily on specific connections", "Decrease underfitting"], "a": 0, "why": ""}, {"q": "During inference with a model that uses dropout:", "choices": ["Not used. the activation value is scaled by p", "Used and activation value is scaled by p", "Used, but set the ratio to half the ratio used in training", "Dropout is used normally"], "a": 0, "why": ""}, {"q": "Batch normalization is usually applied", "choices": ["Before activation functions", "For training only", "For initial input data only", "After activation functions"], "a": 0, "why": ""}, {"q": "Batch normalization is a technique that normalizes", "choices": ["The filter values", "The bias values", "Intermediate input data", "The initial input data"], "a": 2, "why": ""}, {"q": "In batch normalization, the batch mean and variance are", "choices": ["Learned parameters", "Computed directly", "Amplifying normalized values", "Moving the values away from zero"], "a": 1, "why": ""}, {"q": "The scale γ and shift β give the network control in", "choices": ["Augmentation", "AdamW", "Batch normalization", "Ensemble voting"], "a": 2, "why": ""}, {"q": "A batch normalization layer with γ = 1, β = 0 will effectively", "choices": ["Perform PCA", "Set mean to 1 and variance to 0", "Keep the normalization", "Undo the normalization"], "a": 2, "why": ""}, {"q": "During inference with batch normalization", "choices": ["Only use γ and β", "Use statistics from current batch", "Use stored running averages", "It is only used in training"], "a": 2, "why": ""}, {"q": "Semantic segmentation is the task of assigning", "choices": ["A caption per image", "A class per pixel", "A class per image", "A bounding box + class per box"], "a": 1, "why": ""}, {"q": "________ Segmentation breaks an image into patches, runs each patch through a classifier and classifies the center pixel", "choices": ["Standard convolution", "Sliding window", "U-Net", "Full convolution"], "a": 1, "why": ""}, {"q": "What is used to solve the inefficiency problem in full convolutional segmentation?", "choices": ["Keep convolution kernels the same size as the image resolution", "Downsampling then upsampling inside the network", "Skip connection", "Use a sliding window"], "a": 1, "why": ""}, {"q": "Which of the following help in downsampling?", "choices": ["Unpooling", "Transpose convolution", "Pooling", "Padded convolution"], "a": 2, "why": ""}, {"q": "The upsampling technique that uses the remembered max index is", "choices": ["Max unpooling", "Transpose convolution", "Max pooling", "Bed of nails"], "a": 0, "why": ""}, {"q": "Which of these upsampling techniques has learnable parameters?", "choices": ["Transposed convolution", "Max unpooling", "Nearest neighbors", "Bed of nails"], "a": 0, "why": ""}, {"q": "If the input size is 2x2 and a 3x3 transposed convolution was used with stride = 2, output_pad = 1 and pad = 1", "choices": ["3x3", "4x4", "2x2", "5x5"], "a": 1, "why": ""}, {"q": "What is the output size formula of transposed convolution?", "choices": ["(N-1) * stride + 2 * output_pad + dilation * (kernel_size - 1) + pad + 1", "(N-1) * stride - 2 * pad + dilation * (kernel_size - 1) + output_pad + 1", "(N-1) * stride + 2 * pad + dilation * (kernel_size - 1) + output_pad + 1", "(N-1) * stride - 2 * output_pad + dilation * (kernel_size - 1) + pad + 1"], "a": 1, "why": ""}, {"q": "What is the output size after transposed convolution if the input size is 2x2, the filter size is 2x2 with stride 1?", "choices": ["2x2", "3x3", "4x4", "5x5"], "a": 1, "why": ""}, {"q": "What technique is used to avoid losing important details and spatial information while downsampling?", "choices": ["Transpose convolution", "Unpooling", "Residual connection", "Bed of nails"], "a": 2, "why": ""}, {"q": "Instance segmentation", "choices": ["Separate things instances", "Label each pixel with a category label", "Output a bounding box", "Separate all objects (things and stuff)"], "a": 0, "why": ""}, {"q": "What is the output size after transposed convolution if the input size is 7x7, the filter size is 3x3 with stride 1?", "choices": ["15x15", "5x5", "7x7", "9x9"], "a": 3, "why": ""}, {"q": "___ Is used to compare the predicted bounding box to the ground truth bounding box", "choices": ["IoU", "Euclidean distance", "Feature similarity", "Manhattan distance"], "a": 0, "why": ""}, {"q": "How many regions does selective search usually propose for an 800x600 image?", "choices": ["6000", "58M", "50", "2000"], "a": 3, "why": ""}, {"q": "Region proposal in R-CNN", "choices": ["Pass through CNN once", "Are processed independently", "Share the feature map", "Predicted with RPN"], "a": 1, "why": ""}, {"q": "The classification in R-CNN is done through", "choices": ["Transformer", "Fine tuned CNN", "Pretrained CNN", "Independent SVM per class"], "a": 3, "why": ""}, {"q": "In Faster R-CNN", "choices": ["One model that runs in two stages", "2 Independent models are trained/used", "One model that runs once", "3 Independent models are trained/used (SUS)"], "a": 3, "why": ""}, {"q": "In R-CNN, the Bounding box regressor", "choices": ["Predict the bbox", "Predict correctio nto the Rol bbox", "Predict the bbox and class", "Predict class confidence score"], "a": 1, "why": ""}, {"q": "In Fast R-CNN, the image", "choices": ["Passes through the CNN once, so region proposals share the feature map", "Passes through the CNN once, so the CNN predicts the region proposals", "Is processed once and predicts the bbox and class directly", "Passes through CNN, then selective search is run over the feature map"], "a": 0, "why": ""}, {"q": "Fast R-CNN improves upon R-CNN by", "choices": ["Processing the entire image once and sharing features", "Introducing RoI pooling", "Eliminating the need to independently train 3 models", "All of the above"], "a": 3, "why": ""}, {"q": "RoI in Faster R-CNN is", "choices": ["Computed after the forward pass from feature map", "Computed before CNN forward pass using selective search", "Predicted through RPN", "Predicted at once via a single stage neural network"], "a": 2, "why": ""}, {"q": "How many losses does Faster R-CNN train?", "choices": ["3 Joint losses", "2 Joint losses", "4 Joint losses", "2 Independent losses"], "a": 2, "why": ""}, {"q": "Faster R-CNN is a", "choices": ["2 Stage object detector", "One stage object detector", "3 Stage object detector", "Segmentation algorithm"], "a": 0, "why": ""}, {"q": "The technique that deals with overlapping boxes for the same class is", "choices": ["Hard Negative Mining", "RoI pool", "Anchor box clustering", "Non-max Suppression"], "a": 3, "why": ""}, {"q": "If box1 class is dog and box2 class is cat, and IoU is 0.9. NMS with threshold 0.7 will", "choices": ["Remove both boxes", "Have no effect", "Create a new box = (box1 + box2)/2", "Remove box with lower confidence"], "a": 1, "why": ""}, {"q": "Box1 and box2 have the same class. p(box1) = 0.85, and p(box2) = 0.95. If IoU = 0.8 and threshold=0.6, NMS will", "choices": ["Keep both boxes", "Remove box1", "Create a new box = (box1 + box2)/2", "Remove box2"], "a": 1, "why": ""}, {"q": "Box1 and box2 have the same class. p(box1) = 0.95, and p(box2) = 0.6. If IoU = 0.4 and threshold=0.7, NMS will", "choices": ["Remove both boxes", "Keep both boxes", "Remove box1", "Remove box2"], "a": 1, "why": ""}, {"q": "Which of the following is true about YOLO?", "choices": ["It has real-time speed", "All of the above", "It has a high false rate", "It is a single shot object detection algorithm"], "a": 1, "why": ""}, {"q": "YOLO Loss =", "choices": ["Localization + confidence + classification", "Confidence + classification", "RPN classification + regression + object classification + object regression", "Localization + classification"], "a": 0, "why": ""}, {"q": "Network that deals with various scales", "choices": ["Faster R-CNN", "YOLO", "Feature Pyramid Network", "U-Net"], "a": 2, "why": ""}, {"q": "Feature pyramid network works by", "choices": ["Building an image pyramid", "Using a single high-resolution feature map", "Attaching an independent detector to each feature level", "Adding top-down connections and detector at each level"], "a": 3, "why": ""}, {"q": "For each grid cell, YOLOv1 output size is", "choices": ["4 * B + C", "B * (4 + C)", "B * (5 + C)", "5 * B + C"], "a": 3, "why": ""}, {"q": "In YOLOv1 if S=7, B=2 and C=20, how many bounding boxes are there?", "choices": ["98", "490", "100", "96"], "a": 0, "why": ""}, {"q": "In YOLOv1 if S=7, B=2 and C=20, the output shape is", "choices": ["7x7x50", "7x7x28", "7x7x30", "7x7x48"], "a": 2, "why": ""}, {"q": "YOLOv2 improves over YOLOv1 by", "choices": ["Predicting class probabilities per box", "Allowing a grid to predict multiple classes", "All of the above", "Removing FC layers"], "a": 2, "why": ""}, {"q": "Which of the following is an instance segmentation algorithm?", "choices": ["U-Net", "Panoptic Feature Pyramid Network", "Mask R-CNN"], "a": 2, "why": ""}];
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+    }
+
+    const LATEX_EXACT = new Map([
+      ['Floor((n + p - k) / s) + 1', '\\(\\left\\lfloor\\frac{n + p - k}{s}\\right\\rfloor + 1\\)'],
+      ['Floor((n + 2p + k) / s)', '\\(\\left\\lfloor\\frac{n + 2p + k}{s}\\right\\rfloor\\)'],
+      ['Floor((k + 2p - s) / n) + 1', '\\(\\left\\lfloor\\frac{k + 2p - s}{n}\\right\\rfloor + 1\\)'],
+      ['Floor((n + 2p - k) / s) + 1', '\\(\\left\\lfloor\\frac{n + 2p - k}{s}\\right\\rfloor + 1\\)'],
+      ['(N-F)/2', '\\(\\frac{N-F}{2}\\)'],
+      ['(F-1)/2', '\\(\\frac{F-1}{2}\\)'],
+      ['N / F', '\\(\\frac{N}{F}\\)'],
+      ['N - F', '\\(N - F\\)'],
+      ['4 * B + C', '\\(4B + C\\)'],
+      ['B * (4 + C)', '\\(B(4 + C)\\)'],
+      ['B * (5 + C)', '\\(B(5 + C)\\)'],
+      ['5 * B + C', '\\(5B + C\\)'],
+      ['(N-1) * stride + 2 * output_pad + dilation * (kernel_size - 1) + pad + 1', '\\((N-1)\\,\\text{stride} + 2\\,\\text{output\\_pad} + \\text{dilation}(\\text{kernel\\_size}-1) + \\text{pad} + 1\\)'],
+      ['(N-1) * stride - 2 * pad + dilation * (kernel_size - 1) + output_pad + 1', '\\((N-1)\\,\\text{stride} - 2\\,\\text{pad} + \\text{dilation}(\\text{kernel\\_size}-1) + \\text{output\\_pad} + 1\\)'],
+      ['(N-1) * stride + 2 * pad + dilation * (kernel_size - 1) + output_pad + 1', '\\((N-1)\\,\\text{stride} + 2\\,\\text{pad} + \\text{dilation}(\\text{kernel\\_size}-1) + \\text{output\\_pad} + 1\\)'],
+      ['(N-1) * stride - 2 * output_pad + dilation * (kernel_size - 1) + pad + 1', '\\((N-1)\\,\\text{stride} - 2\\,\\text{output\\_pad} + \\text{dilation}(\\text{kernel\\_size}-1) + \\text{pad} + 1\\)'],
+      ['The standard convolution output formula is floor((n + 2p - k)/s) + 1.', 'The standard convolution output formula is \\(\\left\\lfloor\\frac{n + 2p - k}{s}\\right\\rfloor + 1\\).']
+    ]);
+
+    function withLatex(text) {
+      if (!text) return '';
+      if (LATEX_EXACT.has(text)) return LATEX_EXACT.get(text);
+
+      let out = escapeHtml(text);
+      out = out.replace(/\b(\d+)x(\d+)(?:x(\d+))?\b/g, (_, a, b, c) =>
+        c ? `\\(${a} \\times ${b} \\times ${c}\\)` : `\\(${a} \\times ${b}\\)`
+      );
+      out = out.replace(/(\b[xyw]\b)\s*\+\s*(\b[xyw]\b)/gi, (_, a, b) => `\\(${a} + ${b}\\)`);
+      return out;
+    }
+
+    function typesetMath(el) {
+      if (!el || !window.MathJax || !window.MathJax.typesetPromise) return;
+      window.MathJax.typesetPromise([el]).catch(() => {});
+    }
+
+    let state = {
+      questions: [],
+      currentIndex: 0,
+      answers: [],
+      checked: [],
+      optionMaps: [],
+      score: 0,
+      started: false
+    };
+
+    const getEl = id => document.getElementById(id);
+
+    function prepareQuestions() {
+      const shuffleQ = getEl('shuffleQuestions').checked;
+      const shuffleO = getEl('shuffleOptions').checked;
+
+      state.questions = RAW_QUESTIONS.map((q, idx) => ({ ...q, _id: idx }));
+      if (shuffleQ) shuffle(state.questions);
+
+      state.optionMaps = state.questions.map(q => {
+        const map = q.choices.map((_, i) => i);
+        if (shuffleO) shuffle(map);
+        return map;
+      });
+
+      state.currentIndex = 0;
+      state.answers = new Array(state.questions.length).fill(null);
+      state.checked = new Array(state.questions.length).fill(false);
+      state.score = 0;
+      state.started = true;
+    }
+
+    function renderQuestion() {
+      const q = state.questions[state.currentIndex];
+      const map = state.optionMaps[state.currentIndex];
+      const isChecked = state.checked[state.currentIndex];
+      const selectedOpt = state.answers[state.currentIndex];
+
+      const total = state.questions.length;
+      getEl('progressBar').style.width = `${((state.currentIndex + 1) / total) * 100}%`;
+      getEl('progressText').textContent = `${state.currentIndex + 1} / ${total}`;
+
+      let html = `
+        <article class="question-card" id="currentQuestion">
+          <p class="question-eyebrow">Question ${state.currentIndex + 1}</p>
+          <h5>${withLatex(q.q)}</h5>
+          <div class="option-grid">
+      `;
+
+      map.forEach((origIdx, dispIdx) => {
+        const optText = q.choices[origIdx];
+        const isSelected = selectedOpt === dispIdx;
+        const isCorrect = origIdx === q.a;
+        
+        let extraClass = '';
+        if (isChecked) {
+          if (isCorrect) extraClass = 'style="border-color: rgba(74, 211, 149, 0.8); background: rgba(74, 211, 149, 0.1);"';
+          else if (isSelected) extraClass = 'style="border-color: rgba(255, 107, 107, 0.8); background: rgba(255, 107, 107, 0.1);"';
+        }
+
+        html += `
+          <label class="option-pill" ${extraClass}>
+            <input type="radio" name="question-opt" value="${dispIdx}" ${isSelected ? 'checked' : ''} ${isChecked ? 'disabled' : ''}>
+            <span>${withLatex(optText)}</span>
+          </label>
+        `;
+      });
+
+      html += '</div>';
+
+      if (isChecked) {
+        const wasCorrect = map[selectedOpt] === q.a;
+        const correctOptIdx = map.findIndex(m => m === q.a);
+        const correctText = q.choices[q.a];
+        
+        if (wasCorrect) {
+          html += `<div class="question-feedback success"><strong>Correct!</strong> ${withLatex(q.why)}</div>`;
+        } else {
+          html += `<div class="question-feedback error"><strong>Incorrect.</strong> The correct answer is: <em>${withLatex(correctText)}</em>. ${withLatex(q.why)}</div>`;
+        }
+      }
+
+      html += '</article>';
+      getEl('questionArea').innerHTML = html;
+      typesetMath(getEl('questionArea'));
+
+      // Add event listeners for options
+      document.querySelectorAll('input[name="question-opt"]').forEach(input => {
+        input.addEventListener('change', () => {
+          state.answers[state.currentIndex] = parseInt(input.value);
+        });
+      });
+
+      // Update buttons
+      getEl('prevQuestion').disabled = state.currentIndex === 0;
+      getEl('checkAnswer').disabled = isChecked || state.answers[state.currentIndex] === null;
+      getEl('nextQuestion').disabled = state.currentIndex >= state.questions.length - 1;
+    }
+
+    function checkAnswer() {
+      const idx = state.currentIndex;
+      if (state.answers[idx] === null) return;
+
+      state.checked[idx] = true;
+      const q = state.questions[idx];
+      const map = state.optionMaps[idx];
+      const selectedOrig = map[state.answers[idx]];
+
+      if (selectedOrig === q.a) {
+        state.score++;
+      }
+
+      renderQuestion();
+    }
+
+    function showResults() {
+      getEl('quizContainer').style.display = 'none';
+      getEl('resultPanel').classList.remove('d-none');
+
+      const total = state.questions.length;
+      const pct = Math.round((state.score / total) * 100);
+      getEl('scoreSummary').textContent = `${state.score} / ${total} (${pct}%)`;
+
+      // Build review
+      let reviewHtml = '<div class="question-stack">';
+      state.questions.forEach((q, i) => {
+        const map = state.optionMaps[i];
+        const selectedDisp = state.answers[i];
+        const selectedOrig = selectedDisp !== null ? map[selectedDisp] : null;
+        const wasCorrect = selectedOrig === q.a;
+        const correctText = q.choices[q.a];
+
+        reviewHtml += `
+          <article class="question-card ${wasCorrect ? 'correct' : 'incorrect'}">
+            <p class="question-eyebrow">Question ${i + 1} · ${wasCorrect ? '✓ Correct' : '✗ Incorrect'}</p>
+            <h5>${withLatex(q.q)}</h5>
+            <p class="text-muted small"><strong>Correct answer:</strong> ${withLatex(correctText)}</p>
+            <p class="text-muted small"><strong>Explanation:</strong> ${withLatex(q.why)}</p>
+          </article>
+        `;
+      });
+      reviewHtml += '</div>';
+      getEl('reviewPanel').innerHTML = reviewHtml;
+      getEl('reviewPanel').style.display = 'block';
+      typesetMath(getEl('reviewPanel'));
+    }
+
+    function retryMissed() {
+      const missed = [];
+      state.questions.forEach((q, i) => {
+        const map = state.optionMaps[i];
+        const selectedDisp = state.answers[i];
+        if (selectedDisp === null || map[selectedDisp] !== q.a) {
+          missed.push({ q, map: state.optionMaps[i], origIdx: i });
+        }
+      });
+
+      if (missed.length === 0) {
+        alert('No missed questions — great job!');
+        return;
+      }
+
+      // Reset with only missed questions
+      state.questions = missed.map(m => m.q);
+      state.optionMaps = missed.map(m => m.map);
+      state.currentIndex = 0;
+      state.answers = new Array(state.questions.length).fill(null);
+      state.checked = new Array(state.questions.length).fill(false);
+      state.score = 0;
+
+      getEl('resultPanel').classList.add('d-none');
+      getEl('reviewPanel').style.display = 'none';
+      getEl('quizContainer').style.display = 'block';
+      renderQuestion();
+    }
+
+    function restartFull() {
+      prepareQuestions();
+      getEl('resultPanel').classList.add('d-none');
+      getEl('reviewPanel').style.display = 'none';
+      getEl('quizContainer').style.display = 'block';
+      renderQuestion();
+    }
+
+    // Event listeners
+    getEl('startQuiz').addEventListener('click', () => {
+      prepareQuestions();
+      getEl('quizContainer').style.display = 'block';
+      getEl('startQuiz').disabled = true;
+      getEl('resetQuiz').disabled = false;
+      renderQuestion();
+    });
+
+    getEl('resetQuiz').addEventListener('click', () => {
+      state.started = false;
+      getEl('quizContainer').style.display = 'none';
+      getEl('resultPanel').classList.add('d-none');
+      getEl('reviewPanel').style.display = 'none';
+      getEl('startQuiz').disabled = false;
+      getEl('resetQuiz').disabled = true;
+    });
+
+    getEl('prevQuestion').addEventListener('click', () => {
+      if (state.currentIndex > 0) {
+        state.currentIndex--;
+        renderQuestion();
+      }
+    });
+
+    getEl('nextQuestion').addEventListener('click', () => {
+      if (state.currentIndex < state.questions.length - 1) {
+        state.currentIndex++;
+        renderQuestion();
+      }
+    });
+
+    getEl('checkAnswer').addEventListener('click', checkAnswer);
+    getEl('finishQuiz').addEventListener('click', showResults);
+    getEl('retryMissed').addEventListener('click', retryMissed);
+    getEl('restartFull').addEventListener('click', restartFull);
+
+    // Update check button when answer changes
+    document.addEventListener('change', e => {
+      if (e.target.name === 'question-opt') {
+        getEl('checkAnswer').disabled = state.checked[state.currentIndex];
+      }
+    });
+  </script>
+</body>
+</html>

@@ -77,6 +77,17 @@ window.KfupmDayContent = {
         questionCount: 1,
         link: 'quick-challenge.pdf',
         ctaLabel: 'Open quick challenge'
+      },
+      {
+        id: 'day4-comprehensive-material-practice-quiz',
+        title: 'Comprehensive Material Practice Quiz',
+        description: 'Quiz covering the whole Stage 3 material. Authored by Mohammad Alshiekh.',
+        level: 'Core',
+        focus: 'Full material revision',
+        duration: 'Self-paced',
+        questionCount: 86,
+        link: 'comprehensive-quiz.html',
+        ctaLabel: 'Open quiz page'
       }
     ]
   }
