@@ -81,13 +81,15 @@ window.KfupmDayContent = {
       {
         id: 'day4-comprehensive-material-practice-quiz',
         title: 'Comprehensive Material Practice Quiz',
-        description: 'Quiz covering the whole Stage 3 material. Authored by Mohammad Alshiekh.',
+        description: 'Quiz covering the whole Stage 3 material. Authored by Mohammad Alshiekh. Students can use the Kahoot version if preferred.',
         level: 'Core',
         focus: 'Full material revision',
         duration: 'Self-paced',
         questionCount: 86,
         link: 'comprehensive-quiz.html',
-        ctaLabel: 'Open quiz page'
+        ctaLabel: 'Open website quiz',
+        altLink: 'https://create.kahoot.it/share/deep-dive-into-convolutional-neural-networks/d031760e-d7c5-4555-b0f9-684ea8cbbea6',
+        altCtaLabel: 'Open Kahoot version'
       }
     ]
   }

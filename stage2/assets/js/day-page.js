@@ -64,6 +64,12 @@
             ? quiz.link
             : `../quiz.html?day=${encodeURIComponent(dayKey)}&quizId=${encodeURIComponent(quiz.id)}`;
         const buttonLabel = quiz.ctaLabel || (quiz.link ? 'Open quiz page' : 'Practice this quiz');
+        const secondaryHref =
+          typeof quiz.altLink === 'string' && quiz.altLink.trim().length > 0 ? quiz.altLink : '';
+        const secondaryLabel =
+          typeof quiz.altCtaLabel === 'string' && quiz.altCtaLabel.trim().length > 0
+            ? quiz.altCtaLabel
+            : 'Open alternative';
         const questionCount = Array.isArray(quiz.questions)
           ? quiz.questions.length
           : typeof quiz.questionCount === 'number'
@@ -85,6 +91,11 @@
             <span>${questionCount} questions</span>
           </div>
           <a class="btn btn-outline-primary w-100" href="${targetHref}">${buttonLabel}</a>
+          ${
+            secondaryHref
+              ? `<a class="btn btn-outline-secondary w-100 mt-2" href="${secondaryHref}" target="_blank" rel="noopener">${secondaryLabel}</a>`
+              : ''
+          }
         </div>
       `;
       })
