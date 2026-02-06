@@ -62,10 +62,22 @@ window.KfupmDayContent = {
       {
         title: 'Practical Exam Guidelines',
         description: 'Guidelines for the practical exam. Prepared by Mohamed Eltayeb.',
-        href: 'practical_exam_guideline-1.pdf',
+        href: 'exam_guideline.pdf',
         badge: 'PDF'
       }
     ],
-    quizzes: []
+    quizzes: [
+      {
+        id: 'day4-quick-challenge',
+        title: 'Day 4 Quick Challenge',
+        description: 'Quick challenge for Day 4. Prepared by Yara Alzahrani.',
+        level: 'Practice',
+        focus: 'Exam preparation',
+        duration: 'Self-paced',
+        questionCount: 1,
+        link: 'quick-challenge.pdf',
+        ctaLabel: 'Open quick challenge'
+      }
+    ]
   }
 };
